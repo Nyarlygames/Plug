@@ -83,6 +83,7 @@
     <Compile Include="Assets\Options\OptionsController.cs" />
     <Compile Include="Assets\Options\OptionsScript.cs" />
     <Compile Include="Assets\Profiles.cs" />
+    <Compile Include="Assets\WordSelector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

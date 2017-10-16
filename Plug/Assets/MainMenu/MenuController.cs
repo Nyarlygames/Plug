@@ -10,6 +10,8 @@ public class MenuController : MonoBehaviour {
 	void Start () {
         PlayerProf = gameObject.AddComponent<Profiles>();
         GameObject.Find("GreetingText").GetComponent<Text>().text = "Greetings " + PlayerProf.profilename + " ! ";
+        GameObject.Find("PlayButton").GetComponent<Image>().enabled = false;
+        GameObject.Find("OptionsButton").GetComponent<Image>().enabled = false;
     }
 	
 	void Update () {
