@@ -80,10 +80,13 @@
   <ItemGroup>
     <Compile Include="Assets\LoadScene.cs" />
     <Compile Include="Assets\MainMenu\MenuController.cs" />
+    <Compile Include="Assets\MainMenu\MenuWords.cs" />
     <Compile Include="Assets\Options\OptionsController.cs" />
     <Compile Include="Assets\Options\OptionsScript.cs" />
+    <Compile Include="Assets\PlayMode\ModeController.cs" />
+    <Compile Include="Assets\PlayMode\ModeWords.cs" />
     <Compile Include="Assets\Profiles.cs" />
-    <Compile Include="Assets\WordSelector.cs" />
+    <Compile Include="Assets\SoloMode\SoloWords.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

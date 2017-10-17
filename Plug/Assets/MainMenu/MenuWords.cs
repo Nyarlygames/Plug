@@ -4,7 +4,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WordSelector : MonoBehaviour {
+public class MenuWords : MonoBehaviour {
     
     public float frameSeconds = 0.5f;
     public SpriteRenderer spr;
@@ -78,6 +78,11 @@ public class WordSelector : MonoBehaviour {
         wordstring.Add("PLAY");
         wordstring.Add("OPTIONS");
         wordstring.Add("EXIT");
+    }
+
+    public void addWord(string action)
+    {
+        wordstring.Add(action);
     }
 
     void fade_in_out_in()
