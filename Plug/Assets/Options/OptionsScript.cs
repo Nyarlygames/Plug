@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.IO;
 
 
@@ -16,6 +17,7 @@ public class OptionsScript : MonoBehaviour {
     public Button ResetButton;
     public Button ResetProfButton;
     public Button DefaultButton;
+    public Button BackButton;
     public Profiles PlayerProf;
     private Profiles Origin;
     
@@ -37,13 +39,20 @@ public class OptionsScript : MonoBehaviour {
         temp.onClick.AddListener(ResetProfClick);
         temp = DefaultButton.GetComponent<Button>();
         temp.onClick.AddListener(DefaultClick);
-        
+        temp = BackButton.GetComponent<Button>();
+        temp.onClick.AddListener(BackClick);
+
         ProfileViewCanvas.enabled = true;
         GraphViewCanvas.enabled = true;
     }
 	
 	void Update () {
 
+    }
+
+    void BackClick()
+    {
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Single);
     }
 
     void ProfileClick()

@@ -1,8 +1,8 @@
-profilename=Default
+profilename=MyProfileName
 lang=English
 volumemus=50
-volumesfx=80
-volumeall=100
+volumesfx=50
+volumeall=50
 resolution=1920x1080
 quality=0
 difficulty=0

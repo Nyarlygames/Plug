@@ -21,7 +21,7 @@ public class MenuWords : MonoBehaviour {
     void Start()
     {
         spr = GetComponent<SpriteRenderer>();
-        gameObject.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0);
+        gameObject.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
         sprites = new List<Sprite>(Resources.LoadAll<Sprite>("img/cursor/"));
         letters.Add(Resources.Load<Sprite>("img/letters/A"));
         letterstring.Add(KeyCode.A);
@@ -122,7 +122,7 @@ public class MenuWords : MonoBehaviour {
             {
                 GameObject letter = new GameObject("");
                 letter.GetComponent<Transform>().position = gameObject.GetComponent<Transform>().position;
-                letter.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0);
+                letter.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
                 letter.AddComponent<SpriteRenderer>();
                 SpriteRenderer newletter = letter.GetComponent<SpriteRenderer>();
                 word += input.ToString();
@@ -130,7 +130,8 @@ public class MenuWords : MonoBehaviour {
                 newletter.sprite = letters[Convert.ToInt32((char)input) - 97];
                 
                 sprite_word.Add(letter);
-                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, 0, 0);
+                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+
             }
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -140,7 +141,8 @@ public class MenuWords : MonoBehaviour {
                 word = word.Substring(0, word.Length - 1);
                 Destroy(sprite_word[sprite_word.Count - 1]);
                 sprite_word.RemoveAt(sprite_word.Count - 1);
-                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, 0, 0);
+                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+
             }
         }
         if (Input.GetKeyDown(KeyCode.Space))
@@ -148,7 +150,7 @@ public class MenuWords : MonoBehaviour {
             word += " ";
             GameObject letter = new GameObject("Space");
             sprite_word.Add(letter);
-            gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, 0, 0);
+            gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -173,14 +175,13 @@ public class MenuWords : MonoBehaviour {
                     }
                 }
                 word = "";
-                gameObject.GetComponent<Transform>().position = new Vector3(0, 0, 0);
+                gameObject.GetComponent<Transform>().position = new Vector3(0, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
     }
 
     void DetectedWord(string w)
     {
-        Debug.Log("Found : " + w);
         switch(w)
         {
             case "PLAY":

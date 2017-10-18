@@ -115,6 +115,10 @@ public class Profiles : MonoBehaviour {
             GameObject.Find("Brightness").GetComponent<Scrollbar>().value = brightness / 100.0f;
             GameObject.Find("InputField").GetComponent<InputField>().text = profilename;
         }
+        if (string.Compare(SceneManager.GetActiveScene().name, "MainMenu") == 0)
+        {
+            GameObject.Find("GreetingText").GetComponent<Text>().text = "Greetings " + profilename + " ! ";
+        }
     }
     
     void Update () {
