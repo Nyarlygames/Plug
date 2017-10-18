@@ -17,9 +17,11 @@ public class SoloWords : MonoBehaviour {
     private List<Sprite> letters = new List<Sprite>();
     private List<String> wordstring = new List<String>();
     private List<GameObject> sprite_word = new List<GameObject>();
+    public float startposx = 0;
 
     void Start()
     {
+        startposx = gameObject.GetComponent<Transform>().position.x;
         spr = GetComponent<SpriteRenderer>();
         gameObject.GetComponent<Transform>().localScale = new Vector3(0.5f, 0.5f, 0.5f);
         sprites = new List<Sprite>(Resources.LoadAll<Sprite>("img/cursor/"));
@@ -127,7 +129,7 @@ public class SoloWords : MonoBehaviour {
                 newletter.sprite = letters[Convert.ToInt32((char)input) - 97];
                 
                 sprite_word.Add(letter);
-                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+                gameObject.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
         if (Input.GetKeyDown(KeyCode.Backspace))
@@ -137,7 +139,7 @@ public class SoloWords : MonoBehaviour {
                 word = word.Substring(0, word.Length - 1);
                 Destroy(sprite_word[sprite_word.Count - 1]);
                 sprite_word.RemoveAt(sprite_word.Count - 1);
-                gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+                gameObject.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
         if (Input.GetKeyDown(KeyCode.Space))
@@ -145,7 +147,7 @@ public class SoloWords : MonoBehaviour {
             word += " ";
             GameObject letter = new GameObject("Space");
             sprite_word.Add(letter);
-            gameObject.GetComponent<Transform>().position = new Vector3(sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+            gameObject.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 0.5f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
         }
 
         if (Input.GetKeyDown(KeyCode.Return))
@@ -170,7 +172,7 @@ public class SoloWords : MonoBehaviour {
                     }
                 }
                 word = "";
-                gameObject.GetComponent<Transform>().position = new Vector3(0, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
+                gameObject.GetComponent<Transform>().position = new Vector3(startposx, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
     }
