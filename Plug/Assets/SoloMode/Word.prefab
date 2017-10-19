@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 114126215087033974}
   m_Layer: 0
   m_Name: Word
-  m_TagString: Untagged
+  m_TagString: Word
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,11 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfaefaff4614891499893d6749198933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  word: 
-  time: 0
-  points: 0
-  pvhit: 0
-  errormargin: 0
+  word: change me
+  time: 1
+  points: 1
+  pvhit: 1
+  errormargin: 1
+  duration: 1
+  wordsprite: []
+  ishown: 0
+  preloaded: 0
+  letters: []
 --- !u!212 &212767351504394642
 SpriteRenderer:
   m_ObjectHideFlags: 1

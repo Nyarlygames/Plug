@@ -14,10 +14,12 @@ public class SoloWords : MonoBehaviour {
     private float deltaTime = 0;
     public string word = "";
     public List<KeyCode> letterstring = new List<KeyCode>();
-    private List<Sprite> letters = new List<Sprite>();
+    public List<Sprite> letters = new List<Sprite>();
     private List<String> wordstring = new List<String>();
     private List<GameObject> sprite_word = new List<GameObject>();
     public float startposx = 0;
+    public string currentword = "";
+    public int letternumb = 0;
 
     void Start()
     {
@@ -119,20 +121,34 @@ public class SoloWords : MonoBehaviour {
         {
             if (Input.GetKeyDown(input))
             {
-                GameObject letter = new GameObject("");
-                letter.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 1.0f, GameObject.Find("Ground").GetComponent<Transform>().position.y - 1, GameObject.Find("Ground").GetComponent<Transform>().position.z);
-                letter.GetComponent<Transform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
-                letter.AddComponent<SpriteRenderer>();
-                SpriteRenderer newletter = letter.GetComponent<SpriteRenderer>();
-                word += input.ToString();
-                letter.name = input.ToString();
-                newletter.sprite = letters[Convert.ToInt32((char)input) - 97];
-                
-                sprite_word.Add(letter);
+                if (currentword != "")
+                {
+                    if (String.Compare(currentword[letternumb].ToString(),input.ToString()) == 0)
+                    {
+                        GameObject letter = new GameObject("");
+                        letter.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 1.0f, GameObject.Find("Ground").GetComponent<Transform>().position.y - 1.0f, GameObject.Find("Ground").GetComponent<Transform>().position.z); // "-1.0f" should be called ground scale, but lazy
+                        letter.GetComponent<Transform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        letter.AddComponent<SpriteRenderer>();
+                        SpriteRenderer newletter = letter.GetComponent<SpriteRenderer>();
+                        word += input.ToString();
+                        letter.name = input.ToString();
+                        newletter.sprite = letters[Convert.ToInt32((char)input) - 97];
+                        letter.GetComponent<SpriteRenderer>().color = Color.green;
+
+                        sprite_word.Add(letter);
+                        currentword = currentword.Substring(1, currentword.Length - 1);
+                    }
+                    else
+                    {
+                        Debug.Log("NOT SAME cur : " + currentword[letternumb].ToString() + " input : " + input.ToString());
+                    }
+
+                    
+                }
                // gameObject.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 1.0f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Backspace))
+       /* if (Input.GetKeyDown(KeyCode.Backspace))
         {
             if (word.Length > 0)
             {
@@ -141,7 +157,7 @@ public class SoloWords : MonoBehaviour {
                 sprite_word.RemoveAt(sprite_word.Count - 1);
                // gameObject.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 1.0f, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
-        }
+        }*/
         if (Input.GetKeyDown(KeyCode.Space))
         {
             word += " ";
@@ -159,7 +175,7 @@ public class SoloWords : MonoBehaviour {
                     Destroy(sprite_word[i]);
                 }
                 sprite_word = new List<GameObject>();
-                foreach (String action in wordstring)
+                /*foreach (String action in wordstring)
                 {
                     if (string.Compare(word, action) == 0)
                     {
@@ -170,8 +186,9 @@ public class SoloWords : MonoBehaviour {
                     {
                         // unrecognized word
                     }
-                }
+                }*/
                 word = "";
+                //currentword = ""; TO KEEP IF/WHEN RETURN VALIDATES THE WORD
                 //gameObject.GetComponent<Transform>().position = new Vector3(startposx, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
@@ -179,7 +196,6 @@ public class SoloWords : MonoBehaviour {
 
     void DetectedWord(string w)
     {
-        Debug.Log("Found : " + w);
         /*switch(w)
         {
             case "PLAY":
@@ -208,8 +224,8 @@ public class SoloWords : MonoBehaviour {
     {
         foreach (ContactPoint contact in collision.contacts)
         {
-            Debug.DrawRay(contact.point, contact.normal, Color.white);
-            Debug.Log(collision.collider.name);
+           // Debug.DrawRay(contact.point, contact.normal, Color.white);
+           // Debug.Log(collision.collider.name);
         }
     }
 }
