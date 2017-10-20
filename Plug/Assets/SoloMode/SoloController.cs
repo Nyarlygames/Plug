@@ -9,7 +9,8 @@ public class SoloController : MonoBehaviour {
     public float main_timer = 0.0f;
     private bool activeword = false;
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         GameObject.Find("MovieSprite").GetComponent<VideoPlayer>().Play();
         GameObject.Find("MovieSprite").GetComponent<VideoPlayer>().isLooping = false;
         foreach (GameObject word in GameObject.FindGameObjectsWithTag("Word"))
@@ -28,7 +29,15 @@ public class SoloController : MonoBehaviour {
             if ((main_timer >= wordgo.GetComponent<WordController>().time) && (main_timer - wordgo.GetComponent<WordController>().time <= wordgo.GetComponent<WordController>().duration) && wordgo.GetComponent<WordController>().ishown == false)
             {
                     wordgo.GetComponent<WordController>().ishown = true;
-                    GameObject.Find("Selector").GetComponent<SoloWords>().currentword = wordgo.GetComponent<WordController>().word;
+                GameObject.Find("Selector").GetComponent<SoloWords>().currentword = wordgo.GetComponent<WordController>().word;
+                GameObject.Find("Selector").GetComponent<SoloWords>().validword = wordgo.GetComponent<WordController>().word;
+                GameObject.Find("Selector").GetComponent<SoloWords>().wordcontrol = wordgo.GetComponent<WordController>();
+                GameObject.Find("Selector").GetComponent<SoloWords>().word = "";
+                for (int i = GameObject.Find("Selector").GetComponent<SoloWords>().sprite_word.Count - 1; i >= 0; i--)
+                {
+                    Destroy(GameObject.Find("Selector").GetComponent<SoloWords>().sprite_word[i]);
+                }
+                GameObject.Find("Selector").GetComponent<SoloWords>().sprite_word = new List<GameObject>();
             }
             else if ((main_timer >= wordgo.GetComponent<WordController>().time) && (main_timer - wordgo.GetComponent<WordController>().time > wordgo.GetComponent<WordController>().duration))
             {

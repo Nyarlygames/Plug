@@ -16,14 +16,18 @@ public class SoloWords : MonoBehaviour {
     public List<KeyCode> letterstring = new List<KeyCode>();
     public List<Sprite> letters = new List<Sprite>();
     private List<String> wordstring = new List<String>();
-    private List<GameObject> sprite_word = new List<GameObject>();
+    public List<GameObject> sprite_word = new List<GameObject>();
     public float startposx = 0;
     public string currentword = "";
-    public int letternumb = 0;
+    public string validword = "";
+    public Vector3 letternumb;
+    public WordController wordcontrol;
+    public List<GameObject> wrong_answers = new List<GameObject>();
 
     void Start()
     {
-        startposx = gameObject.GetComponent<Transform>().position.x;
+     letternumb = new Vector3(-7, 4, 1);
+    startposx = gameObject.GetComponent<Transform>().position.x;
         spr = GetComponent<SpriteRenderer>();
         gameObject.GetComponent<Transform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
         sprites = new List<Sprite>(Resources.LoadAll<Sprite>("img/cursor/"));
@@ -123,7 +127,7 @@ public class SoloWords : MonoBehaviour {
             {
                 if (currentword != "")
                 {
-                    if (String.Compare(currentword[letternumb].ToString(),input.ToString()) == 0)
+                    if (String.Compare(currentword[0].ToString(),input.ToString()) == 0)
                     {
                         GameObject letter = new GameObject("");
                         letter.GetComponent<Transform>().position = new Vector3(startposx + sprite_word.Count * 1.0f, GameObject.Find("Ground").GetComponent<Transform>().position.y - 1.0f, GameObject.Find("Ground").GetComponent<Transform>().position.z); // "-1.0f" should be called ground scale, but lazy
@@ -140,7 +144,31 @@ public class SoloWords : MonoBehaviour {
                     }
                     else
                     {
-                        Debug.Log("NOT SAME cur : " + currentword[letternumb].ToString() + " input : " + input.ToString());
+                        GameObject letter = new GameObject("");
+                        letter.GetComponent<Transform>().localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                        letter.AddComponent<SpriteRenderer>();
+                        SpriteRenderer newletter = letter.GetComponent<SpriteRenderer>();
+                        letter.name = input.ToString();
+                        newletter.sprite = letters[Convert.ToInt32((char)input) - 97];
+                        letter.GetComponent<SpriteRenderer>().color = Color.black;
+                        wrong_answers.Add(letter);
+                        Vector3 Letterpos = new Vector3((wrong_answers.IndexOf(letter) % 7), (wrong_answers.IndexOf(letter) / 7), 1);
+                        letter.GetComponent<Transform>().position = letternumb;
+                        if (letternumb.x == 7)
+                        {
+                            letternumb.x = -7;
+                            letternumb.y--;
+                        }
+                        else
+                        {
+                            letternumb.x++;
+                        }
+                        if (letternumb.y < -2)
+                        {
+                            // out of scope => ded
+                        }
+
+
                     }
 
                     
@@ -170,26 +198,23 @@ public class SoloWords : MonoBehaviour {
         {
             if (word.Length > 0)
             {
-                for (int i = sprite_word.Count - 1; i >= 0; i--)
+
+                if (string.Compare(word, validword) == 0)
                 {
-                    Destroy(sprite_word[i]);
+                    for (int i = sprite_word.Count - 1; i >= 0; i--)
+                    {
+                        Destroy(sprite_word[i]);
+                    }
+                    if ((wordcontrol != null) && (wordcontrol.wordsprite.Count > 0))
+                    {
+                        foreach (GameObject letter in wordcontrol.wordsprite)
+                        {
+                            Destroy(letter);
+                        }
+                    }
+                    sprite_word = new List<GameObject>();
+                    word = "";
                 }
-                sprite_word = new List<GameObject>();
-                /*foreach (String action in wordstring)
-                {
-                    if (string.Compare(word, action) == 0)
-                    {
-                        // possible action
-                        DetectedWord(action);
-                    }
-                    else
-                    {
-                        // unrecognized word
-                    }
-                }*/
-                word = "";
-                //currentword = ""; TO KEEP IF/WHEN RETURN VALIDATES THE WORD
-                //gameObject.GetComponent<Transform>().position = new Vector3(startposx, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
             }
         }
     }
