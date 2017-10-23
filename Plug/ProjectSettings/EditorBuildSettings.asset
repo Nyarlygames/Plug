@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/SoloMode/2DPlug.unity
     guid: 2c760ba3e3971064980210f15db08d40
+  - enabled: 1
+    path: Assets/2DRun/2DRun.unity
+    guid: 453dffd0f4e68b94c984af9047e25229

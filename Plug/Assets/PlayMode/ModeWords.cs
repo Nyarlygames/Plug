@@ -193,7 +193,7 @@ public class ModeWords : MonoBehaviour {
                 GameObject.Find("SoloText").GetComponent<Text>().enabled = true;
                 GameObject.Find("MultiText").GetComponent<Text>().enabled = false;
                 GameObject.Find("CoopText").GetComponent<Text>().enabled = false;*/
-                SceneManager.LoadScene("2DPlug", LoadSceneMode.Single);
+                SceneManager.LoadScene("2DRun", LoadSceneMode.Single);
                 break;
             case "MULTI":
                 GameObject.Find("Multi").GetComponent<Image>().enabled = true;

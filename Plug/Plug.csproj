@@ -78,6 +78,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\2DRun\PlayerController.cs" />
+    <Compile Include="Assets\2DRun\RunController.cs" />
     <Compile Include="Assets\LoadScene.cs" />
     <Compile Include="Assets\MainMenu\MenuController.cs" />
     <Compile Include="Assets\MainMenu\MenuWords.cs" />

@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/SoloMode/2DPlug.unity
+- path: Assets/2DRun/2DRun.unity
   isLoaded: 1
   isActive: 1

@@ -141,6 +141,7 @@ MonoBehaviour:
   sprites: []
   word: 
   letterstring: 
+  startposx: 0
 --- !u!4 &92001205
 Transform:
   m_ObjectHideFlags: 0
@@ -970,7 +971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayButton: {fileID: 881643897}
-  SceneToLoad: 2DPlug
+  SceneToLoad: 2DRun
 --- !u!1 &933991881
 GameObject:
   m_ObjectHideFlags: 0
