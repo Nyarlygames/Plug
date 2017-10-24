@@ -1,0 +1,7 @@
+- Player controls
+-- Jump
+-- Run
+-- Drop
+-- Float
+- Map generation
+-- Or map loading
