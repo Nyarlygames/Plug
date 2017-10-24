@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
-
-    private Vector3 campos = new Vector3(0,0,0);
+    
     public float speed = 3.0f;
     public float max_speed = 8.0f;
     public float acceleration_speed = 3.0f;
@@ -16,28 +16,27 @@ public class PlayerController : MonoBehaviour {
     private float init_speed = 3.0f;
     private float init_camspeed = 3.0f;
     public bool floating = false;
+    public bool floatinglock = false;
+
     // Use this for initialization
     void Start()
     {
         init_speed = speed;
         init_camspeed = speed;
+        GameObject.Find("GameOver").GetComponent<Text>().enabled = false;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate ()
+
+    void OnBecameInvisible()
     {
+        GameObject.Find("GameOver").GetComponent<Text>().enabled = true;
+    }
+    void OnBecameVisible()
+    {
+    }
 
-
-        /*
-         * Floating :
-         * - Input pressed : float
-         * - Input released : drop
-         */
-        /*
-         * Ground :
-         * - Input pressed : run
-         * - Input released : jump
-         */
+    // Update is called once per frame
+    void Update ()
+    {
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (floating == true)
@@ -95,28 +94,26 @@ public class PlayerController : MonoBehaviour {
         }
         else if (Input.GetKeyUp(KeyCode.F))
         {
-            if (floating == true)
+            if ((floating == true) && (floatinglock == false))
             {
-                Debug.Log("endfloating");
-                //gameObject.GetComponent<Rigidbody>().AddForce(0, -jumpheight - 50f, 0); // need to add speed factor
-                // gameObject.GetComponent<Rigidbody>().AddForce(0, -jumpheight, 0);
+                Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
+                floatinglock = true;
+                gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0); 
                 // start droping
+            }
+            else if ((floating == true) && (floatinglock == true))
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
             }
             else
             {
                 gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
-                // start jumping
                 speed = init_speed; // remove acceleration ? more like reduce it
                 camspeed = init_camspeed; // remove acceleration ? more like reduce it
                 floating = true;
             }
 
         }
-        
-
-
-
-
         // HERE DO : MoveTO Or AddVelocity
         // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
         gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
@@ -125,9 +122,14 @@ public class PlayerController : MonoBehaviour {
     }
     void OnCollisionEnter(Collision coll)
     {
-        if (coll.gameObject.tag == "Ground")
+        if (coll.contacts.Length > 0)
         {
-            floating = false;
+            ContactPoint contact = coll.contacts[0];
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5)
+            {
+                floating = false;
+                floatinglock = false;
+            }
         }
 
     }
