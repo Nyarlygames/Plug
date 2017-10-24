@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     public float acceleration_speed = 3.0f;
     public float max_speed = 8.0f;
     public int jumpheight = 300;
+    public float floating_force = 2.0f;
     private float init_speed = 3.0f;
     public bool floating = false;
     // Use this for initialization
@@ -36,7 +37,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (floating == true)
             {
-                // start floating
+                gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
             }
             else
             {
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (floating == true)
             {
-                // continue floating
+                gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
             }
             else
             {
@@ -69,25 +70,27 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight, 0);
+                gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
+                floating = true;
                 // start jumping
                 speed = init_speed; // remove acceleration ? more like reduce it
             }
 
         }
+        
 
 
 
 
         // HERE DO : MoveTO Or AddVelocity
         // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
-        Vector3 advance = new Vector3(gameObject.GetComponent<Transform>().position.x + speed, gameObject.GetComponent<Transform>().position.y, gameObject.GetComponent<Transform>().position.z);
         gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
-        Camera.main.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x + 7, 0, -5);
-        
+        Camera.main.GetComponent<Transform>().Translate(transform.right * init_speed * Time.deltaTime);
+
     }
-    void OnCollisionEnter2D(Collision2D coll)
+    void OnCollisionEnter(Collision coll)
     {
+        floating = false;
         Debug.Log(coll.gameObject.tag);
 
     }
