@@ -435,7 +435,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version 0.0.13
+  m_Text: Version 0.0.14
 --- !u!222 &642100718
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -932,6 +932,21 @@ Prefab:
         type: 2}
       propertyPath: floating_force
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: camspeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: max_camspeed
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: acceleration_camspeed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
