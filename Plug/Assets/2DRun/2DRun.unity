@@ -558,7 +558,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version 0.0.17
+  m_Text: Version 0.0.18
 --- !u!222 &642100718
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -578,7 +578,7 @@ GameObject:
   - component: {fileID: 671448452}
   m_Layer: 0
   m_Name: Bloc1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1049,7 +1049,7 @@ GameObject:
   - component: {fileID: 1039066232}
   m_Layer: 0
   m_Name: Bloc1 (1)
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

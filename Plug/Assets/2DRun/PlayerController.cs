@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     private float init_speed = 3.0f;
     private float init_camspeed = 3.0f;
     public bool floating = false;
+    public bool canclimb = false;
     public bool Paused = false;
     private bool floatinglock = false;
     public bool isloaded = false;
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour {
     private float starttime = 0;
     private int reverser = 1;
     private int frame = 0;
+    private string climbcoll = "";
+    private string groundcoll = "";
 
     // Use this for initialization
     void Start()
@@ -65,9 +68,7 @@ public class PlayerController : MonoBehaviour {
             {
                 frame = 1;
                 reverser = 1; // minimum sprite => reverse order (++)
-            }
-
-            Debug.Log("frame : " + frame + " alenght : " + anim.Length);
+            }   
         }
         else
         {
@@ -88,7 +89,7 @@ public class PlayerController : MonoBehaviour {
             {
                 gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
             }
-            else
+            else if (canclimb == false)
             {
                 if (speed < max_speed)
                 {
@@ -135,6 +136,12 @@ public class PlayerController : MonoBehaviour {
                     camspeed = max_camspeed;
                 }
             }
+            if (canclimb == true)
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(0, 200, 0);
+                Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+
+            }
 
         }
         else if (Input.GetKeyUp(KeyCode.F))
@@ -142,14 +149,12 @@ public class PlayerController : MonoBehaviour {
             if ((floating == true) && (floatinglock == false))
             {
                 floatinglock = true;
-                gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
-                Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
+                gameObject.GetComponent<Rigidbody>().AddForce(0, -jumpheight + ((speed - 3) * 50), 0);
                 // start droping
             }
-            /* else if ((floating == true) && (floatinglock == true))
+             else if ((floating == true) && (floatinglock == true))
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
-            }*/
+            }
             else
             {
                 gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
@@ -163,17 +168,49 @@ public class PlayerController : MonoBehaviour {
         // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
         gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
         Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
+
+
     }
     void OnCollisionEnter(Collision coll)
     {
         if (coll.contacts.Length > 0)
         {
+
             ContactPoint contact = coll.contacts[0];
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5)
             {
-                floating = false;
-                floatinglock = false;
+                if (coll.gameObject.tag != "Parallax")
+                {
+                    floating = false;
+                    floatinglock = false;
+                    groundcoll = coll.gameObject.name;
+                }
             }
+            if (Vector3.Dot(contact.normal, Vector3.left) == 1)
+            {
+                if (coll.gameObject.tag != "Parallax")
+                {
+                    canclimb = true;
+                    climbcoll = coll.gameObject.name;
+                }
+            }
+        }
+
+    }
+    void OnCollisionExit(Collision coll)
+    {
+        if (string.Compare(coll.gameObject.name, climbcoll) == 0)
+        {
+            canclimb = false;
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            climbcoll = "";
+        }
+        if (string.Compare(coll.gameObject.name, groundcoll) == 0)
+        {
+            speed = init_speed; // remove acceleration ? more like reduce it
+            camspeed = init_camspeed; // remove acceleration ? more like reduce it
+            floating = true;
+            groundcoll = "";
         }
 
     }
