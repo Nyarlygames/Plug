@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     
@@ -18,116 +18,114 @@ public class PlayerController : MonoBehaviour {
     public bool floating = false;
     public bool Paused = false;
     private bool floatinglock = false;
+    public bool isloaded = false;
 
     // Use this for initialization
     void Start()
     {
         init_speed = speed;
         init_camspeed = speed;
-        GameObject.Find("GameOver").GetComponent<Text>().enabled = false;
+       // GameObject.Find("GameOver").GetComponent<Text>().enabled = false;
     }
 
     void OnBecameInvisible()
     {
-        GameObject.Find("GameOver").GetComponent<Text>().enabled = true;
-        // load scene gameover
+        if (GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded == false)
+        {
+            GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded = true;
+            SceneManager.LoadSceneAsync("GameOver", LoadSceneMode.Additive);
+            Time.timeScale = 0.0f;
+        }
     }
     void OnBecameVisible()
     {
+        // after cam is set, or for later purposes : invisibility?
     }
 
     // Update is called once per frame
     void Update ()
     {
-         if (!Paused) { 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (floating == true)
-                {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
-                }
-                else
-                {
-                    if (speed < max_speed)
-                    {
-                        speed += acceleration_speed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        speed = max_speed;
-                    }
-
-                    if (camspeed < max_camspeed)
-                    {
-                        camspeed += acceleration_camspeed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        camspeed = max_camspeed;
-                    }
-                }
-            }
-            else if (Input.GetKey(KeyCode.F))
-            {
-                if (floating == true)
-                {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
-                }
-                else
-                {
-                    if (speed < max_speed)
-                    {
-                        speed += acceleration_speed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        speed = max_speed;
-                    }
-
-                    if (camspeed < max_camspeed)
-                    {
-                        camspeed += acceleration_camspeed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        camspeed = max_camspeed;
-                    }
-                }
-
-            }
-            else if (Input.GetKeyUp(KeyCode.F))
-            {
-                if ((floating == true) && (floatinglock == false))
-                {
-                    floatinglock = true;
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
-                    Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
-                    // start droping
-                }
-               /* else if ((floating == true) && (floatinglock == true))
-                {
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
-                }*/
-                else
-                {
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
-                    speed = init_speed; // remove acceleration ? more like reduce it
-                    camspeed = init_camspeed; // remove acceleration ? more like reduce it
-                    floating = true;
-                }
-
-            }
-            // HERE DO : MoveTO Or AddVelocity
-            // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
-            gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
-            Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
-        }
-        else // paused game
+        if (Input.GetKeyDown(KeyCode.F))
         {
-            //Debug.Log(Time.timeScale);
-           // Time.timeScale = 0;
-          //  Debug.Log(Time.timeScale);
+            if (floating == true)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
+            }
+            else
+            {
+                if (speed < max_speed)
+                {
+                    speed += acceleration_speed * Time.deltaTime;
+                }
+                else
+                {
+                    speed = max_speed;
+                }
+
+                if (camspeed < max_camspeed)
+                {
+                    camspeed += acceleration_camspeed * Time.deltaTime;
+                }
+                else
+                {
+                    camspeed = max_camspeed;
+                }
+            }
         }
+        else if (Input.GetKey(KeyCode.F))
+        {
+            if (floating == true)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
+            }
+            else
+            {
+                if (speed < max_speed)
+                {
+                    speed += acceleration_speed * Time.deltaTime;
+                }
+                else
+                {
+                    speed = max_speed;
+                }
+
+                if (camspeed < max_camspeed)
+                {
+                    camspeed += acceleration_camspeed * Time.deltaTime;
+                }
+                else
+                {
+                    camspeed = max_camspeed;
+                }
+            }
+
+        }
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
+            if ((floating == true) && (floatinglock == false))
+            {
+                floatinglock = true;
+                gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
+                Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
+                // start droping
+            }
+            /* else if ((floating == true) && (floatinglock == true))
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
+            }*/
+            else
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
+                speed = init_speed; // remove acceleration ? more like reduce it
+                camspeed = init_camspeed; // remove acceleration ? more like reduce it
+                floating = true;
+            }
+
+        }
+        // HERE DO : MoveTO Or AddVelocity
+        // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
+        gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
+        Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
     }
     void OnCollisionEnter(Collision coll)
     {

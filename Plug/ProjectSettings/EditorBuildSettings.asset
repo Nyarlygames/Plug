@@ -20,3 +20,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Pause/Pause.unity
     guid: 5f340523c24ebf84680e29fb0a5119cf
+  - enabled: 1
+    path: Assets/GameOver/GameOver.unity
+    guid: 8ac94e5a9bdb15c4697b3cc6e99e7e32
