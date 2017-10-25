@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Parallax
   - Ground
+  - PauseMenu
   layers:
   - Default
   - TransparentFX

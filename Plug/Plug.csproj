@@ -86,6 +86,7 @@
     <Compile Include="Assets\MainMenu\MenuWords.cs" />
     <Compile Include="Assets\Options\OptionsController.cs" />
     <Compile Include="Assets\Options\OptionsScript.cs" />
+    <Compile Include="Assets\Pause\PauseController.cs" />
     <Compile Include="Assets\PlayMode\ModeController.cs" />
     <Compile Include="Assets\PlayMode\ModeWords.cs" />
     <Compile Include="Assets\Profiles.cs" />
