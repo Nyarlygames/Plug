@@ -19,13 +19,18 @@ public class PlayerController : MonoBehaviour {
     public bool Paused = false;
     private bool floatinglock = false;
     public bool isloaded = false;
+    private Sprite[] anim_walk;
+    private float deltaTime = 0;
+    private float starttime = 0;
+    private int reverser = 1;
+    private int frame = 0;
 
     // Use this for initialization
     void Start()
     {
         init_speed = speed;
         init_camspeed = speed;
-       // GameObject.Find("GameOver").GetComponent<Text>().enabled = false;
+        anim_walk = Resources.LoadAll<Sprite>("img/Players/Player_Run");
     }
 
     void OnBecameInvisible()
@@ -42,9 +47,41 @@ public class PlayerController : MonoBehaviour {
         // after cam is set, or for later purposes : invisibility?
     }
 
+    void run_anim(Sprite[] anim, float slicetime)
+    {
+        //Keep track of the time that has passed
+        deltaTime += Time.deltaTime; // deleta varies between 0 and frameseconds.
+
+        if (deltaTime >= starttime) // hit frameseconds => goto next frame
+        {
+            frame += reverser;
+            starttime += slicetime;
+            if (frame >= anim.Length)
+            {
+                frame = anim.Length - 2; // maximum sprite => reverse order (--)
+                reverser = -1;
+            }
+            if (frame < 0)
+            {
+                frame = 1;
+                reverser = 1; // minimum sprite => reverse order (++)
+            }
+
+            Debug.Log("frame : " + frame + " alenght : " + anim.Length);
+        }
+        else
+        {
+            // keeps building up time
+
+        }
+        gameObject.GetComponent<SpriteRenderer>().sprite = anim_walk[frame];
+    }
+
     // Update is called once per frame
     void Update ()
     {
+       // Debug.Log(anim_walk.Length);
+        run_anim(anim_walk, 0.1f); // handle duration here, not in function?
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (floating == true)

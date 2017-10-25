@@ -19,10 +19,11 @@ public class GameOverController : MonoBehaviour {
 	void Update () {
 
     }
+
     void RetryClick()
     {
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("2DRun"));
-        SceneManager.LoadSceneAsync("2DRun", LoadSceneMode.Single);
+        SceneManager.LoadScene("2DRun", LoadSceneMode.Single);
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2DRun"));
         Time.timeScale = 1.0f;
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("GameOver"));
