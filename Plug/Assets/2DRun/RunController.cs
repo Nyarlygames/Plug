@@ -7,7 +7,7 @@ public class RunController : MonoBehaviour
 {
     GameObject[] PauseScene;
     GameObject[] GameScene;
-    private bool isloaded = false;
+    public bool isloaded = false;
 
     // Use this for initialization
     void Start ()
@@ -20,25 +20,10 @@ public class RunController : MonoBehaviour
         {
             if (isloaded == false)
             {
-                GameScene = GameObject.FindGameObjectsWithTag("Player");
-                foreach (GameObject elem in GameScene)
-                {
-                    elem.GetComponent<PlayerController>().Paused = true;
-                    Debug.Log(elem.name);
-                }
-                SceneManager.LoadScene("Pause", LoadSceneMode.Additive);
-                PauseScene = GameObject.FindGameObjectsWithTag("PauseMenu");
                 isloaded = true;
+                SceneManager.LoadSceneAsync("Pause", LoadSceneMode.Additive);
+                Time.timeScale = 0.0f;
             }
-            else
-            {
-
-            }
-            /* PauseMenu = GameObject.FindGameObjectsWithTag("PauseMenu");//  Find("PauseMenu")
-             foreach (GameObject elem in PauseMenu)
-             {
-                 Debug.Log(elem.name);
-             }*/
         }
     }
 }

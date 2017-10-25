@@ -99,15 +99,15 @@ public class PlayerController : MonoBehaviour {
             {
                 if ((floating == true) && (floatinglock == false))
                 {
-                    Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
                     floatinglock = true;
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0); 
+                    gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
+                    Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
                     // start droping
                 }
-                else if ((floating == true) && (floatinglock == true))
+               /* else if ((floating == true) && (floatinglock == true))
                 {
                     gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
-                }
+                }*/
                 else
                 {
                     gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
@@ -124,9 +124,9 @@ public class PlayerController : MonoBehaviour {
         }
         else // paused game
         {
-            Debug.Log(Time.timeScale);
-            Time.timeScale = 0;
-            Debug.Log(Time.timeScale);
+            //Debug.Log(Time.timeScale);
+           // Time.timeScale = 0;
+          //  Debug.Log(Time.timeScale);
         }
     }
     void OnCollisionEnter(Collision coll)
