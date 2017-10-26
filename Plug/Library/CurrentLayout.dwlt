@@ -20,7 +20,11 @@ MonoBehaviour:
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 6}
+<<<<<<< HEAD
   m_MinSize: {x: 950, y: 371}
+=======
+  m_MinSize: {x: 950, y: 300}
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -48,11 +52,18 @@ MonoBehaviour:
 =======
     width: 2560
     height: 1307
+<<<<<<< HEAD
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
 >>>>>>> parent of f871bb4... Modifs LD
   vertical: 0
   controlID: 10
+=======
+  m_MinSize: {x: 683, y: 492}
+  m_MaxSize: {x: 14004, y: 14042}
+  vertical: 0
+  controlID: 35
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,15 +155,21 @@ MonoBehaviour:
     y: 823
     width: 2006
     height: 484
+<<<<<<< HEAD
   m_MinSize: {x: 102, y: 121}
   m_MaxSize: {x: 4002, y: 4021}
 >>>>>>> parent of f871bb4... Modifs LD
   m_ActualView: {fileID: 21}
+=======
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 16}
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
   m_Panes:
   - {fileID: 16}
   - {fileID: 21}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -249,11 +266,18 @@ MonoBehaviour:
 =======
     width: 2006
     height: 1307
+<<<<<<< HEAD
   m_MinSize: {x: 406, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
 >>>>>>> parent of f871bb4... Modifs LD
   vertical: 1
   controlID: 11
+=======
+  m_MinSize: {x: 406, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
+  vertical: 1
+  controlID: 36
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -284,7 +308,7 @@ MonoBehaviour:
   m_MaxSize: {x: 8006, y: 4021}
 >>>>>>> parent of f871bb4... Modifs LD
   vertical: 0
-  controlID: 12
+  controlID: 37
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -486,6 +510,7 @@ MonoBehaviour:
   m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
+<<<<<<< HEAD
     m_SelectedIDs: 74260000
     m_LastClickedID: 9844
 <<<<<<< HEAD
@@ -493,6 +518,11 @@ MonoBehaviour:
 =======
     m_ExpandedIDs: 000000003626000070260000cc26000000ca9a3bffffff7f
 >>>>>>> parent of f871bb4... Modifs LD
+=======
+    m_SelectedIDs: 50270000
+    m_LastClickedID: 10064
+    m_ExpandedIDs: 000000003826000072260000ce26000000ca9a3bffffff7f
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -521,10 +551,14 @@ MonoBehaviour:
     m_SelectedIDs: 
     m_LastClickedID: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_ExpandedIDs: 000000004227000088270000fc270000
 =======
     m_ExpandedIDs: 000000003626000070260000cc260000
 >>>>>>> parent of f871bb4... Modifs LD
+=======
+    m_ExpandedIDs: 000000003826000072260000ce260000
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -549,9 +583,15 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
+<<<<<<< HEAD
     m_SelectedInstanceIDs: 86290000
     m_LastClickedInstanceID: 10630
     m_HadKeyboardFocusLastEvent: 0
+=======
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
     m_ExpandedInstanceIDs: 88270000782600004c26000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -641,6 +681,7 @@ MonoBehaviour:
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
     m_SelectedIDs: 
     m_LastClickedID: 0
     m_ExpandedIDs: a6fbffff00000000
@@ -649,6 +690,11 @@ MonoBehaviour:
     m_LastClickedID: 10572
     m_ExpandedIDs: f2a3ffffeae2ffff90f0ffff1afcffff000000002e280000e6280000002900004629000098290000
 >>>>>>> parent of f871bb4... Modifs LD
+=======
+    m_SelectedIDs: f0270000
+    m_LastClickedID: 10224
+    m_ExpandedIDs: 18fcffff00000000ea2700003c2800004a280000
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -698,14 +744,24 @@ MonoBehaviour:
     width: 1506
     height: 802
   m_SceneLighting: 1
+<<<<<<< HEAD
   lastFramingTime: 1703.703370999223
+=======
+  lastFramingTime: 2179.8295977255634
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
+<<<<<<< HEAD
     m_Target: {x: 751.23987, y: 392.5, z: -0.2600708}
     speed: 2
     m_Value: {x: 751.23987, y: 392.5, z: -0.2600708}
+=======
+    m_Target: {x: -6.353649, y: -1.5, z: -0.93714535}
+    speed: 2
+    m_Value: {x: -6.353649, y: -1.5, z: -0.93714535}
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -728,6 +784,7 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
+<<<<<<< HEAD
     m_Target: {x: -0.14045519, y: 0.07329143, z: -0.010427007, w: -0.9873155}
     speed: 2
 <<<<<<< HEAD
@@ -739,6 +796,15 @@ MonoBehaviour:
     m_Target: 959.10736
     speed: 2
     m_Value: 959.10736
+=======
+    m_Target: {x: -0.03629098, y: -0.026382303, z: 0.0009578163, w: -0.99899256}
+    speed: 2
+    m_Value: {x: -0.03629098, y: -0.026382303, z: 0.0009578163, w: -0.99899256}
+  m_Size:
+    m_Target: 8.447317
+    speed: 2
+    m_Value: 8.447317
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
   m_Ortho:
     m_Target: 0
     speed: 2

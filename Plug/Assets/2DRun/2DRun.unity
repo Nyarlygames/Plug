@@ -558,7 +558,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
+<<<<<<< HEAD
   m_Text: Version 0.0.16b
+=======
+  m_Text: Version 0.0.17
+>>>>>>> parent of b2a7bce... 0.0.18 climb v01
 --- !u!222 &642100718
 CanvasRenderer:
   m_ObjectHideFlags: 0
