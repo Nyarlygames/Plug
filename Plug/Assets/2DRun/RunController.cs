@@ -24,6 +24,15 @@ public class RunController : MonoBehaviour
                 Time.timeScale = 0.0f;
             }
         }
+        if ((GameObject.Find("Player").GetComponent<SpriteRenderer>().isVisible == false) && (GameObject.Find("Player").GetComponent<PlayerController>().initgo == true)) 
+        {
+            if (isGameOverloaded == false)
+            {
+                isGameOverloaded = true;
+                SceneManager.LoadSceneAsync("GameOver", LoadSceneMode.Additive);
+                Time.timeScale = 0.0f;
+            }
+        }
     }
 }
  

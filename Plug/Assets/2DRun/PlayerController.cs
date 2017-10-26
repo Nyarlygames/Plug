@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     public bool Paused = false;
     private bool floatinglock = false;
     public bool isloaded = false;
+    public bool initgo = false;
     private Sprite[] anim_walk;
     private float deltaTime = 0;
     private float starttime = 0;
@@ -38,16 +39,11 @@ public class PlayerController : MonoBehaviour {
 
     void OnBecameInvisible()
     {
-        if (GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded == false)
-        {
-            GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded = true;
-            SceneManager.LoadSceneAsync("GameOver", LoadSceneMode.Additive);
-            Time.timeScale = 0.0f;
-        }
     }
     void OnBecameVisible()
     {
-        // after cam is set, or for later purposes : invisibility?
+        initgo = true;  // after cam is set
+        //or for later purposes : invisibility?
     }
 
     void run_anim(Sprite[] anim, float slicetime)
