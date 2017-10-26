@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PauseController : MonoBehaviour {
 
+    // NOTE FOR LATER :  I DEACTIVATED AUDIO LISTENER FOR THE RUNCONTROLLER ONE, SWITCH FOR PAUSE AND GAMEOVER MUSICS 
     public Button BackButton;
     // Use this for initialization
     void Start () {
@@ -21,7 +22,7 @@ public class PauseController : MonoBehaviour {
 
     void BackClick()
     {
-        GameObject.Find("RunController").GetComponent<RunController>().isloaded = false;
+        GameObject.Find("RunController").GetComponent<RunController>().isPauseloaded = false;
         SceneManager.SetActiveScene(SceneManager.GetSceneByName("2DRun"));
         Time.timeScale = 1.0f;
         SceneManager.UnloadSceneAsync(SceneManager.GetSceneByName("Pause"));

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour {
     
@@ -16,35 +16,37 @@ public class PlayerController : MonoBehaviour {
     private float init_speed = 3.0f;
     private float init_camspeed = 3.0f;
     public bool floating = false;
+    public bool canclimb = false;
     public bool Paused = false;
     private bool floatinglock = false;
-<<<<<<< HEAD
-=======
     public bool isloaded = false;
     private Sprite[] anim_walk;
     private float deltaTime = 0;
     private float starttime = 0;
     private int reverser = 1;
     private int frame = 0;
->>>>>>> parent of b2a7bce... 0.0.18 climb v01
+    private string climbcoll = "";
+    private string groundcoll = "";
 
     // Use this for initialization
     void Start()
     {
         init_speed = speed;
         init_camspeed = speed;
-        GameObject.Find("GameOver").GetComponent<Text>().enabled = false;
+        anim_walk = Resources.LoadAll<Sprite>("img/Players/Player_Run");
     }
 
     void OnBecameInvisible()
     {
-        GameObject.Find("GameOver").GetComponent<Text>().enabled = true;
-        // load scene gameover
+        if (GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded == false)
+        {
+            GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded = true;
+            SceneManager.LoadSceneAsync("GameOver", LoadSceneMode.Additive);
+            Time.timeScale = 0.0f;
+        }
     }
     void OnBecameVisible()
     {
-<<<<<<< HEAD
-=======
         // after cam is set, or for later purposes : invisibility?
     }
 
@@ -66,9 +68,7 @@ public class PlayerController : MonoBehaviour {
             {
                 frame = 1;
                 reverser = 1; // minimum sprite => reverse order (++)
-            }
-
-            Debug.Log("frame : " + frame + " alenght : " + anim.Length);
+            }   
         }
         else
         {
@@ -76,16 +76,11 @@ public class PlayerController : MonoBehaviour {
 
         }
         gameObject.GetComponent<SpriteRenderer>().sprite = anim_walk[frame];
->>>>>>> parent of b2a7bce... 0.0.18 climb v01
     }
 
     // Update is called once per frame
     void Update ()
     {
-<<<<<<< HEAD
-         if (!Paused) { 
-            if (Input.GetKeyDown(KeyCode.F))
-=======
        // Debug.Log(anim_walk.Length);
         run_anim(anim_walk, 0.1f); // handle duration here, not in function?
         if (Input.GetKeyDown(KeyCode.F))
@@ -94,113 +89,72 @@ public class PlayerController : MonoBehaviour {
             {
                 gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
             }
-            else
->>>>>>> parent of b2a7bce... 0.0.18 climb v01
+            else if (canclimb == false)
             {
-                if (floating == true)
+                if (speed < max_speed)
                 {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
+                    speed += acceleration_speed * Time.deltaTime;
                 }
                 else
                 {
-                    if (speed < max_speed)
-                    {
-                        speed += acceleration_speed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        speed = max_speed;
-                    }
-
-                    if (camspeed < max_camspeed)
-                    {
-                        camspeed += acceleration_camspeed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        camspeed = max_camspeed;
-                    }
+                    speed = max_speed;
                 }
-            }
-            else if (Input.GetKey(KeyCode.F))
-            {
-                if (floating == true)
+
+                if (camspeed < max_camspeed)
                 {
-                    gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
+                    camspeed += acceleration_camspeed * Time.deltaTime;
                 }
                 else
                 {
-                    if (speed < max_speed)
-                    {
-                        speed += acceleration_speed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        speed = max_speed;
-                    }
-
-                    if (camspeed < max_camspeed)
-                    {
-                        camspeed += acceleration_camspeed * Time.deltaTime;
-                    }
-                    else
-                    {
-                        camspeed = max_camspeed;
-                    }
+                    camspeed = max_camspeed;
                 }
-
             }
-            else if (Input.GetKeyUp(KeyCode.F))
-            {
-                if ((floating == true) && (floatinglock == false))
-                {
-                    floatinglock = true;
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
-                    Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
-                    // start droping
-                }
-               /* else if ((floating == true) && (floatinglock == true))
-                {
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
-                }*/
-                else
-                {
-                    gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
-                    speed = init_speed; // remove acceleration ? more like reduce it
-                    camspeed = init_camspeed; // remove acceleration ? more like reduce it
-                    floating = true;
-                }
-<<<<<<< HEAD
-
-            }
-            // HERE DO : MoveTO Or AddVelocity
-            // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
-            gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
-            Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
-=======
-            }
-
->>>>>>> parent of b2a7bce... 0.0.18 climb v01
         }
-        else // paused game
+        else if (Input.GetKey(KeyCode.F))
         {
-<<<<<<< HEAD
-            //Debug.Log(Time.timeScale);
-           // Time.timeScale = 0;
-          //  Debug.Log(Time.timeScale);
+            if (floating == true)
+            {
+                gameObject.GetComponent<Rigidbody>().velocity = gameObject.GetComponent<Rigidbody>().velocity / floating_force;
+            }
+            else
+            {
+                if (speed < max_speed)
+                {
+                    speed += acceleration_speed * Time.deltaTime;
+                }
+                else
+                {
+                    speed = max_speed;
+                }
+
+                if (camspeed < max_camspeed)
+                {
+                    camspeed += acceleration_camspeed * Time.deltaTime;
+                }
+                else
+                {
+                    camspeed = max_camspeed;
+                }
+            }
+            if (canclimb == true)
+            {
+                gameObject.GetComponent<Rigidbody>().AddForce(0, 200, 0);
+                Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
+
+            }
+
         }
-=======
+        else if (Input.GetKeyUp(KeyCode.F))
+        {
             if ((floating == true) && (floatinglock == false))
             {
                 floatinglock = true;
-                gameObject.GetComponent<Rigidbody>().AddForce(0, - (jumpheight + ((speed) * 100)), 0);
-                Debug.Log("velocity start dropping " + gameObject.GetComponent<Rigidbody>().velocity.x + " / " + gameObject.GetComponent<Rigidbody>().velocity.y);
+                gameObject.GetComponent<Rigidbody>().AddForce(0, -jumpheight + ((speed - 3) * 50), 0);
                 // start droping
             }
-            /* else if ((floating == true) && (floatinglock == true))
+             else if ((floating == true) && (floatinglock == true))
             {
-                gameObject.GetComponent<Rigidbody>().AddForce(0, -(jumpheight + ((speed) * 100)), 0); 
-            }*/
+            }
             else
             {
                 gameObject.GetComponent<Rigidbody>().AddForce(0, jumpheight + ((speed - 3) * 50) , 0); // need to add speed factor
@@ -214,18 +168,49 @@ public class PlayerController : MonoBehaviour {
         // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);
         gameObject.GetComponent<Transform>().Translate(transform.right * speed * Time.deltaTime);
         Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
->>>>>>> parent of b2a7bce... 0.0.18 climb v01
+
+
     }
     void OnCollisionEnter(Collision coll)
     {
         if (coll.contacts.Length > 0)
         {
+
             ContactPoint contact = coll.contacts[0];
             if (Vector3.Dot(contact.normal, Vector3.up) > 0.5)
             {
-                floating = false;
-                floatinglock = false;
+                if (coll.gameObject.tag != "Parallax")
+                {
+                    floating = false;
+                    floatinglock = false;
+                    groundcoll = coll.gameObject.name;
+                }
             }
+            if (Vector3.Dot(contact.normal, Vector3.left) == 1)
+            {
+                if (coll.gameObject.tag != "Parallax")
+                {
+                    canclimb = true;
+                    climbcoll = coll.gameObject.name;
+                }
+            }
+        }
+
+    }
+    void OnCollisionExit(Collision coll)
+    {
+        if (string.Compare(coll.gameObject.name, climbcoll) == 0)
+        {
+            canclimb = false;
+            gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            climbcoll = "";
+        }
+        if (string.Compare(coll.gameObject.name, groundcoll) == 0)
+        {
+            speed = init_speed; // remove acceleration ? more like reduce it
+            camspeed = init_camspeed; // remove acceleration ? more like reduce it
+            floating = true;
+            groundcoll = "";
         }
 
     }

@@ -81,6 +81,7 @@
     <Compile Include="Assets\2DRun\ParallaxController.cs" />
     <Compile Include="Assets\2DRun\PlayerController.cs" />
     <Compile Include="Assets\2DRun\RunController.cs" />
+    <Compile Include="Assets\GameOver\GameOverController.cs" />
     <Compile Include="Assets\LoadScene.cs" />
     <Compile Include="Assets\MainMenu\MenuController.cs" />
     <Compile Include="Assets\MainMenu\MenuWords.cs" />

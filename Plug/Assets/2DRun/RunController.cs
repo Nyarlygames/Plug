@@ -5,9 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class RunController : MonoBehaviour
 {
-    GameObject[] PauseScene;
-    GameObject[] GameScene;
-    public bool isloaded = false;
+    public bool isPauseloaded = false;
+    public bool isGameOverloaded = false;
 
     // Use this for initialization
     void Start ()
@@ -18,9 +17,9 @@ public class RunController : MonoBehaviour
 	void FixedUpdate () {
         if (Input.GetKeyDown(KeyCode.P))
         {
-            if (isloaded == false)
+            if (isPauseloaded == false)
             {
-                isloaded = true;
+                isPauseloaded = true;
                 SceneManager.LoadSceneAsync("Pause", LoadSceneMode.Additive);
                 Time.timeScale = 0.0f;
             }
