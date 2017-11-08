@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour {
     public bool isfalling = false;
     public bool isrunning = false;
     public bool isfloating = false;
+    public bool isjumping = false;
     public bool Paused = false;
     public bool isloaded = false;
     public bool initgo = false;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour {
     private float deltaTime = 0;
     private float starttime = 0;
     private int reverser = 1;
+    private float jumpmax = 0.0f;
     private int frame = 0;
     private Rigidbody prb;
     private Transform pt;
@@ -104,10 +106,12 @@ public class PlayerController : MonoBehaviour {
 
             if ((isfalling == false) && (isrunning == true) && (collnum > 0))
             {
-                isfalling = true;
+                isjumping = true;
                 isrunning = false;
+                jumpmax = pt.position.y + 1.0f;
                 // gameObject.GetComponent<Rigidbody>().velocity = new Vector3(speed, 35, 0); // 35 low - 70 max
-                prb.AddForce(new Vector3(0, 3500, 0));                    //gameObject.GetComponent<NavMeshAgent>().enabled = true;
+                //prb.AddForce(new Vector3(0, 3500, 0));                    //gameObject.GetComponent<NavMeshAgent>().enabled = true;
+
                 speed = init_speed;//----------------------------------------------------------------------------------------------------- decelerate and not reset --------------------------------------------------------------- //
                 Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
                 Debug.Log("jump");
@@ -128,12 +132,12 @@ public class PlayerController : MonoBehaviour {
                 if (speed < max_speed)
                 {
                     speed += acceleration_speed * Time.deltaTime;
-                    Debug.Log("run++");
+                 //   Debug.Log("run++");
                 }
                 else
                 {
                     speed = max_speed;
-                    Debug.Log("runmax");
+                //    Debug.Log("runmax");
                 }
             }
         }
@@ -145,20 +149,20 @@ public class PlayerController : MonoBehaviour {
                 prb.AddForce(new Vector3(0, -100, 0));
                 isfalling = true;
                 isrunning = false;
-                Debug.Log("falling");
+             //   Debug.Log("falling");
             }
             else if ((isfalling == true) && (collnum > 0))
             {
                 // fell to ground
                 isfalling = false;
-                Debug.Log("grounded");
+              //  Debug.Log("grounded");
 
             }
             else if ((isfalling == true) && (collnum == 0))
             {
                 // falling normally 
                 prb.AddForce(new Vector3(0, -100, 0));
-                Debug.Log("downing");
+              //  Debug.Log("downing");
             }
             else
             {
@@ -169,10 +173,35 @@ public class PlayerController : MonoBehaviour {
          // HERE DO : MoveTO Or AddVelocity
          // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);*/
         // else
-        float step = speed * Time.deltaTime;
-        Vector3 target = new Vector3(pt.position.x + 0.5f, pt.position.y, pt.position.z);
-        pt.position = Vector3.MoveTowards(pt.position, target, step);
-        prb.velocity = new Vector3(speed, 0, 0);              
+
+        if (isjumping == false)
+        {
+            float step = speed * Time.deltaTime;
+            Vector3 target = new Vector3(pt.position.x + 0.5f, pt.position.y, pt.position.z);
+            pt.position = Vector3.MoveTowards(pt.position, target, step);
+            prb.velocity = new Vector3(speed, 0, 0);
+        }
+        else
+        {
+            if (pt.position.y < jumpmax)
+            {
+                Debug.Log("gaining height : " + pt.position.y + " max : " + jumpmax);
+                float speedjump = 4.0f;
+                float stepjump = speedjump * Time.deltaTime;
+                Vector3 targetjump = new Vector3(pt.position.x + 1.0f, pt.position.y + 0.5f, pt.position.z);
+                pt.position = Vector3.MoveTowards(pt.position, targetjump, stepjump);
+                prb.velocity = new Vector3(0, 2.0f, 0);
+            }
+            else
+            {
+                Debug.Log("falling now");
+                isjumping = false;
+                isfalling = true;
+            }
+
+        }
+
+             
         Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
 
 
