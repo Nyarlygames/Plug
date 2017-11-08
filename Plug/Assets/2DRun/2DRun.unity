@@ -1061,7 +1061,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4561116163147690, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.2
+      value: 2.17
       objectReference: {fileID: 0}
     - target: {fileID: 4561116163147690, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1120,12 +1120,12 @@ Prefab:
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: speed
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: camspeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
@@ -1135,7 +1135,7 @@ Prefab:
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: acceleration_camspeed
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 1510409824947116, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
       propertyPath: m_TagString
@@ -1539,18 +1539,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1510409824947116, guid: f18f315f3a33bdb44b59f401ce624171,
     type: 2}
   m_PrefabInternal: {fileID: 1613942406}
---- !u!65 &1916668571
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1916668570}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 0.2}
-  m_Center: {x: 0.5, y: 1, z: 0}
 --- !u!135 &1916668575
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1569,7 +1557,7 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1916668570}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 1.0000019
   m_Speed: 3.5
