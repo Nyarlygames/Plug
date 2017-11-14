@@ -7,29 +7,28 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
     
     public float speed = 3.0f;
+    private float init_speed = 3.0f;
     public float max_speed = 8.0f;
     public float acceleration_speed = 3.0f;
     public float camspeed = 3.0f;
+    private float init_camspeed = 3.0f;
     public float max_camspeed = 8.0f;
     public float acceleration_camspeed = 3.0f;
-    private float init_speed = 3.0f;
-    private float init_camspeed = 3.0f;
-    public bool isfalling = false;
-    public bool isrunning = false;
-    public bool isfloating = false;
-    public bool isjumping = false;
     public bool Paused = false;
-    public bool isloaded = false;
     public bool initgo = false;
     private Sprite[] anim_walk;
     private float deltaTime = 0;
     private float starttime = 0;
     private int reverser = 1;
-    private float jumpmax = 0.0f;
     private int frame = 0;
     private Rigidbody prb;
     private Transform pt;
     private int collnum = 0;
+
+
+    public bool jump = false;
+    public float jumpForce = 2800.0f;
+    
 
     // Use this for initialization
     void Start()
@@ -52,160 +51,51 @@ public class PlayerController : MonoBehaviour {
 
     void run_anim(Sprite[] anim, float slicetime)
     {
-        //Keep track of the time that has passed
-        deltaTime += Time.deltaTime; // deleta varies between 0 and frameseconds.
+        deltaTime += Time.deltaTime; 
 
-        if (deltaTime >= starttime) // hit frameseconds => goto next frame
+        if (deltaTime >= starttime) 
         {
             frame += reverser;
             starttime += slicetime;
             if (frame >= anim.Length)
             {
-                frame = anim.Length - 2; // maximum sprite => reverse order (--)
+                frame = anim.Length - 2;
                 reverser = -1;
             }
             if (frame < 0)
             {
                 frame = 1;
-                reverser = 1; // minimum sprite => reverse order (++)
+                reverser = 1;
             }   
         }
         else
         {
-            // keeps building up time
 
         }
         gameObject.GetComponent<SpriteRenderer>().sprite = anim_walk[frame];
     }
 
-    // Update is called once per frame
+    void Update()
+    {
+        // grounded = Physics2D.Linecast(transform.position, Vector3.down, LayerMask.NameToLayer("ground"));
+        if (Input.GetKeyDown(KeyCode.F) && (collnum > 0))
+        {
+            jump = true;
+        }
+        prb.MovePosition(new Vector3(pt.position.x + speed*Time.deltaTime, pt.position.y, pt.position.z));
+        Camera.main.transform.Translate(Vector3.right * speed * Time.deltaTime);
+    }
+    
     void FixedUpdate ()
     {
-       // Debug.Log(anim_walk.Length);
-        run_anim(anim_walk, 0.1f); // handle duration here, not in function?
-
-        if (Input.GetKeyDown(KeyCode.F))
+        if (jump)
         {
-            if ((isfalling == false) && (isrunning == false) && (collnum > 0))
-            {
-                isrunning = true;
-                if (speed < max_speed)
-                {
-                    speed += acceleration_speed * Time.deltaTime;
-                    Debug.Log("run++");
-                }
-                else
-                {
-                    speed = max_speed;
-                    Debug.Log("runmax");
-                }
-            }
+            prb.AddForce(new Vector2(0f, jumpForce));
+            jump = false;
+           // grounded = false;
         }
-        else if (Input.GetKeyUp(KeyCode.F))
-        {
-
-            if ((isfalling == false) && (isrunning == true) && (collnum > 0))
-            {
-                isjumping = true;
-                isrunning = false;
-                jumpmax = pt.position.y + 1.0f;
-                // gameObject.GetComponent<Rigidbody>().velocity = new Vector3(speed, 35, 0); // 35 low - 70 max
-                //prb.AddForce(new Vector3(0, 3500, 0));                    //gameObject.GetComponent<NavMeshAgent>().enabled = true;
-
-                speed = init_speed;//----------------------------------------------------------------------------------------------------- decelerate and not reset --------------------------------------------------------------- //
-                Debug.Log(gameObject.GetComponent<Rigidbody>().velocity);
-                Debug.Log("jump");
-            }
-
-            /*  if (camspeed < max_camspeed)
-              {
-                  camspeed += acceleration_camspeed * Time.deltaTime;
-              }
-              else
-              {
-                  camspeed = max_camspeed;
-              }*/
-        }
-        else if (Input.GetKey(KeyCode.F)) {
-            if ((isrunning == true) && (collnum > 0))
-            {
-                if (speed < max_speed)
-                {
-                    speed += acceleration_speed * Time.deltaTime;
-                 //   Debug.Log("run++");
-                }
-                else
-                {
-                    speed = max_speed;
-                //    Debug.Log("runmax");
-                }
-            }
-        }
-        else
-        {
-            if ((isfalling == false) && (collnum == 0))
-            {
-                // no ground, fall.
-                prb.AddForce(new Vector3(0, -100, 0));
-                isfalling = true;
-                isrunning = false;
-             //   Debug.Log("falling");
-            }
-            else if ((isfalling == true) && (collnum > 0))
-            {
-                // fell to ground
-                isfalling = false;
-              //  Debug.Log("grounded");
-
-            }
-            else if ((isfalling == true) && (collnum == 0))
-            {
-                // falling normally 
-                prb.AddForce(new Vector3(0, -100, 0));
-              //  Debug.Log("downing");
-            }
-            else
-            {
-
-            }
-        }
-        /*
-         // HERE DO : MoveTO Or AddVelocity
-         // gameObject.GetComponent<Transform>().Translate(speed * Time.deltaTime, 0f, 0f);*/
-        // else
-
-        if (isjumping == false)
-        {
-            float step = speed * Time.deltaTime;
-            Vector3 target = new Vector3(pt.position.x + 0.5f, pt.position.y, pt.position.z);
-            pt.position = Vector3.MoveTowards(pt.position, target, step);
-            prb.velocity = new Vector3(speed, 0, 0);
-        }
-        else
-        {
-            if (pt.position.y < jumpmax)
-            {
-                Debug.Log("gaining height : " + pt.position.y + " max : " + jumpmax);
-                float speedjump = 4.0f;
-                float stepjump = speedjump * Time.deltaTime;
-                Vector3 targetjump = new Vector3(pt.position.x + 1.0f, pt.position.y + 0.5f, pt.position.z);
-                pt.position = Vector3.MoveTowards(pt.position, targetjump, stepjump);
-                prb.velocity = new Vector3(0, 2.0f, 0);
-            }
-            else
-            {
-                Debug.Log("falling now");
-                isjumping = false;
-                isfalling = true;
-            }
-
-        }
-
-             
-        Camera.main.GetComponent<Transform>().Translate(transform.right * camspeed * Time.deltaTime);
-
-
     }
+    
     void OnCollisionEnter(Collision coll)
     {
         collnum++;
