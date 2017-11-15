@@ -27,8 +27,14 @@ public class PlayerController : MonoBehaviour {
 
 
     public bool jump = false;
+    public bool run = false;
+    public bool slowfall = false;
+    public bool drop = false;
+    public bool climb = false;
+    public bool grounded = false;
     public float jumpForce = 2800.0f;
-    
+    public float bigjumpForce = 1100.0f;
+
 
     // Use this for initialization
     void Start()
@@ -77,68 +83,75 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        // grounded = Physics2D.Linecast(transform.position, Vector3.down, LayerMask.NameToLayer("ground"));
-        if (Input.GetKeyDown(KeyCode.F) && (collnum > 0))
+        RaycastHit hit;
+        if (Physics.Raycast(pt.position, Vector3.down, out hit, 0.5f, 1 << LayerMask.NameToLayer("ground")) || (collnum > 0))
         {
-            jump = true;
+            grounded = true;
         }
-        prb.MovePosition(new Vector3(pt.position.x + speed*Time.deltaTime, pt.position.y, pt.position.z));
-        Camera.main.transform.Translate(Vector3.right * speed * Time.deltaTime);
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            if (grounded == true)
+            {
+                run = true;
+                jump = false;
+            }
+            else
+            {
+                slowfall = true;
+            }
+        }
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            if ((run == true) && (grounded == true))
+            {
+                run = false;
+                jump = true;
+                grounded = false;
+            }
+            else if ((slowfall == true) && (grounded == false))
+            {
+                slowfall = false;
+                drop = true;
+
+            }
+        }
+
     }
     
     void FixedUpdate ()
     {
         if (jump)
         {
-            prb.AddForce(new Vector2(0f, jumpForce));
+            prb.AddForce(new Vector2(0f, jumpForce + (((speed - init_speed) / (max_speed - init_speed)) * 1100)));
             jump = false;
-           // grounded = false;
         }
+        if (run)
+        {
+            if (speed < max_speed)
+            {
+                speed += acceleration_speed * Time.deltaTime;
+            }
+            else
+                speed = max_speed;
+
+            if (camspeed < max_camspeed)
+            {
+                camspeed += acceleration_camspeed * Time.deltaTime;
+            }
+            else
+                camspeed = max_camspeed;
+        }
+        prb.MovePosition(new Vector3(pt.position.x + speed * Time.deltaTime, pt.position.y, pt.position.z));
+        Camera.main.transform.Translate(Vector3.right * speed * Time.deltaTime);
     }
     
     void OnCollisionEnter(Collision coll)
     {
         collnum++;
-     /*   if (coll.contacts.Length > 0)
-        {
-
-            ContactPoint contact = coll.contacts[0];
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5)
-            {
-                if (coll.gameObject.tag != "Parallax")
-                {
-                    floating = false;
-                    floatinglock = false;
-                    groundcoll = coll.gameObject.name;
-                }
-            }
-            if (Vector3.Dot(contact.normal, Vector3.left) == 1)
-            {
-                if (coll.gameObject.tag != "Parallax")
-                {
-                    canclimb = true;
-                    climbcoll = coll.gameObject.name;
-                }
-            }
-        }*/
-
     }
     void OnCollisionExit(Collision coll)
     {
         collnum--;
-        /* if (string.Compare(coll.gameObject.name, climbcoll) == 0)
-         {
-             canclimb = false;
-             gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
-             climbcoll = "";
-         }
-         if (string.Compare(coll.gameObject.name, groundcoll) == 0)
-         {
-             speed = init_speed; // remove acceleration ? more like reduce it
-             camspeed = init_camspeed; // remove acceleration ? more like reduce it
-             floating = true;
-             groundcoll = "";
-         }*/
-
     }
 }
