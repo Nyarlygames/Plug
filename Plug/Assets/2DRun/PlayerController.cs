@@ -34,13 +34,16 @@ public class PlayerController : MonoBehaviour {
     public bool grounded = false;
     public float jumpForce = 2800.0f;
     public float bigjumpForce = 1100.0f;
-
+    public float floatFactor = 0.5f; // scale of 0 to 1, 1 being normal gravity
+    public float floatMass = 0.5f; // scale of 0 to 1, 1 being normal gravity
+    public float dropFactor = 1.5f;
+    private float init_mass = 10.0f;
 
     // Use this for initialization
     void Start()
     {
-        init_speed = speed;
-        init_camspeed = speed;
+        init_speed = speed;;
+        init_camspeed = camspeed;
         anim_walk = Resources.LoadAll<Sprite>("img/Players/Player_Run");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
@@ -87,6 +90,27 @@ public class PlayerController : MonoBehaviour {
         if (Physics.Raycast(pt.position, Vector3.down, out hit, 0.5f, 1 << LayerMask.NameToLayer("ground")) || (collnum > 0))
         {
             grounded = true;
+            slowfall = false;
+            prb.mass = init_mass;
+        }
+        else
+        {
+            grounded = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.F))
+        {
+            if ((run == true) && (grounded == true))
+            {
+                run = false;
+                jump = true;
+            }
+            else if ((slowfall == true) && (grounded == false))
+            {
+                slowfall = false;
+                drop = true;
+
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F))
@@ -98,22 +122,9 @@ public class PlayerController : MonoBehaviour {
             }
             else
             {
-                slowfall = true;
-            }
-        }
-        if (Input.GetKeyUp(KeyCode.F))
-        {
-            if ((run == true) && (grounded == true))
-            {
                 run = false;
-                jump = true;
-                grounded = false;
-            }
-            else if ((slowfall == true) && (grounded == false))
-            {
-                slowfall = false;
-                drop = true;
-
+                Debug.Log("no grounded & down");
+                slowfall = true;
             }
         }
 
@@ -123,8 +134,18 @@ public class PlayerController : MonoBehaviour {
     {
         if (jump)
         {
+            run = false;
             prb.AddForce(new Vector2(0f, jumpForce + (((speed - init_speed) / (max_speed - init_speed)) * 1100)));
             jump = false;
+        }
+        if (slowfall)
+        {
+            prb.velocity = new Vector3(prb.velocity.x, prb.velocity.y * floatFactor, prb.velocity.z);
+        }
+        if (drop)
+        {
+       //     prb.velocity = new Vector3(prb.velocity.x, prb.velocity.y * dropFactor, prb.velocity.z);
+       // see mass instead ?
         }
         if (run)
         {
@@ -143,7 +164,7 @@ public class PlayerController : MonoBehaviour {
                 camspeed = max_camspeed;
         }
         prb.MovePosition(new Vector3(pt.position.x + speed * Time.deltaTime, pt.position.y, pt.position.z));
-        Camera.main.transform.Translate(Vector3.right * speed * Time.deltaTime);
+        Camera.main.transform.Translate(Vector3.right * camspeed * Time.deltaTime);
     }
     
     void OnCollisionEnter(Collision coll)

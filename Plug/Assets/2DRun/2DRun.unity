@@ -1071,7 +1071,7 @@ Prefab:
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: max_speed
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
@@ -1111,7 +1111,7 @@ Prefab:
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: max_camspeed
-      value: 4
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
@@ -1165,6 +1165,16 @@ Prefab:
         type: 2}
       propertyPath: run
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: floatingFactor
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: dropFactor
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 65855636215693326, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
