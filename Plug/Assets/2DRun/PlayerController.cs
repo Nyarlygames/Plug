@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour {
     private float deltaTime = 0;
     private float starttime = 0;
     private int reverser = 1;
+    public int cam_reverser = 1;
     private int frame = 0;
     private Rigidbody prb;
     private Transform pt;
@@ -123,7 +124,6 @@ public class PlayerController : MonoBehaviour {
             else
             {
                 run = false;
-                Debug.Log("no grounded & down");
                 slowfall = true;
             }
         }
@@ -144,8 +144,9 @@ public class PlayerController : MonoBehaviour {
         }
         if (drop)
         {
-       //     prb.velocity = new Vector3(prb.velocity.x, prb.velocity.y * dropFactor, prb.velocity.z);
-       // see mass instead ?
+            //     prb.velocity = new Vector3(prb.velocity.x, prb.velocity.y * dropFactor, prb.velocity.z);
+            // see mass instead ?
+            prb.AddForce(Vector3.down * dropFactor);
         }
         if (run)
         {
@@ -164,7 +165,7 @@ public class PlayerController : MonoBehaviour {
                 camspeed = max_camspeed;
         }
         prb.MovePosition(new Vector3(pt.position.x + speed * Time.deltaTime, pt.position.y, pt.position.z));
-        Camera.main.transform.Translate(Vector3.right * camspeed * Time.deltaTime);
+        Camera.main.transform.Translate(Vector3.right * camspeed * cam_reverser * Time.deltaTime);
     }
     
     void OnCollisionEnter(Collision coll)

@@ -1,10 +1,4 @@
 sceneSetups:
-- path: Assets/GameOver/GameOver.unity
-  isLoaded: 0
-  isActive: 0
-- path: Assets/GameOver/GameOver.unity
-  isLoaded: 0
-  isActive: 0
 - path: Assets/2DRun/2DRun.unity
   isLoaded: 1
   isActive: 1
