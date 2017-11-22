@@ -120,6 +120,7 @@ public class PlayerController : MonoBehaviour {
             {
                 run = true;
                 jump = false;
+                drop = false;
             }
             else
             {

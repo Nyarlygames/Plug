@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour {
                 psettings.cam_reverser = -1;
             else
                 psettings.cam_reverser = 1;
-
+                                   
             if (gameovertrigger)
             {
                 GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded = true;
