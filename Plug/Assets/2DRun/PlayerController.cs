@@ -7,11 +7,11 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour {
     
     public float speed = 3.0f;
-    private float init_speed = 3.0f;
+    [HideInInspector] public float init_speed = 3.0f;
     public float max_speed = 8.0f;
     public float acceleration_speed = 3.0f;
     public float camspeed = 3.0f;
-    private float init_camspeed = 3.0f;
+    [HideInInspector] public float init_camspeed = 3.0f;
     public float max_camspeed = 8.0f;
     public float acceleration_camspeed = 3.0f;
     public bool Paused = false;
@@ -20,12 +20,13 @@ public class PlayerController : MonoBehaviour {
     private float deltaTime = 0;
     private float starttime = 0;
     private int reverser = 1;
-    public int cam_reverser = 1;
+    public int inverted = 1;
+    public int speed_reverser = 1;
     private int frame = 0;
     private Rigidbody prb;
     private Transform pt;
     private int collnum = 0;
-
+    public Vector3 cam_direction = Vector3.right;
 
     public bool jump = false;
     public bool run = false;
@@ -90,9 +91,15 @@ public class PlayerController : MonoBehaviour {
         RaycastHit hit;
         if (Physics.Raycast(pt.position, Vector3.down, out hit, 0.5f, 1 << LayerMask.NameToLayer("ground")) || (collnum > 0))
         {
+            if (grounded == false)
+            {
+                slowfall = false;
+                drop = false;
+                prb.mass = init_mass;
+                speed = init_speed;
+                camspeed = init_camspeed;
+            }
             grounded = true;
-            slowfall = false;
-            prb.mass = init_mass;
         }
         else
         {
@@ -120,7 +127,6 @@ public class PlayerController : MonoBehaviour {
             {
                 run = true;
                 jump = false;
-                drop = false;
             }
             else
             {
@@ -151,22 +157,41 @@ public class PlayerController : MonoBehaviour {
         }
         if (run)
         {
-            if (speed < max_speed)
+            if (inverted == 1)
             {
-                speed += acceleration_speed * Time.deltaTime;
-            }
-            else
-                speed = max_speed;
+                if (speed < max_speed)
+                {
+                    speed += acceleration_speed * Time.deltaTime;
+                }
+                else
+                    speed = max_speed;
 
-            if (camspeed < max_camspeed)
-            {
-                camspeed += acceleration_camspeed * Time.deltaTime;
+                if (camspeed < max_camspeed)
+                {
+                    camspeed += acceleration_camspeed * Time.deltaTime;
+                }
+                else
+                    camspeed = max_camspeed;
             }
             else
-                camspeed = max_camspeed;
+            {
+                if (speed > max_speed)
+                {
+                    speed += acceleration_speed * Time.deltaTime;
+                }
+                else
+                    speed = max_speed;
+
+                if (camspeed > max_camspeed)
+                {
+                    camspeed += acceleration_camspeed * Time.deltaTime;
+                }
+                else
+                    camspeed = max_camspeed;
+            }
         }
         prb.MovePosition(new Vector3(pt.position.x + speed * Time.deltaTime, pt.position.y, pt.position.z));
-        Camera.main.transform.Translate(Vector3.right * camspeed * cam_reverser * Time.deltaTime);
+        Camera.main.transform.Translate(cam_direction * camspeed * Time.deltaTime);
     }
     
     void OnCollisionEnter(Collision coll)

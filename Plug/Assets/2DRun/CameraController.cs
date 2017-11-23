@@ -33,7 +33,6 @@ public class CameraController : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
-            Debug.Log("hit");
             PlayerController psettings = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             if (ChangeSize)
                 Camera.main.orthographicSize = sizecam;
@@ -44,11 +43,29 @@ public class CameraController : MonoBehaviour {
                 psettings.acceleration_camspeed = change_cam_acceleration;
             }
 
+            if (ChangeDir)
+            {
+                psettings.cam_direction = direction;
+            }
+
             if (reverser)
-                psettings.cam_reverser = -1;
-            else
-                psettings.cam_reverser = 1;
-                                   
+            {
+                if (psettings.inverted == 1)
+                    psettings.GetComponent<Transform>().rotation = new Quaternion(psettings.GetComponent<Transform>().rotation.x, 180.0f, psettings.GetComponent<Transform>().rotation.z, psettings.GetComponent<Transform>().rotation.w);
+                else
+                    psettings.GetComponent<Transform>().rotation = new Quaternion(psettings.GetComponent<Transform>().rotation.x, 0.0f, psettings.GetComponent<Transform>().rotation.z, psettings.GetComponent<Transform>().rotation.w);
+                psettings.inverted *= -1;
+                psettings.speed *= -1;
+                psettings.acceleration_speed *= -1;
+                psettings.max_speed *= -1;
+                psettings.init_speed *= -1;
+
+                psettings.camspeed *= -1;
+                psettings.acceleration_camspeed *= -1;
+                psettings.max_camspeed *= -1;
+                psettings.init_camspeed *= -1;
+            }
+
             if (gameovertrigger)
             {
                 GameObject.Find("RunController").GetComponent<RunController>().isGameOverloaded = true;
