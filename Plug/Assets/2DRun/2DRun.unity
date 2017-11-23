@@ -556,7 +556,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version 0.0.21
+  m_Text: Version 0.0.22
 --- !u!222 &642100718
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1199,7 +1199,7 @@ Prefab:
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
       propertyPath: max_speed
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 114074466006516012, guid: f18f315f3a33bdb44b59f401ce624171,
         type: 2}
