@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.448052, g: 0.49805957, b: 0.57551986, a: 1}
+  m_IndirectSpecularColor: {r: 0.44805247, g: 0.49806035, b: 0.5755213, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -208,6 +208,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: -1, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &138980576
 BoxCollider:
@@ -620,7 +623,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Version 0.0.23
+  m_Text: Version 0.0.24
 --- !u!222 &642100718
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -885,6 +888,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 0, y: 1, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1044034562
 BoxCollider:
@@ -1096,6 +1102,9 @@ MonoBehaviour:
   reverser: 1
   ChangeDir: 1
   direction: {x: 1, y: -1, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1361245618
 BoxCollider:
@@ -1159,6 +1168,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: 0, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1383558888
 BoxCollider:
@@ -1303,7 +1315,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1487093793}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 386.5, y: 217.5, z: 0}
+  m_LocalPosition: {x: 632.5, y: 356, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 642100716}
@@ -1370,6 +1382,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: 0, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1547829804
 BoxCollider:
@@ -1455,7 +1470,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4561116163147690, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 3.8399992
+      value: 0.77
       objectReference: {fileID: 0}
     - target: {fileID: 4561116163147690, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
       propertyPath: m_LocalPosition.y
@@ -1740,6 +1755,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: 1, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1710475289
 BoxCollider:
@@ -1790,6 +1808,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: 1, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1712393061
 BoxCollider:
@@ -1870,6 +1891,9 @@ MonoBehaviour:
   reverser: 0
   ChangeDir: 1
   direction: {x: 1, y: 0, z: 0}
+  activated: 0
+  IsSleeping: 0
+  activator: {fileID: 0}
   gameovertrigger: 0
 --- !u!65 &1786661254
 BoxCollider:
