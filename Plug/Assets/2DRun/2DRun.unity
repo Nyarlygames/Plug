@@ -1618,6 +1618,11 @@ Prefab:
       propertyPath: grounded
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 212835544913867120, guid: f18f315f3a33bdb44b59f401ce624171,
+        type: 2}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 65855636215693326, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: f18f315f3a33bdb44b59f401ce624171, type: 2}
@@ -1977,7 +1982,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.6
-  m_Center: {x: 0.4, y: 0.83, z: 0}
+  m_Center: {x: 0.5, y: 1, z: 0}
 --- !u!1001 &1950739199
 Prefab:
   m_ObjectHideFlags: 0

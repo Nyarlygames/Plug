@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour {
     private Sprite[] anim_walk;
     private float deltaTime = 0;
     private float starttime = 0;
+    public float slicetime = 0.2f;
     private int reverser = 1;
     public int inverted = 1;
     public int speed_reverser = 1;
@@ -70,14 +71,14 @@ public class PlayerController : MonoBehaviour {
             starttime += slicetime;
             if (frame >= anim.Length)
             {
-                frame = anim.Length - 2;
-                reverser = -1;
+                frame = 0;
+               // reverser = ;
             }
-            if (frame < 0)
+           /* if (frame < 0)
             {
                 frame = 1;
                 reverser = 1;
-            }   
+            }  */ 
         }
         else
         {
@@ -139,7 +140,6 @@ public class PlayerController : MonoBehaviour {
     
     void FixedUpdate ()
     {
-        run_anim(anim_walk, 0.1f);
         if (jump)
         {
             run = false;
@@ -158,6 +158,7 @@ public class PlayerController : MonoBehaviour {
         }
         if (run)
         {
+            slicetime = 0.1f;
             if (inverted == 1)
             {
                 if (speed < max_speed)
@@ -191,8 +192,13 @@ public class PlayerController : MonoBehaviour {
                     camspeed = max_camspeed;
             }
         }
+        else
+        {
+            slicetime = 0.2f;
+        }
         prb.MovePosition(new Vector3(pt.position.x + speed * Time.deltaTime, pt.position.y, pt.position.z));
         Camera.main.transform.Translate(cam_direction * camspeed * Time.deltaTime);
+        run_anim(anim_walk, slicetime);
     }
     
     void OnCollisionEnter(Collision coll)
