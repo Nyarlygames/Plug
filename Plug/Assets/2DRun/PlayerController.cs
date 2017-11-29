@@ -139,6 +139,7 @@ public class PlayerController : MonoBehaviour {
     
     void FixedUpdate ()
     {
+        run_anim(anim_walk, 0.1f);
         if (jump)
         {
             run = false;
