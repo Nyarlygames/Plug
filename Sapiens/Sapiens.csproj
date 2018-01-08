@@ -283,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\MainMenuController.cs" />
+    <Compile Include="Assets\NewGameController.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
   </ItemGroup>
