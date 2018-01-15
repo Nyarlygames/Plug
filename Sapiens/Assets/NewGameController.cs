@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 
 public class NewGameController : MonoBehaviour {
 
@@ -36,8 +37,7 @@ public class NewGameController : MonoBehaviour {
     Text Charisme_Text;
     Text Social_Text;
     Text Langage_Text;
-
-    // Use this for initialization
+    
     void Start () {
 
         Button temp = GameObject.Find("+Force").GetComponent<Button>();
@@ -96,8 +96,10 @@ public class NewGameController : MonoBehaviour {
         temp.onClick.AddListener(LangageUpButton_Click);
         temp = GameObject.Find("-Langage").GetComponent<Button>();
         temp.onClick.AddListener(LangageDownButton_Click);
-        // Points = Convert.ToInt32(GameObject.Find("Total").GetComponent<Text>().text);
-        // Force = Convert.ToInt32(GameObject.Find("Force_Int").GetComponent<Text>().text);
+        temp = GameObject.Find("Launch").GetComponent<Button>();
+        temp.onClick.AddListener(LaunchButton_Click);
+
+
         Total_Text = GameObject.Find("Total").GetComponent<Text>();
         Total_Text.text = Points.ToString();
         Force_Text = GameObject.Find("Force_Int").GetComponent<Text>();
@@ -131,9 +133,13 @@ public class NewGameController : MonoBehaviour {
 
     }
 	
-	// Update is called once per frame
 	void Update () {
 
+    }
+
+    void LaunchButton_Click()
+    {
+        SceneManager.LoadScene("Sapiens", LoadSceneMode.Additive);
     }
 
     void ForceUpButton_Click()
