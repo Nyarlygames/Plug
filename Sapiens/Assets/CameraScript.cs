@@ -6,10 +6,12 @@ public class CameraScript : MonoBehaviour {
 
     Transform Ppos;
     Transform Cpos;
+    float init_zoom = 0;
 
     void Start () {
         Ppos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         Cpos = gameObject.GetComponent<Transform>();
+        init_zoom = Cpos.position.y;
 
     }
 	
@@ -19,6 +21,6 @@ public class CameraScript : MonoBehaviour {
 
     public void MoveToPlayer()
     {
-        Cpos.position = new Vector3(Ppos.position.x, 20, Ppos.position.z);
+        Cpos.position = new Vector3(Ppos.position.x, init_zoom, Ppos.position.z);
     }
 }

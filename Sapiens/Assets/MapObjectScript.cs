@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MapObjectScript : MonoBehaviour {
 
-    public float height = 0;
+    public int height = 0;
     public string Archetype = "";
     public string RegionName = "";
 

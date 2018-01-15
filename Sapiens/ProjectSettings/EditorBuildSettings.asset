@@ -17,3 +17,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewGame.unity
     guid: f7d21e8b705fea045b34b4681fd62605
+  - enabled: 1
+    path: Assets/Scenes/Sapiens.unity
+    guid: 70070146f49957b46bb07128df072f7b
