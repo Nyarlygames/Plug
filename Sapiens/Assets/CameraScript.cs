@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    Transform Ppos;
+    Transform Cpos;
+
+    void Start () {
+        Ppos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        Cpos = gameObject.GetComponent<Transform>();
+
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
+	void Update ()
+    {
 	}
+
+    public void MoveToPlayer()
+    {
+        Cpos.position = new Vector3(Ppos.position.x, 20, Ppos.position.z);
+    }
 }
