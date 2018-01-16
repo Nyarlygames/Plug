@@ -77,13 +77,12 @@ public class PlayerScript : MonoBehaviour
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            Logger.Add_To_Log(ms.RegionName);
+            Logger.Add_To_Log("Entered: " + ms.RegionName);
             speed = ms.speed;
         }
     }
     void OnTriggerStay(Collider coll)
     {
-        Debug.Log("stay " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
@@ -92,26 +91,24 @@ public class PlayerScript : MonoBehaviour
     }
     void OnTriggerExit(Collider coll)
     {
-        Debug.Log("exited " + coll.gameObject.name);
         speed = 0;
     }
 
     // collision = non walkable, stops movement
     void OnCollisionEnter(Collision coll)
     {
-        Debug.Log("entered " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
             if (ms.speed < 0)
             {
+                Logger.Add_To_Log("Blocked by: " + ms.RegionName);
                 targetHit = Vector3.zero;
             }
         }
     }
     void OnCollisionStay(Collision coll)
     {
-        Debug.Log("exited " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {

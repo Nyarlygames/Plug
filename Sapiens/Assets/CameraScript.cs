@@ -5,22 +5,48 @@ using UnityEngine;
 public class CameraScript : MonoBehaviour {
 
     Transform Ppos;
-    Transform Cpos;
-    float init_zoom = 0;
+    public Transform Cpos;
+    public float init_zoom = 0;
+    public float max_zoom = 0;
+    public float current_zoom = 0;
+    public float speeddezoom = 0;
+    public float speedzoom = 0;
+    Transform Cursor_Pos;
 
     void Start () {
         Ppos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         Cpos = gameObject.GetComponent<Transform>();
-        init_zoom = Cpos.position.y;
-
+        Cpos.position = new Vector3(Cpos.position.x, init_zoom, Cpos.position.z);
+        current_zoom = init_zoom;
+        Cursor_Pos = GameObject.Find("Cursor").GetComponent<Transform>();
     }
 	
 	void Update ()
     {
-	}
+        if (Input.GetKey(KeyCode.Space))
+        {
+            Dezoom();
+        }
+        else
+        {
+            Zoom();
+        }
+        Debug.Log(" cur : " + Cursor_Pos.position + " mous : " + Input.mousePosition + " generated : " + new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 3, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
+        Cursor_Pos.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 3, Camera.main.ScreenToWorldPoint(Input.mousePosition).z);
+    }
+
+    public void Zoom()
+    {
+        Cpos.position = Vector3.MoveTowards(new Vector3(Cpos.position.x, Cpos.position.y, Cpos.position.z), new Vector3(Cpos.position.x, init_zoom, Cpos.position.z), speedzoom * Time.deltaTime);
+    }
+
+    public void Dezoom()
+    {
+        Cpos.position = Vector3.MoveTowards(new Vector3(Cpos.position.x, Cpos.position.y, Cpos.position.z), new Vector3(Cpos.position.x, max_zoom, Cpos.position.z), speeddezoom * Time.deltaTime);
+    }
 
     public void MoveToPlayer()
     {
-        Cpos.position = new Vector3(Ppos.position.x, init_zoom, Ppos.position.z);
+        Cpos.position = new Vector3(Ppos.position.x, Cpos.position.y, Ppos.position.z);
     }
 }
