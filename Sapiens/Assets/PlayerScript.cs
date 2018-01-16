@@ -14,11 +14,12 @@ public class PlayerScript : MonoBehaviour
     Rigidbody prb;
     LogController Logger;
     Vector3 targetHit = Vector3.zero;
+    GameObject Targetgo;
     
 
     void Start()
     {
-
+        Targetgo = GameObject.Find("Target");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
         ct = gameObject.GetComponent<Transform>();
@@ -44,7 +45,9 @@ public class PlayerScript : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 targetHit = hit.point;
-                targetHit.y = 2;
+                targetHit.y = 2.1f;
+                Targetgo.GetComponent<Transform>().position = targetHit;
+                Targetgo.GetComponent<SpriteRenderer>().enabled = true;
             }
         }
 
@@ -68,6 +71,7 @@ public class PlayerScript : MonoBehaviour
         {
             // target reached, reset target to zero
             targetHit = Vector3.zero;
+            Targetgo.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 
@@ -104,6 +108,7 @@ public class PlayerScript : MonoBehaviour
             {
                 Logger.Add_To_Log("Blocked by: " + ms.RegionName);
                 targetHit = Vector3.zero;
+                Targetgo.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }
@@ -115,6 +120,7 @@ public class PlayerScript : MonoBehaviour
             if (ms.speed < 0)
             {
                 targetHit = Vector3.zero;
+                Targetgo.GetComponent<SpriteRenderer>().enabled = false;
             }
         }
     }

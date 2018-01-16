@@ -31,8 +31,13 @@ public class CameraScript : MonoBehaviour {
         {
             Zoom();
         }
-        Debug.Log(" cur : " + Cursor_Pos.position + " mous : " + Input.mousePosition + " generated : " + new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 3, Camera.main.ScreenToWorldPoint(Input.mousePosition).z));
-        Cursor_Pos.position = new Vector3(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, 3, Camera.main.ScreenToWorldPoint(Input.mousePosition).z);
+
+        RaycastHit hit;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out hit))
+        {
+            Cursor_Pos.position = hit.point;
+        }
     }
 
     public void Zoom()
