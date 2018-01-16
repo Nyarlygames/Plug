@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
 
     public float speed;
-    public int height;
     Transform pt;
     Transform ct;
     CameraScript cs;
     PlayerScript ps;
     Rigidbody prb;
+    LogController Logger;
     Vector3 targetHit = Vector3.zero;
+    
 
     void Start()
     {
@@ -22,6 +24,9 @@ public class PlayerScript : MonoBehaviour
         ct = gameObject.GetComponent<Transform>();
         cs = Camera.main.GetComponent<CameraScript>();
         ps = gameObject.GetComponent<PlayerScript>();
+        Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
+        Debug.Log("1 " + PlayerPrefs.GetString("Name") + " 2 " + GameObject.Find("Tribename").GetComponent<Text>().text);
+        GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
     }
 
     /*void Update()
@@ -52,25 +57,10 @@ public class PlayerScript : MonoBehaviour
 
     void MovePlayerTo(Vector3 target)
     {
-        switch (height)
-        {
-            case 0:
-                speed = 20;
-                break;
-            case 100:
-                speed = 15;
-                break;
-            case 2000:
-                speed = 5;
-                break;
-
-        }
-
-
         if (pt.position != target)
         {
             // if target not reached, move to target
-            prb.MovePosition(Vector3.MoveTowards(pt.position, target, ps.speed * Time.deltaTime));
+            prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
             // also move camera if player is moving (no need when not moving)
             cs.MoveToPlayer();
         }
@@ -87,29 +77,33 @@ public class PlayerScript : MonoBehaviour
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            height = ms.height;
+            Logger.Add_To_Log(ms.RegionName);
+            speed = ms.speed;
         }
     }
     void OnTriggerStay(Collider coll)
     {
+        Debug.Log("stay " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            height = ms.height;
+            speed = ms.speed;
         }
     }
     void OnTriggerExit(Collider coll)
     {
-        height = 0;
+        Debug.Log("exited " + coll.gameObject.name);
+        speed = 0;
     }
 
     // collision = non walkable, stops movement
     void OnCollisionEnter(Collision coll)
     {
+        Debug.Log("entered " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            if (ms.height < 0)
+            if (ms.speed < 0)
             {
                 targetHit = Vector3.zero;
             }
@@ -117,10 +111,11 @@ public class PlayerScript : MonoBehaviour
     }
     void OnCollisionStay(Collision coll)
     {
+        Debug.Log("exited " + coll.gameObject.name);
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            if (ms.height < 0)
+            if (ms.speed < 0)
             {
                 targetHit = Vector3.zero;
             }

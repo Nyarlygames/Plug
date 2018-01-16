@@ -139,7 +139,23 @@ public class NewGameController : MonoBehaviour {
 
     void LaunchButton_Click()
     {
-        SceneManager.LoadScene("Sapiens", LoadSceneMode.Additive);
+        PlayerPrefs.SetInt("Skills", Points);
+        PlayerPrefs.SetInt("Force", Force);
+        PlayerPrefs.SetInt("Endurance", Endurance);
+        PlayerPrefs.SetInt("Constitution", Constitution);
+        PlayerPrefs.SetInt("Mental", Mental);
+        PlayerPrefs.SetInt("Dexterite", Dexterite);
+        PlayerPrefs.SetInt("Precision", Precision);
+        PlayerPrefs.SetInt("Vitesse", Vitesse);
+        PlayerPrefs.SetInt("Perception", Perception);
+        PlayerPrefs.SetInt("Survie", Survie);
+        PlayerPrefs.SetInt("Intelligence", Intelligence);
+        PlayerPrefs.SetInt("Memoire", Memoire);
+        PlayerPrefs.SetInt("Charisme", Charisme);
+        PlayerPrefs.SetInt("Social", Social);
+        PlayerPrefs.SetString("Name", GameObject.Find("TribeName").GetComponent<Text>().text);
+        PlayerPrefs.SetInt("Langage", Langage);
+        SceneManager.LoadScene("Sapiens", LoadSceneMode.Single);
     }
 
     void ForceUpButton_Click()

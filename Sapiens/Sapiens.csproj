@@ -284,6 +284,7 @@
   <ItemGroup>
     <Compile Include="Assets\CameraScript.cs" />
     <Compile Include="Assets\ControlsScript.cs" />
+    <Compile Include="Assets\LogController.cs" />
     <Compile Include="Assets\MainMenuController.cs" />
     <Compile Include="Assets\MapObjectScript.cs" />
     <Compile Include="Assets\NewGameController.cs" />
