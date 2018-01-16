@@ -83,6 +83,7 @@ public class PlayerScript : MonoBehaviour
         {
             Logger.Add_To_Log("Entered: " + ms.RegionName);
             speed = ms.speed;
+            ms.VisitState = 1;
         }
     }
     void OnTriggerStay(Collider coll)
@@ -91,11 +92,17 @@ public class PlayerScript : MonoBehaviour
         if (ms != null)
         {
             speed = ms.speed;
+            ms.VisitState = 2;
         }
     }
     void OnTriggerExit(Collider coll)
     {
         speed = 0;
+        MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
+        if (ms != null)
+        {
+            ms.VisitState = 1;
+        }
     }
 
     // collision = non walkable, stops movement
@@ -109,6 +116,7 @@ public class PlayerScript : MonoBehaviour
                 Logger.Add_To_Log("Blocked by: " + ms.RegionName);
                 targetHit = Vector3.zero;
                 Targetgo.GetComponent<SpriteRenderer>().enabled = false;
+                ms.VisitState = 1;
             }
         }
     }
@@ -121,6 +129,18 @@ public class PlayerScript : MonoBehaviour
             {
                 targetHit = Vector3.zero;
                 Targetgo.GetComponent<SpriteRenderer>().enabled = false;
+                ms.VisitState = 2;
+            }
+        }
+    }
+    void OnCollisionExit(Collision coll)
+    {
+        MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
+        if (ms != null)
+        {
+            if (ms.speed < 0)
+            {
+                ms.VisitState = 1;
             }
         }
     }
