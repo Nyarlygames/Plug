@@ -13,7 +13,7 @@ public class PlayerScript : MonoBehaviour
     PlayerScript ps;
     Rigidbody prb;
     LogController Logger;
-    Vector3 targetHit = Vector3.zero;
+    public Vector3 targetHit = Vector3.zero;
     GameObject Targetgo;
     
 
@@ -36,19 +36,26 @@ public class PlayerScript : MonoBehaviour
     void FixedUpdate()
     {
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out hit))
-            {
-                targetHit = hit.point;
-                targetHit.y = 2.1f;
-                Targetgo.GetComponent<Transform>().position = targetHit;
-                Targetgo.GetComponent<SpriteRenderer>().enabled = true;
-            }
-        }
+        /* if (Input.GetMouseButtonDown(1))
+         {
+             // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;
+             RaycastHit hit;
+             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+             if (Physics.Raycast(ray, out hit))
+             {
+                 targetHit = hit.point;
+                 targetHit.y = 2.1f;
+                 Targetgo.GetComponent<Transform>().position = targetHit;
+                 Targetgo.GetComponent<SpriteRenderer>().enabled = true;
+             }
+         }
+
+         if (targetHit != Vector3.zero)
+         {
+             // if target is set, move player
+             MovePlayerTo(targetHit);
+         }*/
+
 
         if (targetHit != Vector3.zero)
         {
@@ -70,7 +77,7 @@ public class PlayerScript : MonoBehaviour
         {
             // target reached, reset target to zero
             targetHit = Vector3.zero;
-            Targetgo.GetComponent<SpriteRenderer>().enabled = false;
+            //Targetgo.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 

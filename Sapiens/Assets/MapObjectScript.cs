@@ -11,12 +11,18 @@ public class MapObjectScript : MonoBehaviour {
     Color Base;
 
     void Start () {
-        Base = gameObject.GetComponent<MeshRenderer>().material.color;
-		if (VisitState == 0)
+        if (gameObject.GetComponent<MeshRenderer>() != null)
+            Base = gameObject.GetComponent<MeshRenderer>().material.color;
+        if (gameObject.GetComponent<SpriteRenderer>() != null)
+            Base = gameObject.GetComponent<SpriteRenderer>().material.color;
+        if (VisitState == 0)
         {
-            Color black = new Color(0.0f,0.0f,0.0f,255.0f);
+            Color black = new Color(0.0f,0.0f,0.0f,0.0f);
             //black.a = 0.1f;
-            gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<SpriteRenderer>() != null)
+                gameObject.GetComponent<SpriteRenderer>().material.color = black;
         }
 	}
 	
@@ -27,13 +33,19 @@ public class MapObjectScript : MonoBehaviour {
         {
             Color black = Base;
             black.a = 0.5f;
-            gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<SpriteRenderer>() != null)
+                gameObject.GetComponent<SpriteRenderer>().material.color = black;
         }
         if (VisitState == 2)
         {
             Color black = Base;
             black.a = 1.0f;
-            gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material.color = black;
+            if (gameObject.GetComponent<SpriteRenderer>() != null)
+                gameObject.GetComponent<SpriteRenderer>().material.color = black;
         }
 
     }

@@ -68,7 +68,7 @@ public class CameraScript : MonoBehaviour {
         }
     }
 
-    public void MoveToPlayer()
+    public void MoveToTribe()
     {
         Cpos.position = new Vector3(Ppos.position.x, Cpos.position.y, Ppos.position.z);
     }
