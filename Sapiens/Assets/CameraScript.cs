@@ -11,12 +11,14 @@ public class CameraScript : MonoBehaviour {
     public float current_zoom = 0;
     public float speeddezoom = 0;
     public float speedzoom = 0;
+    Camera cam;
     Transform Cursor_Pos;
 
     void Start () {
-        Ppos = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        Ppos = GameObject.FindGameObjectWithTag("Tribe").GetComponent<Transform>();
+        cam = gameObject.GetComponent<Camera>();
+        cam.orthographicSize = init_zoom;
         Cpos = gameObject.GetComponent<Transform>();
-        Cpos.position = new Vector3(Cpos.position.x, init_zoom, Cpos.position.z);
         current_zoom = init_zoom;
         Cursor_Pos = GameObject.Find("Cursor").GetComponent<Transform>();
     }
@@ -42,12 +44,28 @@ public class CameraScript : MonoBehaviour {
 
     public void Zoom()
     {
-        Cpos.position = Vector3.MoveTowards(new Vector3(Cpos.position.x, Cpos.position.y, Cpos.position.z), new Vector3(Cpos.position.x, init_zoom, Cpos.position.z), speedzoom * Time.deltaTime);
+        if (current_zoom - (speedzoom * Time.deltaTime) >= init_zoom)
+        {
+            cam.orthographicSize = current_zoom - speedzoom * Time.deltaTime;
+            current_zoom = cam.orthographicSize;
+        }
+        else
+        {
+            current_zoom = init_zoom;
+        }
     }
 
     public void Dezoom()
     {
-        Cpos.position = Vector3.MoveTowards(new Vector3(Cpos.position.x, Cpos.position.y, Cpos.position.z), new Vector3(Cpos.position.x, max_zoom, Cpos.position.z), speeddezoom * Time.deltaTime);
+        if (current_zoom + (speeddezoom * Time.deltaTime) <= max_zoom)
+        {
+            cam.orthographicSize = current_zoom + speeddezoom * Time.deltaTime;
+            current_zoom = cam.orthographicSize;
+        }
+        else
+        {
+            current_zoom = max_zoom;
+        }
     }
 
     public void MoveToPlayer()

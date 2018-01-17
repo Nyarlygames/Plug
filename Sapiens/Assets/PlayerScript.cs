@@ -26,7 +26,6 @@ public class PlayerScript : MonoBehaviour
         cs = Camera.main.GetComponent<CameraScript>();
         ps = gameObject.GetComponent<PlayerScript>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
-        Debug.Log("1 " + PlayerPrefs.GetString("Name") + " 2 " + GameObject.Find("Tribename").GetComponent<Text>().text);
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
     }
 
@@ -65,7 +64,7 @@ public class PlayerScript : MonoBehaviour
             // if target not reached, move to target
             prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
             // also move camera if player is moving (no need when not moving)
-            cs.MoveToPlayer();
+            //cs.MoveToPlayer();
         }
         else
         {
