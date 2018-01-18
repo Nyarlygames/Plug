@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class TribeScript : MonoBehaviour {
 
-    public float speed;
+    public float speed=0;
     private Transform pt;
     private Transform ct;
     private CameraScript cs;
@@ -20,10 +20,13 @@ public class TribeScript : MonoBehaviour {
     private Vector3 targetExplore = Vector3.zero;
     private Sprite Explore_cursor;
     private Sprite Mouse_cursor;
+    public int member_count = 0;
+    private List<GameObject> Players = new List<GameObject>();
+    private ControlsScript Controls;
 
-    // Use this for initialization
-    void Start ()
+    void Start()
     {
+        // settings variables to reduce GetComponent calls
         Targetgo = GameObject.Find("Target");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
@@ -31,11 +34,13 @@ public class TribeScript : MonoBehaviour {
         cs = Camera.main.GetComponent<CameraScript>();
         ps = gameObject.GetComponent<PlayerScript>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
+        Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
+        //load ressources
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
         PlayerPrefab = Resources.Load("Play/Prefabs/Player_Prefab") as GameObject;
         Mouse_go = GameObject.Find("Cursor");
         Mouse_cursor = Mouse_go.GetComponent<SpriteRenderer>().sprite;
-        var textures = Resources.LoadAll("Play", typeof(Sprite));
+        var textures = Resources.LoadAll("Play", typeof(Sprite)); // must use load for cursor. need to check why it fails. or else actively use every sprite in that array
         foreach (var t in textures)
         {
             if (t.name == "cursor_explore")
@@ -44,19 +49,37 @@ public class TribeScript : MonoBehaviour {
             }
 
         }
+        AddChar(0, "Player0test", 0);
+        AddChar(1, "Yolo1", 0);
+        AddChar(2, "Deuz", 0);
+
     }
+
+    void AddChar(int id, string name, int stats)
+    {
+        // to add : stats
+        Players.Add(Instantiate(PlayerPrefab));
+        Players[id].GetComponent<Transform>().position = Vector3.zero;
+        Players[id].name = name;
+        member_count++;
+    }
+
     void Update()
     {
+
+        // change the cursor for exploration, and activate left click
         if (Input.GetKeyDown(KeyCode.E) && (launch_explore == false))
         {
             Mouse_go.GetComponent<SpriteRenderer>().sprite = Explore_cursor;
             launch_explore = true;
         }
+        // cancel exploration
         else if (Input.GetKeyDown(KeyCode.E) && (launch_explore == true))
         {
             Mouse_go.GetComponent<SpriteRenderer>().sprite = Mouse_cursor;
             launch_explore = false;
         }
+        // send a player to explore at mouse position
         if ((Input.GetMouseButtonDown(0)) && ((launch_explore == true) && (targetExplore == Vector3.zero)))
         {
             launch_explore = false;
@@ -67,17 +90,20 @@ public class TribeScript : MonoBehaviour {
                 targetExplore = hit.point;
                 targetExplore.y = 2.1f;
             }
-            PlayerPrefab = (GameObject)Instantiate(GameObject.FindWithTag("Player"));
+
+
+            PlayerPrefab = Players[Controls.selectedChar];
             PlayerPrefab.GetComponent<Transform>().position = gameObject.GetComponent<Transform>().position;
             PlayerPrefab.GetComponent<PlayerScript>().targetHit = targetExplore;
             targetExplore = Vector3.zero;
+            Logger.Add_To_Log("Sent Player" + PlayerPrefab.name + " to explore");
 
         }
     }
 
     // Update is called once per frame
     void FixedUpdate () {
-        if ((Input.GetMouseButtonDown(1)) && (targetHit== Vector3.zero))
+        if (Input.GetMouseButtonDown(1))
         {
             // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;
             RaycastHit hit;
@@ -121,25 +147,28 @@ public class TribeScript : MonoBehaviour {
     // trigger = walkable, set height
     void OnTriggerEnter(Collider coll)
     {
+        // entering a new region
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
             Logger.Add_To_Log("Entered: " + ms.RegionName);
-            speed = ms.speed;
+           // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
             ms.VisitState = 1;
         }
     }
     void OnTriggerStay(Collider coll)
     {
+        // inside a region
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            speed = ms.speed;
+            // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
             ms.VisitState = 2;
         }
     }
     void OnTriggerExit(Collider coll)
     {
+        // Exiting a region
         speed = 0;
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
@@ -148,9 +177,10 @@ public class TribeScript : MonoBehaviour {
         }
     }
 
-    // collision = non walkable, stops movement
+    // collision = non walkable
     void OnCollisionEnter(Collision coll)
     {
+        // Entering collision
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
@@ -165,6 +195,7 @@ public class TribeScript : MonoBehaviour {
     }
     void OnCollisionStay(Collision coll)
     {
+        // Inside collision
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
@@ -178,6 +209,7 @@ public class TribeScript : MonoBehaviour {
     }
     void OnCollisionExit(Collision coll)
     {
+        // Exiting collision
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {

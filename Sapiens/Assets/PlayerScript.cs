@@ -6,7 +6,23 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
 
-    public float speed;
+    public float Init_speed =0;
+    public string pname = "";
+    public int plevel =0;
+    public int strength = 0;
+    public int endu = 0;
+    public int body = 0;
+    public int mental = 0;
+    public int dexte = 0;
+    public int accu = 0;
+    public int speed = 0;
+    public int percept = 0;
+    public int surv = 0;
+    public int intel = 0;
+    public int mem = 0;
+    public int chari = 0;
+    public int social = 0;
+    public int lang = 0;
     Transform pt;
     Transform ct;
     CameraScript cs;
@@ -87,7 +103,8 @@ public class PlayerScript : MonoBehaviour
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            Logger.Add_To_Log("Entered: " + ms.RegionName);
+            if (ms.VisitState == 0)
+                Logger.Add_To_Log("Entered: " + ms.RegionName); // to add : region listing so to not respam.
             speed = ms.speed;
             ms.VisitState = 1;
         }
