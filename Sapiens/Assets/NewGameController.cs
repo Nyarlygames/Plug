@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System;
 using UnityEngine.SceneManagement;
 
 public class NewGameController : MonoBehaviour {
@@ -39,6 +38,48 @@ public class NewGameController : MonoBehaviour {
     Text Langage_Text;
     
     void Start () {
+
+
+
+        Object[] textures;
+        //switch button texts or pic to correct language
+        switch (PlayerPrefs.GetString("Lang"))
+        {
+            case "French":
+                textures = Resources.LoadAll("NewGame/FR", typeof(Sprite));
+                break;
+            case "English":
+                textures = Resources.LoadAll("NewGame/EN", typeof(Sprite));
+                break;
+            case "Spanish":
+                textures = Resources.LoadAll("NewGame/SPA", typeof(Sprite));
+                // NYI
+                break;
+            default:
+                //English if not set
+                textures = Resources.LoadAll("NewGame/EN", typeof(Sprite));
+                break;
+        }
+        foreach (var t in textures)
+        {
+            if (t.name == "Back_NG")
+            {
+                GameObject.Find("Background").GetComponent<Image>().sprite = t as Sprite;
+            }
+            if (t.name == "Launch")
+            {
+                GameObject.Find("Launch").GetComponent<Image>().sprite = t as Sprite;
+            }
+            if (t.name == "BackPlay")
+            {
+                GameObject.Find("BackButton").GetComponent<Image>().sprite = t as Sprite;
+            }
+        }
+
+
+
+
+
 
         Button temp = GameObject.Find("+Force").GetComponent<Button>();
         temp.onClick.AddListener(ForceUpButton_Click);
@@ -98,6 +139,8 @@ public class NewGameController : MonoBehaviour {
         temp.onClick.AddListener(LangageDownButton_Click);
         temp = GameObject.Find("Launch").GetComponent<Button>();
         temp.onClick.AddListener(LaunchButton_Click);
+        temp = GameObject.Find("BackButton").GetComponent<Button>();
+        temp.onClick.AddListener(BackButton_Click);
 
 
         Total_Text = GameObject.Find("Total").GetComponent<Text>();
@@ -155,7 +198,12 @@ public class NewGameController : MonoBehaviour {
         PlayerPrefs.SetInt("Social", Social);
         PlayerPrefs.SetString("Name", GameObject.Find("TribeName").GetComponent<Text>().text);
         PlayerPrefs.SetInt("Langage", Langage);
+        PlayerPrefs.SetString("Seed", GameObject.Find("SeedName").GetComponent<Text>().text);
         SceneManager.LoadScene("Sapiens", LoadSceneMode.Single);
+    }
+    void BackButton_Click()
+    {
+        SceneManager.LoadScene("PlayMenu", LoadSceneMode.Single);
     }
 
     void ForceUpButton_Click()

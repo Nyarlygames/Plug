@@ -11,13 +11,14 @@ public class ControlsScript : MonoBehaviour
     PlayerScript ps;
     Rigidbody prb;
     Vector3 targetHit = Vector3.zero;
-
+    string seed = "";
     public Transform Charpic_selected;
     public int selectedChar = 0;
     public List<Transform> Charpics = new List<Transform>();
 
     void Start ()
     {
+        seed = PlayerPrefs.GetString("SeedName");
         /*   prb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody>();
            pt = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
            ct = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();

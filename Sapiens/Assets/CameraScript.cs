@@ -25,6 +25,7 @@ public class CameraScript : MonoBehaviour {
 	
 	void Update ()
     {
+        // dezoom if space is pressed, else zoom
         if (Input.GetKey(KeyCode.Space))
         {
             Dezoom();
@@ -44,6 +45,7 @@ public class CameraScript : MonoBehaviour {
 
     public void Zoom()
     {
+        // move camera down
         if (current_zoom - (speedzoom * Time.deltaTime) >= init_zoom)
         {
             cam.orthographicSize = current_zoom - speedzoom * Time.deltaTime;
@@ -57,6 +59,7 @@ public class CameraScript : MonoBehaviour {
 
     public void Dezoom()
     {
+        // move camera up
         if (current_zoom + (speeddezoom * Time.deltaTime) <= max_zoom)
         {
             cam.orthographicSize = current_zoom + speeddezoom * Time.deltaTime;
@@ -70,6 +73,7 @@ public class CameraScript : MonoBehaviour {
 
     public void MoveToTribe()
     {
+        // move camera to the tribe's place
         Cpos.position = new Vector3(Ppos.position.x, Cpos.position.y, Ppos.position.z);
     }
 }

@@ -11,6 +11,7 @@ public class LogController : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
     {
+        // Set combat log objet
         LinesText.Add(GameObject.Find("UI_Log_Line1"));
         LinesText.Add(GameObject.Find("UI_Log_Line2"));
         LinesText.Add(GameObject.Find("UI_Log_Line3"));
@@ -35,6 +36,7 @@ public class LogController : MonoBehaviour {
 
     public void Add_To_Log(string key)
     {
+        // add a string to the log (remove the first sent if over 15 lines
         if (Lines.Count == 15)
         {
             Lines.RemoveAt(14);

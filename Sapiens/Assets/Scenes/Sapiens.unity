@@ -177,7 +177,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -358,7 +358,7 @@ RectTransform:
   - {fileID: 958346730}
   - {fileID: 774271729}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -501,7 +501,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
 --- !u!4 &282183136 stripped
 Transform:
@@ -803,7 +803,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -841,6 +841,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Charpic_selected: {fileID: 0}
+  selectedChar: 0
   Charpics: []
 --- !u!4 &529836546
 Transform:
@@ -853,7 +854,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &605710301 stripped
 Transform:
@@ -1424,48 +1425,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LinesText: []
   Lines: []
---- !u!1001 &784046228
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 2.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4518480986708162, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: fec5ba7cbcea61b46a22a2a52c9d65c6, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &857797709
 GameObject:
   m_ObjectHideFlags: 0
@@ -1530,7 +1489,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -1724,7 +1683,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4603962423750006, guid: b0c7237b5c658954db89bb13c4f9762c, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 1248303116106716, guid: b0c7237b5c658954db89bb13c4f9762c, type: 2}
       propertyPath: m_TagString
@@ -1797,7 +1756,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -1887,7 +1846,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!114 &1106966521
 MonoBehaviour:
@@ -2012,7 +1971,7 @@ Transform:
   - {fileID: 429333978}
   - {fileID: 282183136}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1436829132
 GameObject:
@@ -2148,7 +2107,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1565506285
 Prefab:
@@ -2187,7 +2146,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4481549057097820, guid: 45cb434bd257e8d448d87c7794ac1cde, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1991622226832484, guid: 45cb434bd257e8d448d87c7794ac1cde, type: 2}
       propertyPath: m_TagString
@@ -2745,7 +2704,7 @@ Transform:
   - {fileID: 645804091}
   - {fileID: 1627008198}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1953480768
 GameObject:
@@ -2811,7 +2770,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
