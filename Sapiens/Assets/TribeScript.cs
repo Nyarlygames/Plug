@@ -7,12 +7,10 @@ public class TribeScript : MonoBehaviour {
 
     public float speed=0;
     private Transform pt;
-    private Transform ct;
     private CameraScript cs;
-    private PlayerScript ps;
     private Rigidbody prb;
     private LogController Logger;
-    private Vector3 targetHit = Vector3.zero;
+    public Vector3 targetHit = Vector3.zero;
     private GameObject Targetgo;
     private GameObject Mouse_go;
     private GameObject PlayerPrefab;
@@ -23,6 +21,9 @@ public class TribeScript : MonoBehaviour {
     public int member_count = 0;
     private List<GameObject> Players = new List<GameObject>();
     private ControlsScript Controls;
+    public Sprite CampOn;// = new Sprite();
+    public Sprite CampOff;// = new Sprite();
+    public List<GameObject> StarterPack = new List<GameObject>();
 
     void Start()
     {
@@ -30,14 +31,15 @@ public class TribeScript : MonoBehaviour {
         Targetgo = GameObject.Find("Target");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
-        ct = gameObject.GetComponent<Transform>();
         cs = Camera.main.GetComponent<CameraScript>();
-        ps = gameObject.GetComponent<PlayerScript>();
+     //   ps = gameObject.GetComponent<PlayerScript>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
         //load ressources
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
         PlayerPrefab = Resources.Load("Play/Prefabs/Player_Prefab") as GameObject;
+        CampOn = Resources.Load<Sprite>("Play/TribeChar/camp");
+        CampOff = Resources.Load<Sprite>("Play/TribeChar/camp_night");
         Mouse_go = GameObject.Find("Cursor");
         Mouse_cursor = Mouse_go.GetComponent<SpriteRenderer>().sprite;
         var textures = Resources.LoadAll("Play", typeof(Sprite)); // must use load for cursor. need to check why it fails. or else actively use every sprite in that array
@@ -60,20 +62,59 @@ public class TribeScript : MonoBehaviour {
 
             if (PlayerPrefs.GetString("Seed") == "Seed hack")
             {
-                AddChar(0, "Player0test", 0);
-                AddChar(1, "Yolo1", 0);
-                AddChar(2, "Deuz", 0);
+                AddChar(0, "Leader", "Play/Prefabs/Leader");
+                AddChar(1, "Man2", "Play/Prefabs/Man1");
+                AddChar(2, "Man2", "Play/Prefabs/Man2");
+                AddChar(3, "Woman1", "Play/Prefabs/Woman1");
+                AddChar(4, "Woman2", "Play/Prefabs/Woman2");
+                AddChar(5, "Son", "Play/Prefabs/Son");
+                AddChar(6, "Daughter", "Play/Prefabs/Daughter");
+                AddChar(7, "Elder", "Play/Prefabs/Man2");
+                /*  stats = new int[15];
+                  stats[0] = 0;
+                  stats[1] = 1;
+                  stats[2] = 2;
+                  stats[3] = 3;
+                  stats[4] = 4;
+                  stats[5] = 5;
+                  stats[6] = 6;
+                  stats[7] = 1;
+                  stats[8] = 8;
+                  stats[9] = 9;
+                  stats[10] = 10;
+                  stats[11] = 11;
+                  stats[12] = 12;
+                  stats[13] = 13;
+                  stats[14] = 14;*/
             }
         }
 
     }
 
-    void AddChar(int id, string name, int stats)
+    void AddChar(int id, string name, string PrefabUrl)
     {
-        // to add : stats
-        Players.Add(Instantiate(PlayerPrefab));
-        Players[id].GetComponent<Transform>().position = Vector3.zero;
+        GameObject PlayerGo = Resources.Load(PrefabUrl) as GameObject;
+        PlayerGo.GetComponent<Transform>().position = new Vector3(pt.position.x, pt.position.z, pt.position.y);
+        Players.Add(Instantiate(PlayerGo));
         Players[id].name = name;
+        PlayerScript ps = Players[id].GetComponent<PlayerScript>();
+        ps.name = name;
+        ps.tribe = gameObject;
+       /* ps.plevel = stats[0];
+        ps.strength = stats[1];
+        ps.endu = stats[2];
+        ps.body = stats[3];
+        ps.mental = stats[4];
+        ps.dexte = stats[5];
+        ps.accu = stats[6];
+        ps.speed = stats[7];
+        ps.percept = stats[8];
+        ps.surv = stats[9];
+        ps.intel = stats[10];
+        ps.mem = stats[11];
+        ps.chari = stats[12];
+        ps.social = stats[13];
+        ps.lang = stats[14];*/
         member_count++;
     }
     

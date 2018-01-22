@@ -8,7 +8,8 @@ public class PlayerScript : MonoBehaviour
 
     public float Init_speed =0;
     public string pname = "";
-    public int plevel =0;
+    public float age = 0;
+    public int plevel = 0;
     public int strength = 0;
     public int endu = 0;
     public int body = 0;
@@ -23,6 +24,7 @@ public class PlayerScript : MonoBehaviour
     public int chari = 0;
     public int social = 0;
     public int lang = 0;
+    public GameObject tribe;
     Transform pt;
     Transform ct;
     CameraScript cs;
@@ -35,6 +37,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        gameObject.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x, 2.2f, gameObject.GetComponent<Transform>().position.y);
         Targetgo = GameObject.Find("Target");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
@@ -72,7 +75,7 @@ public class PlayerScript : MonoBehaviour
              MovePlayerTo(targetHit);
          }*/
 
-
+        targetHit = tribe.GetComponent<TribeScript>().targetHit;
         if (targetHit != Vector3.zero)
         {
             // if target is set, move player
@@ -105,7 +108,7 @@ public class PlayerScript : MonoBehaviour
         {
             if (ms.VisitState == 0)
                 Logger.Add_To_Log("Entered: " + ms.RegionName); // to add : region listing so to not respam.
-            speed = ms.speed;
+           // speed = ms.speed;
             ms.VisitState = 1;
         }
     }
@@ -114,7 +117,7 @@ public class PlayerScript : MonoBehaviour
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
-            speed = ms.speed;
+            //speed = ms.speed;
             ms.VisitState = 2;
         }
     }

@@ -13,7 +13,8 @@ public class ControlsScript : MonoBehaviour
     Rigidbody prb;
     Vector3 targetHit = Vector3.zero;
     Text TribeAge;
-    public Transform Charpic_selected;
+    SpriteRenderer TribeSprite;
+    TribeScript TribeScript;
     public int selectedChar = 0;
     public List<Transform> Charpics = new List<Transform>();
     public int timespeed = 0; // level 1/2/3 time speed
@@ -21,11 +22,9 @@ public class ControlsScript : MonoBehaviour
     void Start ()
     {
         PlayerPrefs.SetFloat("TribeAge", 0.0f); // keep previous experience when loading/saving is done
-        Charpic_selected = GameObject.Find("CharacterPic_Select").GetComponent<Transform>();
-        Charpics.Add(GameObject.Find("CharacterPic0").GetComponent<Transform>());
-        Charpics.Add(GameObject.Find("CharacterPic1").GetComponent<Transform>());
-        Charpics.Add(GameObject.Find("CharacterPic2").GetComponent<Transform>());
         TribeAge = GameObject.Find("TribeAge").GetComponent<Text>();
+        TribeSprite = GameObject.Find("Tribe").GetComponent<SpriteRenderer>();
+        TribeScript = GameObject.Find("Tribe").GetComponent<TribeScript>();
     }
 
     string format_Time(float time)
@@ -116,12 +115,22 @@ public class ControlsScript : MonoBehaviour
 
         PlayerPrefs.SetFloat("TribeAge", time);
         PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
+        if ((hours >= 21) || (hours < 6))
+        {
+            TribeSprite.sprite = TribeScript.CampOff;
+        }
+        else
+        {
+            TribeSprite.sprite = TribeScript.CampOn;
+        }
+
         return PlayerPrefs.GetString("FormattedTime");
     }
 
     void FixedUpdate()
     {
         TribeAge.text = "Tribe's Age : " + format_Time((float)Time.time); // shows the tribe's age
+
         if (Input.GetKeyDown(KeyCode.KeypadMinus))
         {
             switch (timespeed)
@@ -159,7 +168,6 @@ public class ControlsScript : MonoBehaviour
                     break;*/
             }
         }
-        Debug.Log(timespeed);
     }
 
     // Update is called once per frame
@@ -170,26 +178,6 @@ public class ControlsScript : MonoBehaviour
         }
         
         
-
-        // create group with mouse ?
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Charpic_selected.position = Charpics[0].position;
-            selectedChar = 0;
-            // select P1
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Charpic_selected.position = Charpics[1].position;
-            selectedChar = 1;
-            // select P2
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Charpic_selected.position = Charpics[2].position;
-            selectedChar = 2;
-            // select P3
-        }
     }
     
 }
