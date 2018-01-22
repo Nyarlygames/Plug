@@ -39,10 +39,10 @@ public class PlayMenuController : MonoBehaviour {
         }
         foreach (var t in textures)
         {
-            if (t.name == "Back_Play")
+           /* if (t.name == "Back_Play")
             {
                 GameObject.Find("PlayMenu").GetComponent<Image>().sprite = t as Sprite;
-            }
+            }*/
             if (t.name == "NewGameButton")
             {
                 GameObject.Find("NGButton").GetComponent<Image>().sprite = t as Sprite;

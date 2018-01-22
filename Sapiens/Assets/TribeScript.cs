@@ -49,9 +49,22 @@ public class TribeScript : MonoBehaviour {
             }
 
         }
-        AddChar(0, "Player0test", 0);
-        AddChar(1, "Yolo1", 0);
-        AddChar(2, "Deuz", 0);
+
+
+
+        Time.timeScale = 3.5f;
+
+
+        if (PlayerPrefs.GetString("Seed") != null)
+        {
+
+            if (PlayerPrefs.GetString("Seed") == "Seed hack")
+            {
+                AddChar(0, "Player0test", 0);
+                AddChar(1, "Yolo1", 0);
+                AddChar(2, "Deuz", 0);
+            }
+        }
 
     }
 
@@ -63,10 +76,10 @@ public class TribeScript : MonoBehaviour {
         Players[id].name = name;
         member_count++;
     }
+    
 
     void Update()
     {
-
         // change the cursor for exploration, and activate left click
         if (Input.GetKeyDown(KeyCode.E) && (launch_explore == false))
         {
@@ -102,7 +115,8 @@ public class TribeScript : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void FixedUpdate () {
+    void FixedUpdate ()
+    {
         if (Input.GetMouseButtonDown(1))
         {
             // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;

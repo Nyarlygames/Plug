@@ -62,10 +62,10 @@ public class NewGameController : MonoBehaviour {
         }
         foreach (var t in textures)
         {
-            if (t.name == "Back_NG")
+            /*if (t.name == "Back_NG")
             {
                 GameObject.Find("Background").GetComponent<Image>().sprite = t as Sprite;
-            }
+            }*/
             if (t.name == "Launch")
             {
                 GameObject.Find("Launch").GetComponent<Image>().sprite = t as Sprite;
