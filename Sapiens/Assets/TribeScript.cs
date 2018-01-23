@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class TribeScript : MonoBehaviour {
 
     public float speed=0;
-    private Transform pt;
+    private Transform tt;
     private CameraScript cs;
-    private Rigidbody prb;
+    private Rigidbody trb;
     private LogController Logger;
     public Vector3 targetHit = Vector3.zero;
     private GameObject Targetgo;
@@ -25,14 +25,31 @@ public class TribeScript : MonoBehaviour {
     public Sprite CampOff;// = new Sprite();
     public List<GameObject> StarterPack = new List<GameObject>();
 
+
+    // Tribe stats
+    public float TrbAge=0;
+    public float TrbUnity=0;
+    public float TrbRank=0;
+    public int TrbAdults=0;
+    public int TrbYoungs=0;
+    public float TrbGenerations=0;
+    public float TrbFood=0;
+    public float TrbWater = 0;
+    public float TrbConfort = 0;
+    public float TrbSocial = 0;
+    public float TrbTools = 0;
+    public float TrbCrafts = 0;
+    public float TrbHerbs = 0;
+    public float TrbSpeed = 0;
+    
+
     void Start()
     {
         // settings variables to reduce GetComponent calls
         Targetgo = GameObject.Find("Target");
-        prb = gameObject.GetComponent<Rigidbody>();
-        pt = gameObject.GetComponent<Transform>();
+        trb = gameObject.GetComponent<Rigidbody>();
+        tt = gameObject.GetComponent<Transform>();
         cs = Camera.main.GetComponent<CameraScript>();
-     //   ps = gameObject.GetComponent<PlayerScript>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
         //load ressources
@@ -94,12 +111,14 @@ public class TribeScript : MonoBehaviour {
     void AddChar(int id, string name, string PrefabUrl)
     {
         GameObject PlayerGo = Resources.Load(PrefabUrl) as GameObject;
-        PlayerGo.GetComponent<Transform>().position = new Vector3(pt.position.x, pt.position.z, pt.position.y);
+        PlayerGo.GetComponent<Transform>().position = new Vector3(tt.position.x, tt.position.z, tt.position.y);
         Players.Add(Instantiate(PlayerGo));
         Players[id].name = name;
         PlayerScript ps = Players[id].GetComponent<PlayerScript>();
         ps.name = name;
         ps.tribe = gameObject;
+        if (ps.status != "Leader")
+            ps.status = "Member";
        /* ps.plevel = stats[0];
         ps.strength = stats[1];
         ps.endu = stats[2];
@@ -158,7 +177,7 @@ public class TribeScript : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate ()
     {
-        if (Input.GetMouseButtonDown(1))
+       /* if (Input.GetMouseButtonDown(1))
         {
             // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;
             RaycastHit hit;
@@ -178,15 +197,20 @@ public class TribeScript : MonoBehaviour {
         {
             // if target is set, move player
             MoveTribeTo(targetHit);
-        }
+        }*/
     }
 
+
+
+
+
+    /*
     void MoveTribeTo(Vector3 target)
     {
-        if (pt.position != target)
+        if (tt.position != target)
         {
             // if target not reached, move to target
-            prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
+            trb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
             // also move camera if player is moving (no need when not moving)
             cs.MoveToTribe();
         }
@@ -224,7 +248,7 @@ public class TribeScript : MonoBehaviour {
     void OnTriggerExit(Collider coll)
     {
         // Exiting a region
-        speed = 0;
+        //speed = 0;
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
@@ -273,5 +297,5 @@ public class TribeScript : MonoBehaviour {
                 ms.VisitState = 1;
             }
         }
-    }
+    }*/
 }

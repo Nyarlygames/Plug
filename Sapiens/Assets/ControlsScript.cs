@@ -15,16 +15,28 @@ public class ControlsScript : MonoBehaviour
     Text TribeAge;
     SpriteRenderer TribeSprite;
     TribeScript TribeScript;
+    SpriteRenderer Fog;
+    GameObject UIDebug;
+    bool debug_panel = true;
+    public bool dusk_cycle = true;
     public int selectedChar = 0;
     public List<Transform> Charpics = new List<Transform>();
     public int timespeed = 0; // level 1/2/3 time speed
+    //public float timescale = 0; // current timescale
+    private Color duskmax = new Color(1f, 1f, 1f, 0.4f);
+    private Color duskmin = new Color(1f, 1f, 1f, 0.0f);
+    private float duskspeed = 0.2f;
 
     void Start ()
     {
+        UIDebug = GameObject.Find("UI_Debug");
+        UIDebug.SetActive(debug_panel);
         PlayerPrefs.SetFloat("TribeAge", 0.0f); // keep previous experience when loading/saving is done
         TribeAge = GameObject.Find("TribeAge").GetComponent<Text>();
         TribeSprite = GameObject.Find("Tribe").GetComponent<SpriteRenderer>();
         TribeScript = GameObject.Find("Tribe").GetComponent<TribeScript>();
+        Time.timeScale = 1.0f;
+        Fog = GameObject.Find("Fog").GetComponent<SpriteRenderer>();
     }
 
     string format_Time(float time)
@@ -63,111 +75,75 @@ public class ControlsScript : MonoBehaviour
 
 
 
-        string test = "";
+        string formattedString = "";
         if (hours >= 10)
-            test += hours + " hours, ";
+            formattedString += hours + " hours, ";
         else
-            test += "0" + hours + " hours, ";
+            formattedString += "0" + hours + " hours, ";
 
         if (days >= 10)
-            test += days + " days ,";
+            formattedString += days + " days ,";
         else
-            test += "0" + days + " days, ";
+            formattedString += "0" + days + " days, ";
 
         if (weeks >= 10)
-            test += weeks + " weeks, ";
+            formattedString += weeks + " weeks, ";
         else
-            test += "0" + weeks + " weeks, ";
+            formattedString += "0" + weeks + " weeks, ";
 
         if (months >= 10)
-            test += months + " months, ";
+            formattedString += months + " months, ";
         else
-            test += "0" + months + " months, ";
+            formattedString += "0" + months + " months, ";
 
         if (years >= 10)
-            test += years + " years";
+            formattedString += years + " years";
         else
-            test += "0" + years + " years";
+            formattedString += "0" + years + " years";
 
-
-        /*  if (temp_time > 86400)
-          {
-              days =(int) temp_time / 86400;
-              temp_time /= 86400;
-          }
-          if (temp_time > 3600)
-          {
-              hours = (int)temp_time / 3600;
-              temp_time /= 3600;
-          }
-          if (temp_time > 60)
-          {
-              minutes = (int)temp_time / 60;
-              temp_time /= 60;
-          }
-          else if (temp_time < 60)
-          {
-              seconds = (int)temp_time;
-          }*/
-
-        PlayerPrefs.SetString("FormattedTime", test);
-
-
+        PlayerPrefs.SetString("FormattedTime", formattedString);
         PlayerPrefs.SetFloat("TribeAge", time);
         PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
+
+        if (dusk_cycle == true)
+        {
+            if ((hours >= 20) || (hours < 5))
+            {
+                if (Fog.color.a < duskmax.a)
+                {
+                    Fog.color = new Color(1f, 1f, 1f, Fog.color.a + (duskspeed * Time.deltaTime));
+                }
+                if (Fog.color.a > duskmax.a)
+                    Fog.color = duskmax;
+            }
+            else
+            {
+                if (Fog.color.a > duskmin.a)
+                {
+                    Fog.color = new Color(1f, 1f, 1f, Fog.color.a - (duskspeed * Time.deltaTime));
+                }
+                if (Fog.color.a < duskmin.a)
+                    Fog.color = duskmin;
+            }
+        }
+
+
         if ((hours >= 21) || (hours < 6))
         {
+
             TribeSprite.sprite = TribeScript.CampOff;
         }
         else
         {
             TribeSprite.sprite = TribeScript.CampOn;
         }
-
         return PlayerPrefs.GetString("FormattedTime");
     }
 
     void FixedUpdate()
     {
         TribeAge.text = "Tribe's Age : " + format_Time((float)Time.time); // shows the tribe's age
-
-        if (Input.GetKeyDown(KeyCode.KeypadMinus))
-        {
-            switch (timespeed)
-            {
-                case 1:
-                    timespeed = 0;
-                    Time.timeScale = 1.0f; // - x1.0 speed
-                    break;
-                /*case 0:
-                    Time.timeScale = 1.0f; // - x1.0 speed
-                    break;
-                case 2:
-                    timespeed = 1;
-                    Time.timeScale = 3.5f;
-                    break;
-                default:
-                    Time.timeScale = 1.0f; // - x1.0 speed
-                    break;*/
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.KeypadPlus))
-        {
-            switch (timespeed)
-            {
-                case 0:
-                    timespeed = 1;
-                    Time.timeScale = 10.0f;
-                    break;
-                /*case 1:
-                    timespeed = 2;
-                    Time.timeScale =80.0f; // - x1.0 speed
-                    break;
-                default:
-                    Time.timeScale = 1.0f; // - x1.0 speed
-                    break;*/
-            }
-        }
+        
     }
 
     // Update is called once per frame
@@ -176,8 +152,13 @@ public class ControlsScript : MonoBehaviour
         {
             SceneManager.LoadScene("CharacterPanel", LoadSceneMode.Additive);
         }
-        
-        
+
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            debug_panel = !debug_panel;
+            UIDebug.SetActive(debug_panel);
+        }
+
     }
     
 }

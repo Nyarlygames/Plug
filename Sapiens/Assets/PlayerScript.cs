@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class PlayerScript : MonoBehaviour
 {
 
-    public float Init_speed =0;
+    public float Init_speed = 0;
+    public string status;
     public string pname = "";
     public float age = 0;
     public int plevel = 0;
@@ -48,32 +49,8 @@ public class PlayerScript : MonoBehaviour
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
     }
 
-    /*void Update()
-    {
-    }*/
-
     void FixedUpdate()
     {
-
-        /* if (Input.GetMouseButtonDown(1))
-         {
-             // if mouse click, get hit coordinates on the map, and readjust y for 2D movements;
-             RaycastHit hit;
-             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-             if (Physics.Raycast(ray, out hit))
-             {
-                 targetHit = hit.point;
-                 targetHit.y = 2.1f;
-                 Targetgo.GetComponent<Transform>().position = targetHit;
-                 Targetgo.GetComponent<SpriteRenderer>().enabled = true;
-             }
-         }
-
-         if (targetHit != Vector3.zero)
-         {
-             // if target is set, move player
-             MovePlayerTo(targetHit);
-         }*/
 
         targetHit = tribe.GetComponent<TribeScript>().targetHit;
         if (targetHit != Vector3.zero)
@@ -89,16 +66,16 @@ public class PlayerScript : MonoBehaviour
         {
             // if target not reached, move to target
             prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
-            // also move camera if player is moving (no need when not moving)
-            //cs.MoveToPlayer();
         }
         else
         {
             // target reached, reset target to zero
             targetHit = Vector3.zero;
-            //Targetgo.GetComponent<SpriteRenderer>().enabled = false;
         }
     }
+
+
+
 
     // trigger = walkable, set height
     void OnTriggerEnter(Collider coll)
@@ -123,7 +100,7 @@ public class PlayerScript : MonoBehaviour
     }
     void OnTriggerExit(Collider coll)
     {
-        speed = 0;
+        //speed = 0;
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {

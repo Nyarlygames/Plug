@@ -285,6 +285,7 @@
     <Compile Include="Assets\CameraScript.cs" />
     <Compile Include="Assets\CharacterPanelScript.cs" />
     <Compile Include="Assets\ControlsScript.cs" />
+    <Compile Include="Assets\FogScript.cs" />
     <Compile Include="Assets\LogController.cs" />
     <Compile Include="Assets\MainMenuController.cs" />
     <Compile Include="Assets\MapObjectScript.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Assets\PlayerScript.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
     <Compile Include="Assets\TribeScript.cs" />
+    <Compile Include="Assets\UI_DebugScript.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
