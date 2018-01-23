@@ -37,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1302263303775934}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -15, y: 2.1, z: -92}
+  m_LocalPosition: {x: -15, y: 1, z: -92}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,6 +94,20 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  Leader: {fileID: 0}
+  TrbUnity: 0
+  TrbRank: 0
+  TrbAdults: 0
+  TrbYoungs: 0
+  TrbGenerations: 0
+  TrbFood: 0
+  TrbWater: 0
+  TrbConfort: 0
+  TrbSocial: 0
+  TrbTools: 0
+  TrbCrafts: 0
+  TrbHerbs: 0
+  TrbSpeed: 0
 --- !u!212 &212112031458756532
 SpriteRenderer:
   m_ObjectHideFlags: 1

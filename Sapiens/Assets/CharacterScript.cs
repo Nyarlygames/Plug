@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerScript : MonoBehaviour
+public class CharacterScript : MonoBehaviour
 {
 
     public float Init_speed = 0;
+    public bool available = true;
     public string status;
     public string pname = "";
     public float age = 0;
@@ -25,47 +26,37 @@ public class PlayerScript : MonoBehaviour
     public int chari = 0;
     public int social = 0;
     public int lang = 0;
-    public GameObject tribe;
     Transform pt;
-    Transform ct;
-    CameraScript cs;
-    PlayerScript ps;
     Rigidbody prb;
     LogController Logger;
     public Vector3 targetHit = Vector3.zero;
-    GameObject Targetgo;
     
 
     void Start()
     {
         gameObject.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x, 2.2f, gameObject.GetComponent<Transform>().position.y);
-        Targetgo = GameObject.Find("Target");
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
-        ct = gameObject.GetComponent<Transform>();
-        cs = Camera.main.GetComponent<CameraScript>();
-        ps = gameObject.GetComponent<PlayerScript>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
     }
 
     void FixedUpdate()
     {
-
-        targetHit = tribe.GetComponent<TribeScript>().targetHit;
-        if (targetHit != Vector3.zero)
+        
+       /* if (targetHit != Vector3.zero)
         {
             // if target is set, move player
             MovePlayerTo(targetHit);
-        }
+        }*/
     }
 
-    void MovePlayerTo(Vector3 target)
+    public void MovePlayerTo(Vector3 target, float speedMove)
     {
         if (pt.position != target)
         {
             // if target not reached, move to target
-            prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
+            prb.MovePosition(Vector3.MoveTowards(pt.position, target, speedMove * Time.deltaTime));
         }
         else
         {
@@ -77,7 +68,7 @@ public class PlayerScript : MonoBehaviour
 
 
 
-    // trigger = walkable, set height
+    /*// trigger = walkable, set height
     void OnTriggerEnter(Collider coll)
     {
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
@@ -146,5 +137,5 @@ public class PlayerScript : MonoBehaviour
                 ms.VisitState = 1;
             }
         }
-    }
+    }*/
 }
