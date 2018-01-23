@@ -11,12 +11,10 @@ public class ControlsScript : MonoBehaviour
     TribeScript TribeScript;
     public SpriteRenderer Fog;
     GameObject UIDebug;
-    GameObject UIChar;
-    GameObject UITribe;
     CameraScript CamScript;
     bool debug_panel = true;
-    bool char_panel = false;
-    bool tribe_panel = false;
+    public bool char_panel = false;
+    public bool tribe_panel = false;
     public bool dusk_cycle = true;
     public Color duskmax = new Color(1f, 1f, 1f, 0.4f);
     public Color duskmin = new Color(1f, 1f, 1f, 0.0f);
@@ -35,10 +33,6 @@ public class ControlsScript : MonoBehaviour
     {
         UIDebug = GameObject.Find("UI_Debug");
         UIDebug.SetActive(debug_panel);
-        UIChar = GameObject.Find("UI_CharacterPanel");
-        UIChar.SetActive(char_panel);
-        UITribe = GameObject.Find("UI_TribePanel");
-        UITribe.SetActive(tribe_panel);
         PlayerPrefs.SetFloat("TribeAge", 0.0f); // keep previous experience when loading/saving is done
         TribeAge = GameObject.Find("TribeAge").GetComponent<Text>();
         TribeSprite = GameObject.Find("Tribe").GetComponent<SpriteRenderer>();
@@ -53,7 +47,7 @@ public class ControlsScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        TribeAge.text = "Tribe's Age : " + format_Time((float)Time.time); // shows the tribe's age
+        TribeAge.text = "Time spent : " + format_Time((float)Time.time); // shows the tribe's age
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         MousePos.y = UIPlane;
         Cursor_Mouset.position = MousePos;
@@ -63,14 +57,40 @@ public class ControlsScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.C)) // hide/show character panel
         {
-            char_panel = !char_panel;
-            UIChar.SetActive(char_panel);
-        }
+            if (char_panel == false)
+            {
+                char_panel = true;
+                SceneManager.LoadSceneAsync("CharacterPanel", LoadSceneMode.Additive);
+                if (tribe_panel == true)
+                {
+                    SceneManager.UnloadSceneAsync("TribePanel");
+                    tribe_panel = false;
+                }
+            }
+            else
+            {
+                SceneManager.UnloadSceneAsync("CharacterPanel");
+                char_panel = false;
+            }
+    }
 
         if (Input.GetKeyDown(KeyCode.T)) // hide/show tribe panel
         {
-            tribe_panel = !tribe_panel;
-            UITribe.SetActive(tribe_panel);
+            if (tribe_panel == false)
+            {
+                tribe_panel = true;
+                SceneManager.LoadSceneAsync("TribePanel", LoadSceneMode.Additive);
+                if (char_panel == true)
+                {
+                    SceneManager.UnloadSceneAsync("CharacterPanel");
+                    char_panel = false;
+                }
+            }
+            else
+            {
+                SceneManager.UnloadSceneAsync("TribePanel");
+                tribe_panel = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.H)) // hide/show debug ui

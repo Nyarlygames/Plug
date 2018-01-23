@@ -293,6 +293,7 @@
     <Compile Include="Assets\NewGameController.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
+    <Compile Include="Assets\TribePanelScript.cs" />
     <Compile Include="Assets\TribeScript.cs" />
     <Compile Include="Assets\UI_DebugScript.cs" />
   </ItemGroup>

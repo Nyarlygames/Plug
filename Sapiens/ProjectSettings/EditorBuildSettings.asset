@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CharacterPanel.unity
     guid: fa90a50704d778e448720deeb3905adc
+  - enabled: 1
+    path: Assets/Scenes/TribePanel.unity
+    guid: 0c244036faa4c1647b6c2c85bb775f36

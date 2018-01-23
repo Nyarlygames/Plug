@@ -9,7 +9,7 @@ public class TribeScript : MonoBehaviour {
     private Rigidbody trb;
     private LogController Logger;
     public Vector3 targetHit = Vector3.zero;
-    private List<GameObject> Characters = new List<GameObject>();
+    public List<GameObject> Characters = new List<GameObject>();
     private ControlsScript Controls;
     public Sprite CampOn;
     public Sprite CampOff;
