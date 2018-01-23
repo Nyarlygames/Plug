@@ -26,6 +26,19 @@ public class CharacterScript : MonoBehaviour
     public int chari = 0;
     public int social = 0;
     public int lang = 0;
+
+    public int exp = 0;
+    public int moral = 0;
+    public int fatigue = 0;
+    public int respect = 0;
+    public int life = 0;
+    public int speed_attr = 0;
+    public int food = 0;
+    public int resdis = 0;
+    public int healdis = 0;
+    public int reswoun = 0;
+    public int healwoun = 0;
+
     Transform pt;
     Rigidbody prb;
     LogController Logger;
