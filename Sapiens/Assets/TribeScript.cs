@@ -14,16 +14,14 @@ public class TribeScript : MonoBehaviour {
     public Sprite CampOn;
     public Sprite CampOff;
     SpriteRenderer TribeSprite;
-    public GameObject Leader;
-
 
     // Tribe stats
-    public float TrbUnity=0;
-    public float TrbRank=0;
-    public int TrbAdults=0;
-    public int TrbYoungs=0;
-    public float TrbGenerations=0;
-    public float TrbFood=0;
+    public float TrbUnity = 0;
+    public float TrbRank = 0;
+    public int TrbAdults = 0;
+    public int TrbYoungs = 0;
+    public float TrbGenerations = 0;
+    public float TrbFood = 0;
     public float TrbWater = 0;
     public float TrbConfort = 0;
     public float TrbSocial = 0;
@@ -31,7 +29,26 @@ public class TribeScript : MonoBehaviour {
     public float TrbCrafts = 0;
     public float TrbHerbs = 0;
     public float TrbSpeed = 0;
-    
+
+    // Activities
+    public List<GameObject> TrbGather = new List<GameObject>();
+    public List<GameObject> TrbFish = new List<GameObject>();
+    public List<GameObject> TrbHunt = new List<GameObject>();
+    public List<GameObject> TrbCook = new List<GameObject>();
+    public List<GameObject> TrbSource = new List<GameObject>();
+    public List<GameObject> TrbManage = new List<GameObject>();
+    public List<GameObject> TrbMentor = new List<GameObject>();
+    public List<GameObject> TrbSage = new List<GameObject>();
+    public List<GameObject> TrbShaman = new List<GameObject>();
+    public List<GameObject> TrbSkin = new List<GameObject>();
+    public List<GameObject> TrbWood = new List<GameObject>();
+    public List<GameObject> TrbStone = new List<GameObject>();
+    public List<GameObject> TrbProtect = new List<GameObject>();
+    public GameObject TrbLeader;
+    public List<GameObject> TrbScout = new List<GameObject>();
+    public List<GameObject> TrbRest = new List<GameObject>();
+    public List<GameObject> TrbPregnant = new List<GameObject>();
+
 
     void Start()
     {
@@ -60,7 +77,7 @@ public class TribeScript : MonoBehaviour {
                 AddChar(4, "Woman2", "Play/Prefabs/Woman2");
                 AddChar(5, "Son", "Play/Prefabs/Son");
                 AddChar(6, "Daughter", "Play/Prefabs/Daughter");
-                AddChar(7, "Elder", "Play/Prefabs/Man2");
+                AddChar(7, "Elder", "Play/Prefabs/Elder");
             }
         }
         foreach (GameObject chars in Characters)
@@ -87,7 +104,7 @@ public class TribeScript : MonoBehaviour {
         }
         else
         {
-            Leader = Characters[id];
+            TrbLeader = Characters[id];
         }
     }
     

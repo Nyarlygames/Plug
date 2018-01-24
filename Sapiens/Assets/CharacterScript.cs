@@ -10,6 +10,7 @@ public class CharacterScript : MonoBehaviour
     public bool available = true;
     public string status;
     public string pname = "";
+    public TimeStruct Age = new TimeStruct();
     public float age = 0;
     public int plevel = 0;
     public int strength = 0;

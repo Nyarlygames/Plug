@@ -23,11 +23,14 @@ public class ControlsScript : MonoBehaviour
     Transform Cursor_Targett;
     public GameObject Cursor_Target;
     Transform Cursor_Mouset;
+    public TimeStruct TS = new TimeStruct();
 
     public float GroundPlane = 0.0f;
     public float TribePlane = 1.0f;
     public float CharacterPlane = 2.0f;
     public float UIPlane = 3.0f;
+    private float timeScaleBeforePause = 0.0f;
+    private float timeScaleBeforeMenu = 0.0f;
 
     void Start ()
     {
@@ -47,14 +50,29 @@ public class ControlsScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        TribeAge.text = "Time spent : " + format_Time((float)Time.time); // shows the tribe's age
+        TS = format_Time((float)Time.time);
+        TribeAge.text = "Time spent : " + TS.formattedString; // shows the tribe's age
+        DayNightCycle();
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         MousePos.y = UIPlane;
         Cursor_Mouset.position = MousePos;
     }
 
+
+    
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale != 0.0f) && (timeScaleBeforePause == 0.0f)) // pause
+        {
+            timeScaleBeforePause = Time.timeScale;
+            Time.timeScale = 0.0f;
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale == 0.0f) && (timeScaleBeforePause != 0.0f)) // unpause
+        {
+            Time.timeScale = timeScaleBeforePause;
+            timeScaleBeforePause = 0.0f;
+            //might be a lock there, but dunno where, did not reproduce (spamming C/T/P)
+        }
         if (Input.GetKeyDown(KeyCode.C)) // hide/show character panel
         {
             if (char_panel == false)
@@ -66,13 +84,18 @@ public class ControlsScript : MonoBehaviour
                     SceneManager.UnloadSceneAsync("TribePanel");
                     tribe_panel = false;
                 }
+                else { // pauses when opening char/tribe panels
+                    timeScaleBeforeMenu = Time.timeScale;
+                    Time.timeScale = 0.0f;
+                }
             }
             else
-            {
+            { // resume time upon exiting panels
                 SceneManager.UnloadSceneAsync("CharacterPanel");
                 char_panel = false;
+                Time.timeScale = timeScaleBeforeMenu;
             }
-    }
+        }
 
         if (Input.GetKeyDown(KeyCode.T)) // hide/show tribe panel
         {
@@ -85,11 +108,17 @@ public class ControlsScript : MonoBehaviour
                     SceneManager.UnloadSceneAsync("CharacterPanel");
                     char_panel = false;
                 }
+                else
+                { // pauses when opening char/tribe panels
+                    timeScaleBeforeMenu = Time.timeScale;
+                    Time.timeScale = 0.0f;
+                }
             }
             else
-            {
+            { // resume time upon exiting panels
                 SceneManager.UnloadSceneAsync("TribePanel");
                 tribe_panel = false;
+                Time.timeScale = timeScaleBeforeMenu;
             }
         }
 
@@ -121,82 +150,11 @@ public class ControlsScript : MonoBehaviour
         if (TribeScript.targetHit == Vector3.zero)
             Cursor_Target.SetActive(false);
     }
-
-    string format_Time(float time)
+    void DayNightCycle()
     {
-        float temp_time = 0;
-        int hours = 0;
-        int days = 0;
-        int weeks = 0;
-        int months = 0;
-        int years = 0;
-
-        temp_time = time;
-
-        if (temp_time > 8760)
-        { // years
-            years = (int)temp_time / 8760;
-            temp_time = temp_time % 8760;
-        }
-        if (temp_time > 720)
-        {  // months
-            months = (int)temp_time / 720;
-            temp_time = temp_time % 720;
-        }
-        if (temp_time > 168) // weeks
-        {
-            weeks = (int)temp_time / 168;
-            temp_time = temp_time % 168;
-        }
-        if (temp_time >= 24) // days
-        {
-            days = (int)temp_time / 24;
-            temp_time = temp_time % 24;
-        }
-        if (temp_time < 24)
-        {
-            hours = (int)temp_time;
-        }
-
-
-
-        string formattedString = "";
-        if (hours >= 10)
-            formattedString += hours + " hours, ";
-        else
-            formattedString += "0" + hours + " hours, ";
-
-        if (days >= 10)
-            formattedString += days + " days ,";
-        else
-            formattedString += "0" + days + " days, ";
-
-        if (weeks >= 10)
-            formattedString += weeks + " weeks, ";
-        else
-            formattedString += "0" + weeks + " weeks, ";
-
-        if (months >= 10)
-            formattedString += months + " months, ";
-        else
-            formattedString += "0" + months + " months, ";
-
-        if (years >= 10)
-            formattedString += years + " years";
-        else
-            formattedString += "0" + years + " years";
-
-        PlayerPrefs.SetString("FormattedTime", formattedString);
-        PlayerPrefs.SetInt("TribeHours", hours);
-        PlayerPrefs.SetInt("TribeDays", days);
-        PlayerPrefs.SetInt("TribeWeeks", weeks);
-        PlayerPrefs.SetInt("TribeMonth", months);
-        PlayerPrefs.SetInt("TribeYears", years);
-        PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
-
         if (dusk_cycle == true)
         {
-            if ((hours >= 20) || (hours < 5))
+            if ((TS.hours >= 20) || (TS.hours < 5))
             {
                 if (Fog.color.a < duskmax.a)
                 {
@@ -217,7 +175,7 @@ public class ControlsScript : MonoBehaviour
         }
 
 
-        if ((hours >= 21) || (hours < 6))
+        if ((TS.hours >= 21) || (TS.hours < 6))
         {
 
             TribeSprite.sprite = TribeScript.CampOff;
@@ -226,6 +184,71 @@ public class ControlsScript : MonoBehaviour
         {
             TribeSprite.sprite = TribeScript.CampOn;
         }
-        return PlayerPrefs.GetString("FormattedTime");
+    }
+
+    TimeStruct format_Time(float time)
+    {
+        // TO redo timings!
+        float temp_time = 0;
+        int HoursInDay = 24; //(24*30)
+        int HoursinWeek = 168; //(24*7)
+        int HoursinMonth = 720; //(24*30)
+        int HoursinYear = 8760; //(24*365)
+
+        temp_time = time;
+        
+        if (temp_time > HoursinYear)
+        { // years
+            TS.years = (int)temp_time / HoursinYear;
+            TS.cumulyears = (int) time / HoursinYear;
+            temp_time = temp_time % HoursinYear;
+        }
+        if (temp_time > HoursinMonth)
+        {  // months
+            TS.months = (int)temp_time / HoursinMonth;
+            TS.cumulmonths = (int)time / HoursinMonth;
+            temp_time = temp_time % HoursinMonth;
+        }
+        if (temp_time > HoursinWeek) // weeks
+        {
+            TS.weeks = (int)temp_time / HoursinWeek;
+            TS.cumulweeks = (int)time / HoursinWeek;
+            temp_time = temp_time % HoursinWeek;
+        }
+        if (temp_time >= HoursInDay) // days
+        {
+            TS.days = (int)temp_time / HoursInDay;
+            TS.cumuldays = (int)time / HoursInDay;
+            temp_time = temp_time % HoursInDay;
+        }
+        if (temp_time < HoursInDay)
+        {
+            TS.hours = (int)temp_time;
+            TS.cumulhours = (int)time / 1;
+        }
+
+        TS.formattedString = "";
+        TS.formattedcumulString = "";
+        TS.formattedString += TS.hours + " hours, ";
+        TS.formattedcumulString += TS.cumulhours + " hours, ";
+        TS.formattedString += TS.days + " days, ";
+        TS.formattedcumulString += TS.cumuldays + " days, ";
+        TS.formattedString += TS.weeks + " weeks, ";
+        TS.formattedcumulString += TS.cumulweeks + " weeks, ";
+        TS.formattedString += TS.months + " months, ";
+        TS.formattedcumulString += TS.cumulmonths + " months, ";
+        TS.formattedString += TS.years + " years";
+        TS.formattedcumulString += TS.cumulyears + " years";
+
+        PlayerPrefs.SetString("FormattedTime", TS.formattedString);
+        PlayerPrefs.SetString("FormattedcumulTime", TS.formattedcumulString);
+        PlayerPrefs.SetInt("TribeTS.hours", TS.hours);
+        PlayerPrefs.SetInt("TribeDays", TS.days);
+        PlayerPrefs.SetInt("TribeWeeks", TS.weeks);
+        PlayerPrefs.SetInt("TribeMonth", TS.months);
+        PlayerPrefs.SetInt("TribeYears", TS.years);
+        PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
+        
+        return TS;
     }
 }

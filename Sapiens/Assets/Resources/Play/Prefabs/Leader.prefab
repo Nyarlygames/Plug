@@ -82,25 +82,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Init_speed: 5
+  available: 0
   status: Leader
   pname: Man in charge
   age: 32
-  plevel: 0
-  strength: 0
-  endu: 0
-  body: 0
-  mental: 0
-  dexte: 0
-  accu: 0
+  plevel: 25
+  strength: 24
+  endu: 23
+  body: 22
+  mental: 21
+  dexte: 20
+  accu: 19
   speed: 5
-  percept: 0
-  surv: 0
-  intel: 0
-  mem: 0
-  chari: 0
-  social: 0
-  lang: 0
-  tribe: {fileID: 0}
+  percept: 18
+  surv: 17
+  intel: 16
+  mem: 15
+  chari: 14
+  social: 13
+  lang: 12
+  exp: 11
+  moral: 10
+  fatigue: 9
+  respect: 8
+  life: 7
+  speed_attr: 6
+  food: 5
+  resdis: 4
+  healdis: 3
+  reswoun: 2
+  healwoun: 1
   targetHit: {x: 0, y: 0, z: 0}
 --- !u!212 &212298672666782174
 SpriteRenderer:

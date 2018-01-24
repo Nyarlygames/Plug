@@ -121,7 +121,7 @@ public class CharacterPanelScript : MonoBehaviour {
     {
         CurrentChar = Tribe.Characters[CharacterList.value].GetComponent<CharacterScript>();
         CharacterFace.sprite = CurrentChar.GetComponent<SpriteRenderer>().sprite;
-        Character_Name.text = "Name : " + CurrentChar.name.ToString();
+        Character_Name.text = "Name : " + CurrentChar.pname.ToString();
         Character_Age.text = "Age : " + CurrentChar.age.ToString();
         Character_Title.text = "Title : " + CurrentChar.status.ToString();
         if (CurrentChar.available)
