@@ -290,9 +290,11 @@
     <Compile Include="Assets\LogController.cs" />
     <Compile Include="Assets\MainMenuController.cs" />
     <Compile Include="Assets\MapObjectScript.cs" />
+    <Compile Include="Assets\MapPanelScript.cs" />
     <Compile Include="Assets\NewGameController.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
+    <Compile Include="Assets\ResourcesPanelScript.cs" />
     <Compile Include="Assets\TimeStruct.cs" />
     <Compile Include="Assets\TribePanelScript.cs" />
     <Compile Include="Assets\TribeScript.cs" />

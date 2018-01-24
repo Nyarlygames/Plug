@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class CharacterPanelScript : MonoBehaviour {
 
@@ -50,8 +49,10 @@ public class CharacterPanelScript : MonoBehaviour {
         Tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
         Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
         GameObject.Find("CharacterSelector+").GetComponent<Button>().onClick.AddListener(CharacterSelectorPlus_Click);
-        GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharacterSelectorMinus_Click);         
+        GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharacterSelectorMinus_Click);
         GameObject.Find("SwitchTribe").GetComponent<Button>().onClick.AddListener(SwitchTribe_Click);
+        GameObject.Find("SwitchResources").GetComponent<Button>().onClick.AddListener(SwitchResources_Click);
+        GameObject.Find("SwitchMap").GetComponent<Button>().onClick.AddListener(SwitchMap_Click);
         CharacterFace = GameObject.Find("CharacterFace").GetComponent<Image>();
         Character_Strength = GameObject.Find("Character_Strength").GetComponent<Text>();
         Character_Endurance = GameObject.Find("Character_Endurance").GetComponent<Text>();
@@ -104,8 +105,22 @@ public class CharacterPanelScript : MonoBehaviour {
     {
         Controls.char_panel = false;
         Controls.tribe_panel = true;
-        SceneManager.LoadSceneAsync("TribePanel", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("CharacterPanel");
+        Controls.UICharactersPanel.SetActive(false);
+        Controls.UITribePanel.SetActive(true);
+    }
+    void SwitchResources_Click()
+    {
+        Controls.char_panel = false;
+        Controls.resources_panel = true;
+        Controls.UICharactersPanel.SetActive(false);
+        Controls.UIResourcesPanel.SetActive(true);
+    }
+    void SwitchMap_Click()
+    {
+        Controls.char_panel = false;
+        Controls.map_panel = true;
+        Controls.UICharactersPanel.SetActive(false);
+        Controls.UIMapPanel.SetActive(true);
     }
 
     void CharacterSelectorPlus_Click()

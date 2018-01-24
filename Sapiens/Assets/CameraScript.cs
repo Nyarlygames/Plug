@@ -10,9 +10,14 @@ public class CameraScript : MonoBehaviour {
     public float speeddezoom = 0;
     public float speedzoom = 0;
     Camera cam;
+    Transform camPos;
+    Transform tribePos;
 
-    void Start () {
+    void Start ()
+    {
         cam = gameObject.GetComponent<Camera>();
+        camPos = gameObject.GetComponent<Camera>().GetComponent<Transform>();
+        tribePos = GameObject.Find("Tribe").GetComponent<Transform>();
         cam.orthographicSize = init_zoom;
         current_zoom = init_zoom;
     }
@@ -21,8 +26,11 @@ public class CameraScript : MonoBehaviour {
     {
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
+        Vector3 offset = tribePos.position;
+        offset.y = current_zoom;
+        camPos.position = offset;
     }
 
     public void Zoom()

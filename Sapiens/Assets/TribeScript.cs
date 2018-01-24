@@ -63,7 +63,6 @@ public class TribeScript : MonoBehaviour {
         CampOff = Resources.Load<Sprite>("Play/TribeChar/camp_night");
         TribeSprite = gameObject.GetComponent<SpriteRenderer>();
 
-
         // manual player add
         if (PlayerPrefs.GetString("Seed") != null)
         {

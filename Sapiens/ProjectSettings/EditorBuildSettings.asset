@@ -26,3 +26,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TribePanel.unity
     guid: 0c244036faa4c1647b6c2c85bb775f36
+  - enabled: 1
+    path: Assets/Scenes/ResourcesPanel.unity
+    guid: 3e10ae672292bbe4f9928c2488e59ad4
+  - enabled: 1
+    path: Assets/Scenes/MapPanel.unity
+    guid: 4a0e19fc9205aac448bfe6e3903f95a0

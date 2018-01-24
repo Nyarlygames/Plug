@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class TribePanelScript : MonoBehaviour {
 
@@ -43,7 +42,9 @@ public class TribePanelScript : MonoBehaviour {
 
     void Start()
     {
-        GameObject.Find("SwitchChar").GetComponent<Button>().onClick.AddListener(SwitchTribe_Click);
+        GameObject.Find("SwitchChar").GetComponent<Button>().onClick.AddListener(SwitchChar_Click);
+        GameObject.Find("SwitchMap").GetComponent<Button>().onClick.AddListener(SwitchMap_Click);
+        GameObject.Find("SwitchResources").GetComponent<Button>().onClick.AddListener(SwitchResources_Click);
         Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
         Tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
 
@@ -81,13 +82,28 @@ public class TribePanelScript : MonoBehaviour {
 
     }
 
-    void SwitchTribe_Click()
+    void SwitchChar_Click()
     {
         Controls.char_panel = true;
         Controls.tribe_panel = false;
-        SceneManager.LoadSceneAsync("CharacterPanel", LoadSceneMode.Additive);
-        SceneManager.UnloadSceneAsync("TribePanel");
+        Controls.UITribePanel.SetActive(false);
+        Controls.UICharactersPanel.SetActive(true);
+    }
 
+    void SwitchMap_Click()
+    {
+        Controls.map_panel = true;
+        Controls.tribe_panel = false;
+        Controls.UITribePanel.SetActive(false);
+        Controls.UIMapPanel.SetActive(true);
+    }
+
+    void SwitchResources_Click()
+    {
+        Controls.resources_panel = true;
+        Controls.tribe_panel = false;
+        Controls.UITribePanel.SetActive(false);
+        Controls.UIResourcesPanel.SetActive(true);
     }
 
     void Update () {

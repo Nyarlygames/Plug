@@ -7,6 +7,8 @@ Assets/Scenes/NewGame.unity
 Assets/Scenes/Sapiens.unity
 Assets/Scenes/CharacterPanel.unity
 Assets/Scenes/TribePanel.unity
+Assets/Scenes/ResourcesPanel.unity
+Assets/Scenes/MapPanel.unity
 SceneListEnd?
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.UI_DebugScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.OptionsMenu

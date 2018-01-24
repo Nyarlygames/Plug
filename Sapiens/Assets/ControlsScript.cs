@@ -11,10 +11,20 @@ public class ControlsScript : MonoBehaviour
     TribeScript TribeScript;
     public SpriteRenderer Fog;
     GameObject UIDebug;
+    GameObject UICharactersPanelPrefab;
+    GameObject UITribePanelPrefab;
+    GameObject UIMapPanelPrefab;
+    GameObject UIResourcesPanelPrefab;
+    public GameObject UICharactersPanel;
+    public GameObject UITribePanel;
+    public GameObject UIMapPanel;
+    public GameObject UIResourcesPanel;
     CameraScript CamScript;
     bool debug_panel = true;
     public bool char_panel = false;
     public bool tribe_panel = false;
+    public bool resources_panel = false;
+    public bool map_panel = false;
     public bool dusk_cycle = true;
     public Color duskmax = new Color(1f, 1f, 1f, 0.4f);
     public Color duskmin = new Color(1f, 1f, 1f, 0.0f);
@@ -32,7 +42,7 @@ public class ControlsScript : MonoBehaviour
     private float timeScaleBeforePause = 0.0f;
     private float timeScaleBeforeMenu = 0.0f;
 
-    void Start ()
+    void Start()
     {
         UIDebug = GameObject.Find("UI_Debug");
         UIDebug.SetActive(debug_panel);
@@ -46,6 +56,20 @@ public class ControlsScript : MonoBehaviour
         Cursor_Mouset = GameObject.Find("Cursor_Mouse").GetComponent<Transform>();
         Cursor_Targett = GameObject.Find("Cursor_Target").GetComponent<Transform>();
         Cursor_Target = GameObject.Find("Cursor_Target");
+        UICharactersPanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_CharacterPanel");
+        UITribePanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_TribePanel");
+        UIResourcesPanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_ResourcesPanel");
+        UIMapPanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_MapPanel");
+
+        UICharactersPanel = Instantiate(UICharactersPanelPrefab, Vector3.zero, Quaternion.identity);
+        UITribePanel = Instantiate(UITribePanelPrefab, Vector3.zero, Quaternion.identity);
+        UIResourcesPanel = Instantiate(UIResourcesPanelPrefab, Vector3.zero, Quaternion.identity);
+        UIMapPanel = Instantiate(UIMapPanelPrefab, Vector3.zero, Quaternion.identity);
+
+        UICharactersPanel.SetActive(false);
+        UITribePanel.SetActive(false);
+        UIResourcesPanel.SetActive(false);
+        UIMapPanel.SetActive(false);
     }
 
     void FixedUpdate()
@@ -74,76 +98,20 @@ public class ControlsScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.C)) // hide/show character panel
         {
-            if (char_panel == false)
-            {
-                char_panel = true;
-                SceneManager.LoadSceneAsync("CharacterPanel", LoadSceneMode.Additive);
-                if (tribe_panel == true)
-                {
-                    SceneManager.UnloadSceneAsync("TribePanel");
-                    tribe_panel = false;
-                }
-                else
-                { 
-                    if (timeScaleBeforePause == 0.0f)
-                    {
-                        timeScaleBeforeMenu = Time.timeScale;
-                        Time.timeScale = 0.0f;
-                    }
-                    else
-                    {
-                        timeScaleBeforeMenu = timeScaleBeforePause;
-                    }
-                }
-            }
-            else
-            { 
-                SceneManager.UnloadSceneAsync("CharacterPanel");
-                char_panel = false;
-
-                if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
-                {
-                    Time.timeScale = timeScaleBeforeMenu;
-                }
-                timeScaleBeforeMenu = 0.0f;
-            }
+            OpenPanel("CharacterPanel");
+        }
+        if (Input.GetKeyDown(KeyCode.M)) // hide/show map panel
+        {
+            OpenPanel("MapPanel");
+        }
+        if (Input.GetKeyDown(KeyCode.R)) // hide/show resources panel
+        {
+            OpenPanel("ResourcesPanel");
         }
 
         if (Input.GetKeyDown(KeyCode.T)) // hide/show tribe panel
         {
-            if (tribe_panel == false)
-            {
-                tribe_panel = true;
-                SceneManager.LoadSceneAsync("TribePanel", LoadSceneMode.Additive);
-                if (char_panel == true)
-                {
-                    SceneManager.UnloadSceneAsync("CharacterPanel");
-                    char_panel = false;
-                }
-                else
-                {
-                    if (timeScaleBeforePause == 0.0f)
-                    {
-                        timeScaleBeforeMenu = Time.timeScale;
-                        Time.timeScale = 0.0f;
-                    }
-                    else
-                    {
-                        timeScaleBeforeMenu = timeScaleBeforePause;
-                    }
-                }
-            }
-            else
-            {
-                SceneManager.UnloadSceneAsync("TribePanel");
-                tribe_panel = false;
-
-                if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
-                {
-                    Time.timeScale = timeScaleBeforeMenu;
-                }
-                timeScaleBeforeMenu = 0.0f;
-            }            
+            OpenPanel("TribePanel");
         }
 
         if (Input.GetKeyDown(KeyCode.H)) // hide/show debug ui
@@ -174,6 +142,207 @@ public class ControlsScript : MonoBehaviour
         if (TribeScript.targetHit == Vector3.zero)
             Cursor_Target.SetActive(false);
     }
+
+    void OpenPanel(string name)
+    {
+        switch (name)
+        {
+            case "CharacterPanel":
+                if (char_panel == false)
+                {
+                    char_panel = true;
+                    UICharactersPanel.SetActive(true);
+                    if (map_panel == true)
+                    {
+                        UIMapPanel.SetActive(false);
+                        map_panel = false;
+                    }
+                    else if (tribe_panel == true)
+                    {
+                        UITribePanel.SetActive(false);
+                        tribe_panel = false;
+
+                    }
+                    else if (resources_panel == true)
+                    {
+                        UIResourcesPanel.SetActive(false);
+                        resources_panel = false;
+
+                    }
+                    else
+                    {
+                        if (timeScaleBeforePause == 0.0f)
+                        {
+                            timeScaleBeforeMenu = Time.timeScale;
+                            Time.timeScale = 0.0f;
+                        }
+                        else
+                        {
+                            timeScaleBeforeMenu = timeScaleBeforePause;
+                        }
+                    }
+                }
+                else
+                {
+                    UICharactersPanel.SetActive(false);
+                    char_panel = false;
+
+                    if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                    {
+                        Time.timeScale = timeScaleBeforeMenu;
+                    }
+                    timeScaleBeforeMenu = 0.0f;
+                }
+                break;
+                
+            case "TribePanel":
+                if (tribe_panel == false)
+                {
+                    tribe_panel = true;
+                    UITribePanel.SetActive(true);
+                    if (char_panel == true)
+                    {
+                        UICharactersPanel.SetActive(false);
+                        char_panel = false;
+                    }
+                    else if (resources_panel == true)
+                    {
+                        UIResourcesPanel.SetActive(false);
+                        resources_panel = false;
+
+                    }
+                    else if (map_panel == true)
+                    {
+                        UIMapPanel.SetActive(false);
+                        map_panel = false;
+
+                    }
+                    else
+                    {
+                        if (timeScaleBeforePause == 0.0f)
+                        {
+                            timeScaleBeforeMenu = Time.timeScale;
+                            Time.timeScale = 0.0f;
+                        }
+                        else
+                        {
+                            timeScaleBeforeMenu = timeScaleBeforePause;
+                        }
+                    }
+                }
+                else
+                {
+                    UITribePanel.SetActive(false);
+                    tribe_panel = false;
+
+                    if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                    {
+                        Time.timeScale = timeScaleBeforeMenu;
+                    }
+                    timeScaleBeforeMenu = 0.0f;
+                }
+                break;
+
+            case "ResourcesPanel":
+                if (resources_panel == false)
+                {
+                    resources_panel = true;
+                    UIResourcesPanel.SetActive(true);
+                    if (char_panel == true)
+                    {
+                        UICharactersPanel.SetActive(false);
+                        char_panel = false;
+                    }
+                    else if (tribe_panel == true)
+                    {
+                        UITribePanel.SetActive(false);
+                        tribe_panel = false;
+
+                    }
+                    else if (map_panel == true)
+                    {
+                        UIMapPanel.SetActive(false);
+                        map_panel = false;
+
+                    }
+                    else
+                    {
+                        if (timeScaleBeforePause == 0.0f)
+                        {
+                            timeScaleBeforeMenu = Time.timeScale;
+                            Time.timeScale = 0.0f;
+                        }
+                        else
+                        {
+                            timeScaleBeforeMenu = timeScaleBeforePause;
+                        }
+                    }
+                }
+                else
+                {
+                    UIResourcesPanel.SetActive(false);
+                    resources_panel = false;
+
+                    if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                    {
+                        Time.timeScale = timeScaleBeforeMenu;
+                    }
+                    timeScaleBeforeMenu = 0.0f;
+                }
+                break;
+
+            case "MapPanel":
+                if (map_panel == false)
+                {
+                    map_panel = true;
+                    UIMapPanel.SetActive(true);
+                    if (char_panel == true)
+                    {
+                        UICharactersPanel.SetActive(false);
+                        char_panel = false;
+                    }
+                    else if (tribe_panel == true)
+                    {
+                        UITribePanel.SetActive(false);
+                        tribe_panel = false;
+
+                    }
+                    else if (resources_panel == true)
+                    {
+                        UIResourcesPanel.SetActive(false);
+                        resources_panel = false;
+
+                    }
+                    else
+                    {
+                        if (timeScaleBeforePause == 0.0f)
+                        {
+                            timeScaleBeforeMenu = Time.timeScale;
+                            Time.timeScale = 0.0f;
+                        }
+                        else
+                        {
+                            timeScaleBeforeMenu = timeScaleBeforePause;
+                        }
+                    }
+                }
+                else
+                {
+                    UIMapPanel.SetActive(false);
+                    map_panel = false;
+
+                    if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                    {
+                        Time.timeScale = timeScaleBeforeMenu;
+                    }
+                    timeScaleBeforeMenu = 0.0f;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
     void DayNightCycle()
     {
         if (dusk_cycle == true)
