@@ -62,16 +62,15 @@ public class ControlsScript : MonoBehaviour
     
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale != 0.0f) && (timeScaleBeforePause == 0.0f)) // pause
+        if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale != 0.0f) && (timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu == 0.0f)) // pause
         {
             timeScaleBeforePause = Time.timeScale;
             Time.timeScale = 0.0f;
         }
-        else if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale == 0.0f) && (timeScaleBeforePause != 0.0f)) // unpause
+        else if (Input.GetKeyDown(KeyCode.P) && (Time.timeScale == 0.0f) && (timeScaleBeforeMenu == 0.0f) && (timeScaleBeforePause != 0.0f)) // unpause
         {
             Time.timeScale = timeScaleBeforePause;
             timeScaleBeforePause = 0.0f;
-            //might be a lock there, but dunno where, did not reproduce (spamming C/T/P)
         }
         if (Input.GetKeyDown(KeyCode.C)) // hide/show character panel
         {
@@ -84,16 +83,29 @@ public class ControlsScript : MonoBehaviour
                     SceneManager.UnloadSceneAsync("TribePanel");
                     tribe_panel = false;
                 }
-                else { // pauses when opening char/tribe panels
-                    timeScaleBeforeMenu = Time.timeScale;
-                    Time.timeScale = 0.0f;
+                else
+                { 
+                    if (timeScaleBeforePause == 0.0f)
+                    {
+                        timeScaleBeforeMenu = Time.timeScale;
+                        Time.timeScale = 0.0f;
+                    }
+                    else
+                    {
+                        timeScaleBeforeMenu = timeScaleBeforePause;
+                    }
                 }
             }
             else
-            { // resume time upon exiting panels
+            { 
                 SceneManager.UnloadSceneAsync("CharacterPanel");
                 char_panel = false;
-                Time.timeScale = timeScaleBeforeMenu;
+
+                if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                {
+                    Time.timeScale = timeScaleBeforeMenu;
+                }
+                timeScaleBeforeMenu = 0.0f;
             }
         }
 
@@ -109,17 +121,29 @@ public class ControlsScript : MonoBehaviour
                     char_panel = false;
                 }
                 else
-                { // pauses when opening char/tribe panels
-                    timeScaleBeforeMenu = Time.timeScale;
-                    Time.timeScale = 0.0f;
+                {
+                    if (timeScaleBeforePause == 0.0f)
+                    {
+                        timeScaleBeforeMenu = Time.timeScale;
+                        Time.timeScale = 0.0f;
+                    }
+                    else
+                    {
+                        timeScaleBeforeMenu = timeScaleBeforePause;
+                    }
                 }
             }
             else
-            { // resume time upon exiting panels
+            {
                 SceneManager.UnloadSceneAsync("TribePanel");
                 tribe_panel = false;
-                Time.timeScale = timeScaleBeforeMenu;
-            }
+
+                if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                {
+                    Time.timeScale = timeScaleBeforeMenu;
+                }
+                timeScaleBeforeMenu = 0.0f;
+            }            
         }
 
         if (Input.GetKeyDown(KeyCode.H)) // hide/show debug ui
