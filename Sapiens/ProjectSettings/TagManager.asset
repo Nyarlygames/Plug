@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tribe
   - CharacterPicSlot
+  - Gather
   layers:
   - Default
   - TransparentFX

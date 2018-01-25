@@ -12,6 +12,7 @@ public class UI_DebugScript : MonoBehaviour {
     Toggle TDusk;
     Text TDuskText;
     Text TribeAgeCumul;
+    Text TribeAgeCumulSave;
     ControlsScript Cs;
 
     // Use this for initialization
@@ -20,6 +21,7 @@ public class UI_DebugScript : MonoBehaviour {
         TimeScaler = GameObject.Find("TimeScaler").GetComponent<Slider>();
         TimeScalerText = GameObject.Find("TimeScalerText").GetComponent<Text>();
         TribeAgeCumul = GameObject.Find("TribeCumulAge").GetComponent<Text>();
+        TribeAgeCumulSave = GameObject.Find("TribeCumulAgeSave").GetComponent<Text>();
         TimeScalerCurrentText = GameObject.Find("TimeScalerCurrentText").GetComponent<Text>();
         Button temp = GameObject.Find("TimeScalerApply").GetComponent<Button>();
         temp.onClick.AddListener(TimeScalerApply_Click);
@@ -62,7 +64,8 @@ public class UI_DebugScript : MonoBehaviour {
     
     void FixedUpdate ()
     {
-        TribeAgeCumul.text = "Cumul time spent : " + Cs.TS.formattedcumulString;
+        TribeAgeCumul.text = "Cumul session : " + Cs.TS.formattedcumulString;
+        TribeAgeCumulSave.text = "Cumul save : " + Cs.TS.formattedcumulsaveString;
         // set dusk/dawn cycle On
         TimeScalerCurrentText.text = "Current speed : " + Time.timeScale.ToString();
         TimeScalerText.text = Convert.ToInt32(TimeScaler.value).ToString();

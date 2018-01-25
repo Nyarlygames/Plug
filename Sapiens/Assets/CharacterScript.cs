@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CharacterScript : MonoBehaviour
 {
-
+    
     public float Init_speed = 0;
     public bool available = true;
     public string status;
@@ -42,6 +42,7 @@ public class CharacterScript : MonoBehaviour
 
     Transform pt;
     Rigidbody prb;
+    TribeScript tribe;
     LogController Logger;
     public Vector3 targetHit = Vector3.zero;
     
@@ -53,6 +54,13 @@ public class CharacterScript : MonoBehaviour
         pt = gameObject.GetComponent<Transform>();
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
+        tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
+        if (age > 15)
+            tribe.TrbAdults++;
+        else
+            tribe.TrbYoungs++;
+        tribe.TrbUnity += moral;
+        tribe.TrbRank += exp;
     }
 
     void FixedUpdate()

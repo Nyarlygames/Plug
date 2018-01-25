@@ -286,7 +286,9 @@
     <Compile Include="Assets\CharacterPanelScript.cs" />
     <Compile Include="Assets\CharacterScript.cs" />
     <Compile Include="Assets\ControlsScript.cs" />
+    <Compile Include="Assets\EventManagerScript.cs" />
     <Compile Include="Assets\FogScript.cs" />
+    <Compile Include="Assets\GatherZone.cs" />
     <Compile Include="Assets\LogController.cs" />
     <Compile Include="Assets\MainMenuController.cs" />
     <Compile Include="Assets\MapObjectScript.cs" />

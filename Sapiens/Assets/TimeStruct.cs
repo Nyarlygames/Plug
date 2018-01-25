@@ -16,6 +16,13 @@ public class TimeStruct {
     public int cumulmonths = 0;
     public int cumulyears = 0;
 
+    public int savehours = 0;
+    public int savedays = 0;
+    public int saveweeks = 0;
+    public int savemonths = 0;
+    public int saveyears = 0;
+
     public string formattedString = "";
     public string formattedcumulString = "";
+    public string formattedcumulsaveString = "";
 }

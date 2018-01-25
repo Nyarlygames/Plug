@@ -121,6 +121,10 @@ public class TribeScript : MonoBehaviour {
             // if target is set, move player
             MoveTribeTo(targetHit);
         }
+        else
+        {
+            TribeSprite.enabled = true;
+        }
 
         //Players
     }
@@ -141,45 +145,48 @@ public class TribeScript : MonoBehaviour {
         else
         {
             // target reached, reset target and reshow camp
-            TribeSprite.enabled = true;
             targetHit = Vector3.zero;
         }
     }
 
-    /*
+    
     // trigger = walkable, set height
     void OnTriggerEnter(Collider coll)
     {
-        // entering a new region
-        MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
-        if (ms != null)
-        {
-            Logger.Add_To_Log("Entered: " + ms.RegionName);
-           // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
-            ms.VisitState = 1;
-        }
+        /* // entering a new region
+         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
+         if (ms != null)
+         {
+             Logger.Add_To_Log("Entered: " + ms.RegionName);
+            // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
+             ms.VisitState = 1;
+         }*/
+         if (coll.CompareTag("Gather"))
+            Debug.Log("Enter : " + coll.name);
     }
     void OnTriggerStay(Collider coll)
     {
-        // inside a region
+        /*// inside a region
         MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
             // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
             ms.VisitState = 2;
-        }
+        }*/
+       // Debug.Log("Stay : " + coll.name);
     }
     void OnTriggerExit(Collider coll)
     {
         // Exiting a region
         //speed = 0;
-        MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
+        /*MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
         if (ms != null)
         {
             ms.VisitState = 1;
-        }
+        }*/
+      //  Debug.Log("Exit : " + coll.name);
     }
-
+    /*
     // collision = non walkable
     void OnCollisionEnter(Collision coll)
     {

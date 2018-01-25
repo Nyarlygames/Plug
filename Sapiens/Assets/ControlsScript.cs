@@ -46,7 +46,7 @@ public class ControlsScript : MonoBehaviour
     {
         UIDebug = GameObject.Find("UI_Debug");
         UIDebug.SetActive(debug_panel);
-        PlayerPrefs.SetFloat("TribeAge", 0.0f); // keep previous experience when loading/saving is done
+        PlayerPrefs.GetFloat("TribeAge"); // keep previous experience when loading/saving is done
         TribeAge = GameObject.Find("TribeAge").GetComponent<Text>();
         TribeSprite = GameObject.Find("Tribe").GetComponent<SpriteRenderer>();
         TribeScript = GameObject.Find("Tribe").GetComponent<TribeScript>();
@@ -75,7 +75,7 @@ public class ControlsScript : MonoBehaviour
     void FixedUpdate()
     {
         TS = format_Time((float)Time.time);
-        TribeAge.text = "Time spent : " + TS.formattedString; // shows the tribe's age
+        TribeAge.text = "Session time : " + TS.formattedString; // shows the session's age
         DayNightCycle();
         MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         MousePos.y = UIPlane;
@@ -114,6 +114,11 @@ public class ControlsScript : MonoBehaviour
             OpenPanel("TribePanel");
         }
 
+        if (Input.GetKeyDown(KeyCode.S)) // simulate save
+        {
+            PlayerPrefs.SetFloat("TribeAge", PlayerPrefs.GetFloat("TribeAge") + PlayerPrefs.GetFloat("TribeTime"));
+        }
+
         if (Input.GetKeyDown(KeyCode.H)) // hide/show debug ui
         {
             debug_panel = !debug_panel;
@@ -129,7 +134,7 @@ public class ControlsScript : MonoBehaviour
         {
             CamScript.Zoom();
         }
-
+        
         if (Input.GetMouseButtonDown(1)) // right click to move tribe
         {
             Vector3 TargetCoords = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -139,6 +144,12 @@ public class ControlsScript : MonoBehaviour
             TargetCoords.y = TribePlane;
             TribeScript.targetHit = TargetCoords;
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) // cancel move 
+        {
+            TribeScript.targetHit = Vector3.zero;
+        }
+
         if (TribeScript.targetHit == Vector3.zero)
             Cursor_Target.SetActive(false);
     }
@@ -383,17 +394,19 @@ public class ControlsScript : MonoBehaviour
     {
         // TO redo timings!
         float temp_time = 0;
+        float temp_timecumul = 0;
         int HoursInDay = 24; //(24*30)
         int HoursinWeek = 168; //(24*7)
         int HoursinMonth = 720; //(24*30)
         int HoursinYear = 8760; //(24*365)
 
         temp_time = time;
-        
+        temp_timecumul = time + PlayerPrefs.GetFloat("TribeAge");
+
         if (temp_time > HoursinYear)
         { // years
             TS.years = (int)temp_time / HoursinYear;
-            TS.cumulyears = (int) time / HoursinYear;
+            TS.cumulyears = (int)time / HoursinYear;
             temp_time = temp_time % HoursinYear;
         }
         if (temp_time > HoursinMonth)
@@ -420,28 +433,66 @@ public class ControlsScript : MonoBehaviour
             TS.cumulhours = (int)time / 1;
         }
 
+
+        // save time
+        if (temp_timecumul > HoursinYear)
+        { // years
+            TS.saveyears = (int)temp_timecumul / HoursinYear;
+            temp_timecumul = temp_timecumul % HoursinYear;
+        }
+        if (temp_timecumul > HoursinMonth)
+        {  // months
+            TS.savemonths = (int)temp_timecumul / HoursinMonth;
+            temp_timecumul = temp_timecumul % HoursinMonth;
+        }
+        if (temp_timecumul > HoursinWeek) // weeks
+        {
+            TS.saveweeks = (int)temp_timecumul / HoursinWeek;
+            temp_timecumul = temp_timecumul % HoursinWeek;
+        }
+        if (temp_timecumul >= HoursInDay) // days
+        {
+            TS.savedays = (int)temp_timecumul / HoursInDay;
+            temp_timecumul = temp_timecumul % HoursInDay;
+        }
+        if (temp_timecumul < HoursInDay)
+        {
+            TS.savehours = (int)temp_timecumul;
+        }
+
+
+
+
         TS.formattedString = "";
         TS.formattedcumulString = "";
+        TS.formattedcumulsaveString = "";
         TS.formattedString += TS.hours + " hours, ";
         TS.formattedcumulString += TS.cumulhours + " hours, ";
+        TS.formattedcumulsaveString += TS.savehours + " hours, ";
         TS.formattedString += TS.days + " days, ";
         TS.formattedcumulString += TS.cumuldays + " days, ";
+        TS.formattedcumulsaveString += TS.savedays + " days, ";
         TS.formattedString += TS.weeks + " weeks, ";
         TS.formattedcumulString += TS.cumulweeks + " weeks, ";
+        TS.formattedcumulsaveString += TS.saveweeks + " weeks, ";
         TS.formattedString += TS.months + " months, ";
         TS.formattedcumulString += TS.cumulmonths + " months, ";
+        TS.formattedcumulsaveString += TS.savemonths + " months, ";
         TS.formattedString += TS.years + " years";
         TS.formattedcumulString += TS.cumulyears + " years";
+        TS.formattedcumulsaveString += TS.saveyears + " years";
 
         PlayerPrefs.SetString("FormattedTime", TS.formattedString);
         PlayerPrefs.SetString("FormattedcumulTime", TS.formattedcumulString);
+        PlayerPrefs.SetString("FormattedcumulsaveTime", TS.formattedcumulsaveString);
         PlayerPrefs.SetInt("TribeTS.hours", TS.hours);
         PlayerPrefs.SetInt("TribeDays", TS.days);
         PlayerPrefs.SetInt("TribeWeeks", TS.weeks);
         PlayerPrefs.SetInt("TribeMonth", TS.months);
         PlayerPrefs.SetInt("TribeYears", TS.years);
         PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
-        
+        PlayerPrefs.SetFloat("TribeTime", time); // system date, use to skip later.
+
         return TS;
     }
 }
