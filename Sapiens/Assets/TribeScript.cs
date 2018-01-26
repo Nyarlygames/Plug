@@ -7,13 +7,13 @@ public class TribeScript : MonoBehaviour {
     
     private Transform tt;
     private Rigidbody trb;
-    private LogController Logger;
     public Vector3 targetHit = Vector3.zero;
     public List<GameObject> Characters = new List<GameObject>();
     private ControlsScript Controls;
     public Sprite CampOn;
     public Sprite CampOff;
     SpriteRenderer TribeSprite;
+    EventManagerScript EMS;
 
     // Tribe stats
     public float TrbUnity = 0;
@@ -29,6 +29,9 @@ public class TribeScript : MonoBehaviour {
     public float TrbCrafts = 0;
     public float TrbHerbs = 0;
     public float TrbSpeed = 0;
+
+    // areas
+    //public List<GameObject> GatherZones = new List<GameObject>();
 
     // Activities
     public List<GameObject> TrbGather = new List<GameObject>();
@@ -55,13 +58,13 @@ public class TribeScript : MonoBehaviour {
         // settings variables to reduce GetComponent calls
         trb = gameObject.GetComponent<Rigidbody>();
         tt = gameObject.GetComponent<Transform>();
-        Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         Controls = GameObject.Find("Controls").GetComponent<ControlsScript>();
         //load ressources
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
         CampOn = Resources.Load<Sprite>("Play/TribeChar/camp");
         CampOff = Resources.Load<Sprite>("Play/TribeChar/camp_night");
         TribeSprite = gameObject.GetComponent<SpriteRenderer>();
+        EMS = GameObject.Find("EventManager").GetComponent<EventManagerScript>();
 
         // manual player add
         if (PlayerPrefs.GetString("Seed") != null)
@@ -112,8 +115,7 @@ public class TribeScript : MonoBehaviour {
     {
 
     }
-
-    // Update is called once per frame
+    
     void FixedUpdate ()
     {
         if (targetHit != Vector3.zero)
@@ -125,8 +127,6 @@ public class TribeScript : MonoBehaviour {
         {
             TribeSprite.enabled = true;
         }
-
-        //Players
     }
 
     
@@ -139,7 +139,7 @@ public class TribeScript : MonoBehaviour {
             target.y = Controls.CharacterPlane;
             foreach (GameObject chars in Characters)
             {
-                chars.GetComponent<CharacterScript>().MovePlayerTo(target, TrbSpeed);
+                chars.GetComponent<CharacterScript>().MovePlayerTo(target, TrbSpeed, 0);
             }
         }
         else
@@ -161,8 +161,11 @@ public class TribeScript : MonoBehaviour {
             // speed = ms.speed;    //Tribe's speed is different from player speed. Need formula to implement.
              ms.VisitState = 1;
          }*/
-         if (coll.CompareTag("Gather"))
-            Debug.Log("Enter : " + coll.name);
+        if (coll.CompareTag("Gather"))
+        {
+            EMS.AddZone(coll.gameObject);
+           // GatherZones.Add(coll.gameObject);
+        }
     }
     void OnTriggerStay(Collider coll)
     {
@@ -177,6 +180,11 @@ public class TribeScript : MonoBehaviour {
     }
     void OnTriggerExit(Collider coll)
     {
+        if (coll.CompareTag("Gather"))
+        {
+            EMS.AddZone(coll.gameObject);
+            //GatherZones.Remove(coll.gameObject);
+        }
         // Exiting a region
         //speed = 0;
         /*MapObjectScript ms = coll.gameObject.GetComponent<MapObjectScript>();
