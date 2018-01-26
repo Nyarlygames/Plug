@@ -2783,7 +2783,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Version :
 
-    0.0.3 (25/01/18)'
+    0.0.4 (26/01/18)'
 --- !u!222 &1247259804
 CanvasRenderer:
   m_ObjectHideFlags: 0
