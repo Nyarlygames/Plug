@@ -118,6 +118,14 @@ public class TribeScript : MonoBehaviour {
     
     void FixedUpdate ()
     {
+        Vector3 targetChar = tt.position;
+        targetChar.y = Controls.CharacterPlane;
+        foreach (GameObject chars in Characters)
+        {
+            if ((chars.GetComponent<CharacterScript>().available == true) || (chars.GetComponent<CharacterScript>().status == "Leader"))
+                chars.GetComponent<Transform>().position = targetChar;
+        }
+
         if (targetHit != Vector3.zero)
         {
             // if target is set, move player
@@ -136,11 +144,6 @@ public class TribeScript : MonoBehaviour {
         {
             TribeSprite.enabled = false;
             trb.MovePosition(Vector3.MoveTowards(tt.position, target, TrbSpeed * Time.deltaTime));
-            target.y = Controls.CharacterPlane;
-            foreach (GameObject chars in Characters)
-            {
-                chars.GetComponent<CharacterScript>().MovePlayerTo(target, TrbSpeed, 0);
-            }
         }
         else
         {
@@ -163,8 +166,11 @@ public class TribeScript : MonoBehaviour {
          }*/
         if (coll.CompareTag("Gather"))
         {
-            EMS.AddZone(coll.gameObject);
-           // GatherZones.Add(coll.gameObject);
+            if (EMS.EventsTracked.Find(et => et.Zone == coll.gameObject.GetComponent<GatherZoneScript>()) == null)
+                EMS.AddZone(coll.gameObject);
+            else
+                EMS.EventsTracked.Find(et => et.Zone == coll.gameObject.GetComponent<GatherZoneScript>()).isInRange = true;
+            // GatherZones.Add(coll.gameObject);
         }
     }
     void OnTriggerStay(Collider coll)
@@ -182,7 +188,12 @@ public class TribeScript : MonoBehaviour {
     {
         if (coll.CompareTag("Gather"))
         {
-            EMS.AddZone(coll.gameObject);
+            if (EMS.EventsTracked.Find(et => et.Zone == coll.gameObject.GetComponent<GatherZoneScript>()) == null)
+                // EMS.AddZone(coll.gameObject);
+                Debug.Log("Gather event removed without having been entered => huge failure");
+            else
+                EMS.EventsTracked.Find(et => et.Zone == coll.gameObject.GetComponent<GatherZoneScript>()).isInRange = false;
+            //EMS.RemoveZone(coll.gameObject);
             //GatherZones.Remove(coll.gameObject);
         }
         // Exiting a region

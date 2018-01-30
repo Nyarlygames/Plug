@@ -45,7 +45,7 @@ public class UI_DebugScript : MonoBehaviour {
     {
         if (toggle.isOn)
         {
-            if ((Cs != null) && (Cs.Fog != null)) // set dusk/dawn cycle On
+            if ((Cs != null) && (Cs.DuskDawn != null)) // set dusk/dawn cycle On
             {
                 Cs.dusk_cycle = true;
                 TDuskText.text = "Dusk/Dawn : On";
@@ -53,10 +53,10 @@ public class UI_DebugScript : MonoBehaviour {
         }
         else
         {
-            if ((Cs != null) && (Cs.Fog != null)) // set dusk/dawn cycle Off
+            if ((Cs != null) && (Cs.DuskDawn != null)) // set dusk/dawn cycle Off
             {
                 Cs.dusk_cycle = false;
-                Cs.Fog.color = Cs.duskmin;
+                Cs.DuskDawn.color = Cs.duskmin;
                 TDuskText.text = "Dusk/Dawn : Off";
             }
         }

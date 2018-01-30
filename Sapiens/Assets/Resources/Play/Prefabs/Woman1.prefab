@@ -82,12 +82,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Init_speed: 4
+  available: 1
   status: 
   pname: Bitch1
   age: 30
   plevel: 0
   strength: 0
-  endu: 0
+  endu: 15
   body: 0
   mental: 0
   dexte: 0
@@ -100,8 +101,19 @@ MonoBehaviour:
   chari: 0
   social: 0
   lang: 0
-  tribe: {fileID: 0}
+  exp: 0
+  moral: 0
+  fatigue: 0
+  respect: 0
+  life: 0
+  speed_attr: 0
+  food: 0
+  resdis: 0
+  healdis: 0
+  reswoun: 0
+  healwoun: 0
   targetHit: {x: 0, y: 0, z: 0}
+  targetHome: {x: 0, y: 0, z: 0}
 --- !u!212 &212810583366371086
 SpriteRenderer:
   m_ObjectHideFlags: 1

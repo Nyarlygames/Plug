@@ -86,16 +86,16 @@ public class CharacterScript : MonoBehaviour
         if (targetHit != Vector3.zero)
         {
             // if target is set, move player
-            MovePlayerTo(targetHit, speed, 1);
+            MovePlayerTo(targetHit, speed);
         }
 
         if (targetHome != Vector3.zero)
         {
-            targetHome = tribePos.position;
-            targetHome.y = Cs.CharacterPlane;
+            // targetHome = tribePos.position;
+            // targetHome.y = Cs.CharacterPlane;
             MovePlayerBack(targetHome);
-            EMS.Gatherers_Unavailable.Remove(this);
-            EMS.Gatherers_Available.Add(this);
+           // EMS.Gatherers_Unavailable.Remove(this);
+           // EMS.Gatherers_Available.Add(this);
         }
     }
 
@@ -105,16 +105,19 @@ public class CharacterScript : MonoBehaviour
         {
             // if target not reached, move to target
             prb.MovePosition(Vector3.MoveTowards(pt.position, target, speed * Time.deltaTime));
+            targetHome = tribePos.position;
+            targetHome.y = Cs.CharacterPlane;
         }
         else
         {
             // target reached, reset target to zero
             targetHome = Vector3.zero;
-            EMS.Logger.Add_To_Log("Returned : " + pname + " home.");
+            EventStruct updateEvent = EMS.EventsTracked.Find(et => et.Char == this);
+            updateEvent.isCharBack = true;
         }
     }
 
-    public void MovePlayerTo(Vector3 target, float speedMove, int eventMove)
+    public void MovePlayerTo(Vector3 target, float speedMove)
     {
         if (pt.position != target)
         {
@@ -125,10 +128,8 @@ public class CharacterScript : MonoBehaviour
         {
             // target reached, reset target to zero
             targetHit = Vector3.zero;
-            if (eventMove == 1)
-            {
-                targetHome = tribe.GetComponent<Transform>().position;
-            }
+            EventStruct updateEvent = EMS.EventsTracked.Find(et => et.Char == this);
+            updateEvent.isDone = true;
         }
     }
 

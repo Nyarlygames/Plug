@@ -9,7 +9,7 @@ public class ControlsScript : MonoBehaviour
     Text TribeAge;
     SpriteRenderer TribeSprite;
     TribeScript TribeScript;
-    public SpriteRenderer Fog;
+    public SpriteRenderer DuskDawn;
     GameObject UIDebug;
     GameObject UICharactersPanelPrefab;
     GameObject UITribePanelPrefab;
@@ -52,7 +52,7 @@ public class ControlsScript : MonoBehaviour
         TribeScript = GameObject.Find("Tribe").GetComponent<TribeScript>();
         CamScript = GameObject.Find("Camera").GetComponent<CameraScript>();
         Time.timeScale = 1.0f;
-        Fog = GameObject.Find("Fog").GetComponent<SpriteRenderer>();
+        DuskDawn = GameObject.Find("DuskDawn").GetComponent<SpriteRenderer>();
         Cursor_Mouset = GameObject.Find("Cursor_Mouse").GetComponent<Transform>();
         Cursor_Targett = GameObject.Find("Cursor_Target").GetComponent<Transform>();
         Cursor_Target = GameObject.Find("Cursor_Target");
@@ -360,21 +360,21 @@ public class ControlsScript : MonoBehaviour
         {
             if ((TS.hours >= 20) || (TS.hours < 5))
             {
-                if (Fog.color.a < duskmax.a)
+                if (DuskDawn.color.a < duskmax.a)
                 {
-                    Fog.color = new Color(1f, 1f, 1f, Fog.color.a + (duskspeed * Time.deltaTime));
+                    DuskDawn.color = new Color(1f, 1f, 1f, DuskDawn.color.a + (duskspeed * Time.deltaTime));
                 }
-                if (Fog.color.a > duskmax.a)
-                    Fog.color = duskmax;
+                if (DuskDawn.color.a > duskmax.a)
+                    DuskDawn.color = duskmax;
             }
             else
             {
-                if (Fog.color.a > duskmin.a)
+                if (DuskDawn.color.a > duskmin.a)
                 {
-                    Fog.color = new Color(1f, 1f, 1f, Fog.color.a - (duskspeed * Time.deltaTime));
+                    DuskDawn.color = new Color(1f, 1f, 1f, DuskDawn.color.a - (duskspeed * Time.deltaTime));
                 }
-                if (Fog.color.a < duskmin.a)
-                    Fog.color = duskmin;
+                if (DuskDawn.color.a < duskmin.a)
+                    DuskDawn.color = duskmin;
             }
         }
 
@@ -438,27 +438,24 @@ public class ControlsScript : MonoBehaviour
         if (temp_timecumul > HoursinYear)
         { // years
             TS.saveyears = (int)temp_timecumul / HoursinYear;
-            temp_timecumul = temp_timecumul % HoursinYear;
+            //temp_timecumul = temp_timecumul % HoursinYear;
         }
         if (temp_timecumul > HoursinMonth)
         {  // months
             TS.savemonths = (int)temp_timecumul / HoursinMonth;
-            temp_timecumul = temp_timecumul % HoursinMonth;
+           // temp_timecumul = temp_timecumul % HoursinMonth;
         }
         if (temp_timecumul > HoursinWeek) // weeks
         {
             TS.saveweeks = (int)temp_timecumul / HoursinWeek;
-            temp_timecumul = temp_timecumul % HoursinWeek;
+          //  temp_timecumul = temp_timecumul % HoursinWeek;
         }
         if (temp_timecumul >= HoursInDay) // days
         {
             TS.savedays = (int)temp_timecumul / HoursInDay;
-            temp_timecumul = temp_timecumul % HoursInDay;
+           // temp_timecumul = temp_timecumul % HoursInDay;
         }
-        if (temp_timecumul < HoursInDay)
-        {
-            TS.savehours = (int)temp_timecumul;
-        }
+        TS.savehours = (int)temp_timecumul;
 
 
 
@@ -466,18 +463,23 @@ public class ControlsScript : MonoBehaviour
         TS.formattedString = "";
         TS.formattedcumulString = "";
         TS.formattedcumulsaveString = "";
+
         TS.formattedString += TS.hours + " hours, ";
         TS.formattedcumulString += TS.cumulhours + " hours, ";
         TS.formattedcumulsaveString += TS.savehours + " hours, ";
+
         TS.formattedString += TS.days + " days, ";
         TS.formattedcumulString += TS.cumuldays + " days, ";
         TS.formattedcumulsaveString += TS.savedays + " days, ";
+
         TS.formattedString += TS.weeks + " weeks, ";
         TS.formattedcumulString += TS.cumulweeks + " weeks, ";
         TS.formattedcumulsaveString += TS.saveweeks + " weeks, ";
+
         TS.formattedString += TS.months + " months, ";
         TS.formattedcumulString += TS.cumulmonths + " months, ";
         TS.formattedcumulsaveString += TS.savemonths + " months, ";
+
         TS.formattedString += TS.years + " years";
         TS.formattedcumulString += TS.cumulyears + " years";
         TS.formattedcumulsaveString += TS.saveyears + " years";
