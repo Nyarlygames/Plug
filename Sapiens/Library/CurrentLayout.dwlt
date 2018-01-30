@@ -45,7 +45,7 @@ MonoBehaviour:
   m_MinSize: {x: 683, y: 342}
   m_MaxSize: {x: 12008, y: 8042}
   vertical: 0
-  controlID: 9
+  controlID: 125
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -116,8 +116,8 @@ MonoBehaviour:
     y: 900
     width: 1760
     height: 391
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 100, y: 100}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 15}
@@ -211,7 +211,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 342}
   m_MaxSize: {x: 8006, y: 8042}
   vertical: 1
-  controlID: 10
+  controlID: 49
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 11
+  controlID: 50
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -388,19 +388,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/Play/Prefabs
+    - Assets
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Play/Prefabs
+  - Assets
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Projects\Plug\Sapiens
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 4a2a0000
-    m_LastClickedID: 10826
-    m_ExpandedIDs: 000000008a27000094270000f827000032290000a2290000c6290000662d0000
+    scrollPos: {x: 0, y: 31}
+    m_SelectedIDs: 8a270000
+    m_LastClickedID: 10122
+    m_ExpandedIDs: 000000008a27000094270000fa2700003229000036290000a8290000cc290000462a0000902b000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -428,7 +428,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000008a27000094270000f827000032290000a2290000c6290000662d0000
+    m_ExpandedIDs: 000000008a27000094270000fa27000036290000a8290000cc290000462a0000902b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -453,9 +453,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 1
+    m_SelectedInstanceIDs: 3ee7ffff
+    m_LastClickedInstanceID: -6338
+    m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: 56260000083400000000000002280000fe0500003c280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -546,9 +546,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 822b0000
-    m_LastClickedID: 11138
-    m_ExpandedIDs: 9efbffff00000000702b0000ee2c0000
+    m_SelectedIDs: d22c0000
+    m_LastClickedID: 11474
+    m_ExpandedIDs: 5ae7ffff62e7ffff76e8ffffe6e8ffff70e9fffffee9ffff8ceaffff9efbffff00000000c02b0000442d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -599,14 +599,14 @@ MonoBehaviour:
     height: 879
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 4705.635309325377
+  lastFramingTime: 7250.91163573869
   m_2DMode: 0
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 0.38237447, y: -13.1019745, z: -14.617277}
+    m_Target: {x: 100, y: 1, z: 30}
     speed: 2
-    m_Value: {x: 0.38237447, y: -13.1019745, z: -14.617277}
+    m_Value: {x: 100, y: 1, z: 30}
   m_RenderMode: 0
   m_ValidateTrueMetals: 0
   m_SceneViewState:
@@ -630,13 +630,13 @@ MonoBehaviour:
       speed: 2
       m_Value: 0
   m_Rotation:
-    m_Target: {x: -0.47799313, y: 0.002112978, z: -0.0011509912, w: -0.8783604}
+    m_Target: {x: -0.6097173, y: -0.017113792, z: 0.013168161, w: -0.7923248}
     speed: 2
-    m_Value: {x: -0.47799313, y: 0.002112978, z: -0.0011509913, w: -0.87836045}
+    m_Value: {x: -0.6097173, y: -0.017113792, z: 0.013168161, w: -0.7923248}
   m_Size:
-    m_Target: 48.402023
+    m_Target: 55.139202
     speed: 2
-    m_Value: 48.402023
+    m_Value: 55.139202
   m_Ortho:
     m_Target: 0
     speed: 2

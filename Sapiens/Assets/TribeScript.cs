@@ -72,14 +72,14 @@ public class TribeScript : MonoBehaviour {
 
             if (PlayerPrefs.GetString("Seed") == "Seed hack")
             {
-                AddChar(0, "Leader", "Play/Prefabs/Leader");
-                AddChar(1, "Man1", "Play/Prefabs/Man1");
-                AddChar(2, "Man2", "Play/Prefabs/Man2");
-                AddChar(3, "Woman1", "Play/Prefabs/Woman1");
-                AddChar(4, "Woman2", "Play/Prefabs/Woman2");
-                AddChar(5, "Son", "Play/Prefabs/Son");
-                AddChar(6, "Daughter", "Play/Prefabs/Daughter");
-                AddChar(7, "Elder", "Play/Prefabs/Elder");
+                AddChar(0, "Leader", "Play/Prefabs/Characters/Leader");
+                AddChar(1, "Man1", "Play/Prefabs/Characters/Man1");
+                AddChar(2, "Man2", "Play/Prefabs/Characters/Man2");
+                AddChar(3, "Woman1", "Play/Prefabs/Characters/Woman1");
+                AddChar(4, "Woman2", "Play/Prefabs/Characters/Woman2");
+                AddChar(5, "Son", "Play/Prefabs/Characters/Son");
+                AddChar(6, "Daughter", "Play/Prefabs/Characters/Daughter");
+                AddChar(7, "Elder", "Play/Prefabs/Characters/Elder");
             }
         }
         foreach (GameObject chars in Characters)

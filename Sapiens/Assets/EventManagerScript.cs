@@ -6,7 +6,6 @@ public class EventManagerScript : MonoBehaviour {
     TribeScript tribe;
     public LogController Logger;
     List<GatherZoneScript> GatherZones = new List<GatherZoneScript>();
-    List<GameObject> Gatherers;
     public List<CharacterScript> Gatherers_Available = new List<CharacterScript>();
     public List<CharacterScript> Gatherers_Unavailable = new List<CharacterScript>();
     public List<EventStruct> EventsTracked = new List<EventStruct>();
@@ -18,7 +17,6 @@ public class EventManagerScript : MonoBehaviour {
     {
         Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
-        Gatherers = tribe.TrbGather;
         Cs = GameObject.Find("Controls").GetComponent<ControlsScript>();
         lastday = Cs.TS.savedays;
         lasthour = Cs.TS.hours;

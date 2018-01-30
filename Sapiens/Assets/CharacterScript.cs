@@ -45,7 +45,6 @@ public class CharacterScript : MonoBehaviour
     TribeScript tribe;
     Transform tribePos;
     ControlsScript Cs;
-    LogController Logger;
     public Vector3 targetHit = Vector3.zero;
     public Vector3 targetHome = Vector3.zero;
 
@@ -53,10 +52,9 @@ public class CharacterScript : MonoBehaviour
     void Start()
     {
         Cs = GameObject.Find("Controls").GetComponent<ControlsScript>();
-        gameObject.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x, Cs.CharacterPlane, gameObject.GetComponent<Transform>().position.y);
+        gameObject.GetComponent<Transform>().position = new Vector3(gameObject.GetComponent<Transform>().position.x, Cs.CharacterPlane, gameObject.GetComponent<Transform>().position.z);
         prb = gameObject.GetComponent<Rigidbody>();
         pt = gameObject.GetComponent<Transform>();
-        Logger = GameObject.Find("UI_Log").GetComponent<LogController>();
         GameObject.Find("Tribename").GetComponent<Text>().text = PlayerPrefs.GetString("Name");
         tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
         tribePos = tribe.GetComponent<Transform>();
