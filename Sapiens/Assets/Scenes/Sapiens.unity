@@ -1214,10 +1214,12 @@ MonoBehaviour:
   UITribePanel: {fileID: 0}
   UIMapPanel: {fileID: 0}
   UIResourcesPanel: {fileID: 0}
+  UIEscapePanel: {fileID: 0}
   char_panel: 0
   tribe_panel: 0
   resources_panel: 0
   map_panel: 0
+  escape_panel: 0
   dusk_cycle: 0
   duskmax: {r: 1, g: 1, b: 1, a: 0.4}
   duskmin: {r: 1, g: 1, b: 1, a: 0}
@@ -1859,8 +1861,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a8f35d99f63384a969b3cdaa98b24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SizeX: 1000
-  SizeY: 1000
+  SizeX: 200
+  SizeY: 200
   TileSizeX: 4.55
   TileSizeY: 2.44
   SightRadiusX: 20
@@ -2454,16 +2456,16 @@ MonoBehaviour:
 
     M : Open/Close Map Panel
 
+    Escape : Open/Close Menu Panel
+
 
     (Hold) Space : Dezoom/Zoom
 
     Right-Click : Move Tribe
 
-    Escape : Cancel Move Tribe
+    Left-Click : Cancel Move Tribe
 
-    P : Pause game
-
-    S : Simulate save time'
+    P : Pause game'
 --- !u!222 &1099989682
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2904,7 +2906,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Version :
 
-    0.0.5c (30/01/18)'
+    0.0.6 (31/01/18)'
 --- !u!222 &1247259804
 CanvasRenderer:
   m_ObjectHideFlags: 0

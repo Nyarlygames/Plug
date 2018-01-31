@@ -15,16 +15,19 @@ public class ControlsScript : MonoBehaviour
     GameObject UITribePanelPrefab;
     GameObject UIMapPanelPrefab;
     GameObject UIResourcesPanelPrefab;
+    GameObject UIEscapePanelPrefab;
     public GameObject UICharactersPanel;
     public GameObject UITribePanel;
     public GameObject UIMapPanel;
     public GameObject UIResourcesPanel;
+    public GameObject UIEscapePanel;
     CameraScript CamScript;
     bool debug_panel = true;
     public bool char_panel = false;
     public bool tribe_panel = false;
     public bool resources_panel = false;
     public bool map_panel = false;
+    public bool escape_panel = false;
     public bool dusk_cycle = false;
     public Color duskmax = new Color(1f, 1f, 1f, 0.4f);
     public Color duskmin = new Color(1f, 1f, 1f, 0.0f);
@@ -41,12 +44,13 @@ public class ControlsScript : MonoBehaviour
     public float UIPlane = 3.0f;
     private float timeScaleBeforePause = 0.0f;
     private float timeScaleBeforeMenu = 0.0f;
+    public float TribeSaveTime = 0.0f;
 
     void Start()
     {
         UIDebug = GameObject.Find("UI_Debug");
         UIDebug.SetActive(debug_panel);
-        PlayerPrefs.GetFloat("TribeAge"); // keep previous experience when loading/saving is done
+        TribeSaveTime = PlayerPrefs.GetFloat("TribeSaveTime");
         TribeAge = GameObject.Find("TribeAge").GetComponent<Text>();
         TribeSprite = GameObject.Find("Tribe").GetComponent<SpriteRenderer>();
         TribeScript = GameObject.Find("Tribe").GetComponent<TribeScript>();
@@ -60,16 +64,19 @@ public class ControlsScript : MonoBehaviour
         UITribePanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_TribePanel");
         UIResourcesPanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_ResourcesPanel");
         UIMapPanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_MapPanel");
+        UIEscapePanelPrefab = Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel");
 
         UICharactersPanel = Instantiate(UICharactersPanelPrefab, Vector3.zero, Quaternion.identity);
         UITribePanel = Instantiate(UITribePanelPrefab, Vector3.zero, Quaternion.identity);
         UIResourcesPanel = Instantiate(UIResourcesPanelPrefab, Vector3.zero, Quaternion.identity);
         UIMapPanel = Instantiate(UIMapPanelPrefab, Vector3.zero, Quaternion.identity);
+        UIEscapePanel = Instantiate(UIEscapePanelPrefab, Vector3.zero, Quaternion.identity);
 
         UICharactersPanel.SetActive(false);
         UITribePanel.SetActive(false);
         UIResourcesPanel.SetActive(false);
         UIMapPanel.SetActive(false);
+        UIEscapePanel.SetActive(false);
 
         GameObject.Find("GroundGenerator").GetComponent<GroundGeneratorScript>().Generate_Map();
     }
@@ -106,6 +113,10 @@ public class ControlsScript : MonoBehaviour
         {
             OpenPanel("MapPanel");
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) // hide/show map panel
+        {
+            OpenPanel("EscapePanel");
+        }
         if (Input.GetKeyDown(KeyCode.R)) // hide/show resources panel
         {
             OpenPanel("ResourcesPanel");
@@ -118,7 +129,7 @@ public class ControlsScript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.S)) // simulate save
         {
-            PlayerPrefs.SetFloat("TribeAge", PlayerPrefs.GetFloat("TribeAge") + PlayerPrefs.GetFloat("TribeTime"));
+            //PlayerPrefs.SetFloat("TribeAge", PlayerPrefs.GetFloat("TribeAge") + PlayerPrefs.GetFloat("TribeTime"));
         }
 
         if (Input.GetKeyDown(KeyCode.H)) // hide/show debug ui
@@ -147,7 +158,7 @@ public class ControlsScript : MonoBehaviour
             TribeScript.targetHit = TargetCoords;
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) // cancel move 
+        if (Input.GetMouseButtonDown(0)) // cancel move 
         {
             TribeScript.targetHit = Vector3.zero;
         }
@@ -207,7 +218,36 @@ public class ControlsScript : MonoBehaviour
                     timeScaleBeforeMenu = 0.0f;
                 }
                 break;
-                
+            case "EscapePanel":
+                if ((char_panel == false) && (resources_panel == false) && (map_panel == false) && (tribe_panel == false))
+                {
+                    if (escape_panel == false)
+                    {
+                        UIEscapePanel.SetActive(true);
+                        escape_panel = true;
+                        if (timeScaleBeforePause == 0.0f)
+                        {
+                            timeScaleBeforeMenu = Time.timeScale;
+                            Time.timeScale = 0.0f;
+                        }
+                        else
+                        {
+                            timeScaleBeforeMenu = timeScaleBeforePause;
+                        }
+                    }
+                    else
+                    {
+                        UIEscapePanel.SetActive(false);
+                        escape_panel = false;
+                        if ((timeScaleBeforePause == 0.0f) && (timeScaleBeforeMenu != 0.0f))
+                        {
+                            Time.timeScale = timeScaleBeforeMenu;
+                        }
+                        timeScaleBeforeMenu = 0.0f;
+                    }
+                }
+                break;
+
             case "TribePanel":
                 if (tribe_panel == false)
                 {
@@ -403,7 +443,7 @@ public class ControlsScript : MonoBehaviour
         int HoursinYear = 8760; //(24*365)
 
         temp_time = time;
-        temp_timecumul = time + PlayerPrefs.GetFloat("TribeAge");
+        temp_timecumul = time + TribeSaveTime;
 
         if (temp_time > HoursinYear)
         { // years
@@ -435,28 +475,35 @@ public class ControlsScript : MonoBehaviour
             TS.cumulhours = (int)time / 1;
         }
 
-
         // save time
         if (temp_timecumul > HoursinYear)
         { // years
             TS.saveyears = (int)temp_timecumul / HoursinYear;
             //temp_timecumul = temp_timecumul % HoursinYear;
         }
+        else
+            TS.saveyears = 0;
         if (temp_timecumul > HoursinMonth)
         {  // months
             TS.savemonths = (int)temp_timecumul / HoursinMonth;
-           // temp_timecumul = temp_timecumul % HoursinMonth;
+            // temp_timecumul = temp_timecumul % HoursinMonth;
         }
+        else
+            TS.savemonths = 0;
         if (temp_timecumul > HoursinWeek) // weeks
         {
             TS.saveweeks = (int)temp_timecumul / HoursinWeek;
-          //  temp_timecumul = temp_timecumul % HoursinWeek;
+            //  temp_timecumul = temp_timecumul % HoursinWeek;
         }
+        else
+            TS.saveweeks = 0;
         if (temp_timecumul >= HoursInDay) // days
         {
             TS.savedays = (int)temp_timecumul / HoursInDay;
-           // temp_timecumul = temp_timecumul % HoursInDay;
+            // temp_timecumul = temp_timecumul % HoursInDay;
         }
+        else
+            TS.savedays = 0;
         TS.savehours = (int)temp_timecumul;
 
 
@@ -489,13 +536,14 @@ public class ControlsScript : MonoBehaviour
         PlayerPrefs.SetString("FormattedTime", TS.formattedString);
         PlayerPrefs.SetString("FormattedcumulTime", TS.formattedcumulString);
         PlayerPrefs.SetString("FormattedcumulsaveTime", TS.formattedcumulsaveString);
-        PlayerPrefs.SetInt("TribeTS.hours", TS.hours);
+        PlayerPrefs.SetInt("Tribehours", TS.hours);
         PlayerPrefs.SetInt("TribeDays", TS.days);
         PlayerPrefs.SetInt("TribeWeeks", TS.weeks);
         PlayerPrefs.SetInt("TribeMonth", TS.months);
         PlayerPrefs.SetInt("TribeYears", TS.years);
+        PlayerPrefs.SetFloat("TribeAge", TribeSaveTime + time);
         PlayerPrefs.SetString("TribeAgeUtc", System.DateTime.Now.ToString()); // system date, use to skip later.
-        PlayerPrefs.SetFloat("TribeTime", time); // system date, use to skip later.
+        PlayerPrefs.SetFloat("TribeSaveTime", PlayerPrefs.GetFloat("TribeAge"));
 
         return TS;
     }

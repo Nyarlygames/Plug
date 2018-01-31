@@ -287,6 +287,7 @@
     <Compile Include="Assets\CharacterScript.cs" />
     <Compile Include="Assets\ControlsScript.cs" />
     <Compile Include="Assets\DuskDawnScript.cs" />
+    <Compile Include="Assets\EscapePanelScript.cs" />
     <Compile Include="Assets\EventManagerScript.cs" />
     <Compile Include="Assets\EventStruct.cs" />
     <Compile Include="Assets\FogOfWar.cs" />

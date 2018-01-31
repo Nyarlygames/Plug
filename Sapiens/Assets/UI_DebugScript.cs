@@ -25,8 +25,8 @@ public class UI_DebugScript : MonoBehaviour {
         TimeScalerCurrentText = GameObject.Find("TimeScalerCurrentText").GetComponent<Text>();
         Button temp = GameObject.Find("TimeScalerApply").GetComponent<Button>();
         temp.onClick.AddListener(TimeScalerApply_Click);
-        Cs = GameObject.Find("Controls").GetComponent<ControlsScript>();
-        temp.onClick.AddListener(TimeScalerApply_Click);
+        temp = GameObject.Find("RemoveSaveButton").GetComponent<Button>();
+        temp.onClick.AddListener(RemoveSaveApply_Click);
         Cs = GameObject.Find("Controls").GetComponent<ControlsScript>();
         TDusk = GameObject.Find("ToggleDusk").GetComponent<Toggle>();
         TDuskText = GameObject.Find("ToggleDuskText").GetComponent<Text>();
@@ -35,7 +35,13 @@ public class UI_DebugScript : MonoBehaviour {
         });
        // Cs.dusk_cycle = true;
     }
-	
+
+    void RemoveSaveApply_Click()
+    {
+        PlayerPrefs.SetFloat("TribeSaveTime", 0.0f);
+        Cs.TribeSaveTime = 0.0f;
+    }
+
     void TimeScalerApply_Click()
     {
         Time.timeScale = Convert.ToInt32(TimeScaler.value);
