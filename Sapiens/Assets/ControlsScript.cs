@@ -25,7 +25,7 @@ public class ControlsScript : MonoBehaviour
     public bool tribe_panel = false;
     public bool resources_panel = false;
     public bool map_panel = false;
-    public bool dusk_cycle = true;
+    public bool dusk_cycle = false;
     public Color duskmax = new Color(1f, 1f, 1f, 0.4f);
     public Color duskmin = new Color(1f, 1f, 1f, 0.0f);
     private float duskspeed = 0.2f;
@@ -70,6 +70,8 @@ public class ControlsScript : MonoBehaviour
         UITribePanel.SetActive(false);
         UIResourcesPanel.SetActive(false);
         UIMapPanel.SetActive(false);
+
+        GameObject.Find("GroundGenerator").GetComponent<GroundGeneratorScript>().Generate_Map();
     }
 
     void FixedUpdate()

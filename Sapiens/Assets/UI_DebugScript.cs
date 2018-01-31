@@ -33,7 +33,7 @@ public class UI_DebugScript : MonoBehaviour {
         TDusk.onValueChanged.AddListener(delegate {
             ToggleValueChanged(TDusk);
         });
-        Cs.dusk_cycle = true;
+       // Cs.dusk_cycle = true;
     }
 	
     void TimeScalerApply_Click()
