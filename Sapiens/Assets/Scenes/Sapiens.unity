@@ -1228,6 +1228,7 @@ MonoBehaviour:
   TribePlane: 1
   CharacterPlane: 2
   UIPlane: 3
+  TribeSaveTime: 0
 --- !u!4 &529836546
 Transform:
   m_ObjectHideFlags: 0
@@ -1861,8 +1862,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6a8f35d99f63384a969b3cdaa98b24d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SizeX: 200
-  SizeY: 200
+  SizeX: 500
+  SizeY: 500
   TileSizeX: 4.55
   TileSizeY: 2.44
   SightRadiusX: 20
@@ -2906,7 +2907,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Version :
 
-    0.0.6 (31/01/18)'
+    0.0.6b (31/01/18)'
 --- !u!222 &1247259804
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4339,6 +4340,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114643782008215630, guid: e845fab3503c87e4db04684cf29f3bee,
+        type: 2}
+      propertyPath: capacity
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e845fab3503c87e4db04684cf29f3bee, type: 2}
   m_IsPrefabParent: 0
@@ -4406,7 +4412,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4748314468317658, guid: e845fab3503c87e4db04684cf29f3bee, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 17.709991
+      value: 39.87
       objectReference: {fileID: 0}
     - target: {fileID: 4748314468317658, guid: e845fab3503c87e4db04684cf29f3bee, type: 2}
       propertyPath: m_LocalPosition.y
@@ -4414,7 +4420,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4748314468317658, guid: e845fab3503c87e4db04684cf29f3bee, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 5.2700005
+      value: 19.93
       objectReference: {fileID: 0}
     - target: {fileID: 4748314468317658, guid: e845fab3503c87e4db04684cf29f3bee, type: 2}
       propertyPath: m_LocalRotation.x

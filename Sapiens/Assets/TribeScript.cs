@@ -22,6 +22,7 @@ public class TribeScript : MonoBehaviour {
     public int TrbYoungs = 0;
     public float TrbGenerations = 0;
     public float TrbFood = 0;
+    public float TrbMaxFood = 500;
     public float TrbWater = 0;
     public float TrbConfort = 0;
     public float TrbSocial = 0;

@@ -39,7 +39,7 @@ public class GroundGeneratorScript : MonoBehaviour {
         TileMap = new List<List<TileScript>>(SizeX);
         for (int x = 0; x < SizeX; x++)
         {
-            List<GameObject> temp = new List<GameObject>(SizeY);
+            //List<GameObject> temp = new List<GameObject>(SizeY);
             List<TileScript> tempMap = new List<TileScript>(SizeY);
             for (int y = 0; y < SizeY; y++)
             {
@@ -70,20 +70,9 @@ public class GroundGeneratorScript : MonoBehaviour {
                         tempTile.Tile.GetComponent<Transform>().position = offset;
                     }
                 }
-                /* int first_random = (int)Random.Range(1.0f, 101.0f);
-                 GameObject tempTile;
-                 if (first_random <= 95)
-                     tempTile = Instantiate(TileP);
-                 else
-                     tempTile = Instantiate(TileF);
-                 SpriteRenderer tempRenderer = tempTile.GetComponent<SpriteRenderer>();
-                 Vector3 offset = new Vector3(x * tempRenderer.bounds.size.x * 0.6f + (y * 2.7f), Cs.GroundPlane, y * tempRenderer.bounds.size.z);
-                 tempTile.GetComponent<Transform>().position = offset;
-                 temp.Add(tempTile);*/
                 tempMap.Add(tempTile);
             }
             TileMap.Add(tempMap);
-          //  Tiles.Add(temp);
         }
 
         Generate_Biomes();
@@ -97,8 +86,10 @@ public class GroundGeneratorScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
     }
+
     void FixedUpdate()
     {
+        // ---------------------------------------------------------------------------------------- TODO  : memorize what is displayed and don't recheck ----------------------------------------------------------------- //
         tribeY = (int) (tribePos.position.z / TileSizeY);
         tribeX = (int)((tribePos.position.x - (tribeY * 2.75f)) / TileSizeX);
         for (int x = tribeX - SightRadiusX; x < tribeX + SightRadiusX; x++)

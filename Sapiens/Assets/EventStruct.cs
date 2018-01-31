@@ -7,6 +7,7 @@ public class EventStruct {
     public string type = "";
     public int recurrent = 0;
     public int nextStart = 0;
+    public int gathered = 0;
     public bool inUse = false;
     public GatherZoneScript Zone;
     public CharacterScript Char;
