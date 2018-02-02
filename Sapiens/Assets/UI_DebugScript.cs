@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class UI_DebugScript : MonoBehaviour {
 
@@ -14,10 +16,12 @@ public class UI_DebugScript : MonoBehaviour {
     Text TribeAgeCumul;
     Text TribeAgeCumulSave;
     ControlsScript Cs;
+    TribeScript tribe;
 
     // Use this for initialization
     void Start ()
     {
+        tribe = GameObject.Find("Tribe").GetComponent<TribeScript>();
         TimeScaler = GameObject.Find("TimeScaler").GetComponent<Slider>();
         TimeScalerText = GameObject.Find("TimeScalerText").GetComponent<Text>();
         TribeAgeCumul = GameObject.Find("TribeCumulAge").GetComponent<Text>();
@@ -25,6 +29,8 @@ public class UI_DebugScript : MonoBehaviour {
         TimeScalerCurrentText = GameObject.Find("TimeScalerCurrentText").GetComponent<Text>();
         Button temp = GameObject.Find("TimeScalerApply").GetComponent<Button>();
         temp.onClick.AddListener(TimeScalerApply_Click);
+        temp = GameObject.Find("SaveGameButton").GetComponent<Button>();
+        temp.onClick.AddListener(SaveGame_Click);
         temp = GameObject.Find("RemoveSaveButton").GetComponent<Button>();
         temp.onClick.AddListener(RemoveSaveApply_Click);
         Cs = GameObject.Find("Controls").GetComponent<ControlsScript>();
@@ -33,8 +39,17 @@ public class UI_DebugScript : MonoBehaviour {
         TDusk.onValueChanged.AddListener(delegate {
             ToggleValueChanged(TDusk);
         });
-       // Cs.dusk_cycle = true;
+        // Cs.dusk_cycle = true;
     }
+
+    void SaveGame_Click()
+    {
+        BinaryFormatter bf = new BinaryFormatter();
+        FileStream file = File.Open("./test.dat", FileMode.OpenOrCreate);
+        bf.Serialize(file, tribe);
+        file.Close();
+    }
+
 
     void RemoveSaveApply_Click()
     {
