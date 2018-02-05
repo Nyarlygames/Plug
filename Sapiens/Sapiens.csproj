@@ -301,11 +301,14 @@
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
     <Compile Include="Assets\ResourcesPanelScript.cs" />
+    <Compile Include="Assets\Scripts\CharacterGO.cs" />
+    <Compile Include="Assets\Scripts\CharacterSave.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\PlayerGo.cs" />
-    <Compile Include="Assets\Scripts\PlayerScript.cs" />
+    <Compile Include="Assets\Scripts\MapSave.cs" />
+    <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SaveManagerScript.cs" />
-    <Compile Include="Assets\Scripts\SavesList.cs" />
+    <Compile Include="Assets\Scripts\TribeGO.cs" />
+    <Compile Include="Assets\Scripts\TribeSave.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GameObjectExtensions.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GPUInstancing.cs" />

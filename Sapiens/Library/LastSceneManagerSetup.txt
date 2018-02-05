@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/Scenes/Sapiens.unity
+- path: Assets/Scenes/Sapiens_Load.unity
   isLoaded: 1
   isActive: 1
