@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.7e (06/02/2018)'
+  m_Text: 'Version : 0.0.7f (06/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2861,16 +2861,14 @@ MonoBehaviour:
         strength: 0
         endu: 0
         body: 0
-        mental: 0
-        dexte: 0
-        accu: 0
         speed: 0
+        dexte: 0
         percept: 0
-        surv: 0
-        intel: 0
-        mem: 0
-        chari: 0
+        accu: 0
+        autonomy: 0
+        spirit: 0
         social: 0
+        mental: 0
         lang: 0
         moral: 0
         fatigue: 0

@@ -18,19 +18,20 @@ public class CharacterSave
     public int level = 0;
     public float next;
     public float last;
+    
     public int strength = 0;
     public int endu = 0;
     public int body = 0;
-    public int mental = 0;
-    public int dexte = 0;
-    public int accu = 0;
     public int speed = 0;
+
+    public int dexte = 0;
     public int percept = 0;
-    public int surv = 0;
-    public int intel = 0;
-    public int mem = 0;
-    public int chari = 0;
+    public int accu = 0;
+    public int autonomy = 0;
+
+    public int spirit = 0;
     public int social = 0;
+    public int mental = 0;
     public int lang = 0;
     
     public int moral = 0;
@@ -77,11 +78,12 @@ public class CharacterSave
         }
         if (last >= next) // level up
         {
+            LevelUp(level);
             level++;
             last = 0;
             if (level > RF.level_training)
             {
-                next =Mathf.Round(next * RF.ratio_mastering);
+                next = Mathf.Round(next * RF.ratio_mastering);
             }
             if (level > RF.level_growth)
             {
@@ -97,10 +99,12 @@ public class CharacterSave
     public float SkipStats(float xp, float next_level)
     {
         float nextup = next_level;
+        xp += last;
         while ((level < RF.level_growth) && (xp > nextup))
         {
             xp -= nextup;
             level++;
+            LevelUp(level);
             if (level == RF.level_growth)
                 nextup *= RF.ratio_training;
             else
@@ -110,6 +114,7 @@ public class CharacterSave
         {
             xp -= nextup;
             level++;
+            LevelUp(level);
             if (level == RF.ratio_training)
                 nextup *= RF.ratio_mastering;
             else
@@ -120,6 +125,7 @@ public class CharacterSave
             xp -= nextup;
             nextup *= RF.ratio_mastering;
             level++;
+            LevelUp(level);
         }
         last = xp;
         return (Mathf.Round(nextup));
@@ -173,6 +179,125 @@ public class CharacterSave
         xp += xpacc;
         return (xpacc);
         
+    }
+
+    public void LevelUp(int level)
+    {
+        List<string> Attributes = new List<string>();
+        Attributes.Add("strength");
+        Attributes.Add("endu");
+        Attributes.Add("body");
+        Attributes.Add("speed");
+        Attributes.Add("dexte");
+        Attributes.Add("percept");
+        Attributes.Add("accu");
+        Attributes.Add("autonomy");
+        Attributes.Add("spirit");
+        Attributes.Add("social");
+        Attributes.Add("mental");
+        Attributes.Add("lang");
+        if (level < RF.exp_teen_range)
+        {
+            int picking = UnityEngine.Random.Range(10, Attributes.Count+1);
+            for (int i = 0; i <= picking - 1; i++)
+            {
+                int pick = UnityEngine.Random.Range(0, Attributes.Count);
+                switch (Attributes[pick])
+                {
+                    case "strength":
+                        strength += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "endu":
+                        endu += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "body":
+                        body += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "speed":
+                        speed += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "dexte":
+                        dexte += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "percept":
+                        percept += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "accu":
+                        accu += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "autonomy":
+                        autonomy += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "spirit":
+                        spirit += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "social":
+                        social += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "mental":
+                        mental += UnityEngine.Random.Range(1, 4);
+                        break;
+                    case "lang":
+                        lang += UnityEngine.Random.Range(1, 4);
+                        break;
+                    default:
+                        Debug.Log("LevelUp stats failed");
+                        break;
+                }
+                Attributes.RemoveAt(pick);
+            }
+        }
+        else
+        {
+            int picking = UnityEngine.Random.Range(3, 5);
+            for (int i = 0; i <= picking - 1; i++)
+            {
+                int pick = UnityEngine.Random.Range(0, Attributes.Count);
+                switch (Attributes[pick])
+                {
+                    case "strength":
+                        strength += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "endu":
+                        endu += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "body":
+                        body += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "speed":
+                        speed += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "dexte":
+                        dexte += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "percept":
+                        percept += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "accu":
+                        accu += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "autonomy":
+                        autonomy += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "spirit":
+                        spirit += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "social":
+                        social += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "mental":
+                        mental += UnityEngine.Random.Range(1, 6);
+                        break;
+                    case "lang":
+                        lang += UnityEngine.Random.Range(1, 6);
+                        break;
+                    default:
+                        Debug.Log("LevelUp stats failed");
+                        break;
+                }
+                Attributes.RemoveAt(pick);
+            }
+        }
     }
 
    /* public void SetChar(string naming, int identifier)
