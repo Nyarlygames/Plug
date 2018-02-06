@@ -16,6 +16,32 @@ public class CharacterSave
     public AgeStruct age = new AgeStruct();
     public float xp = 0;
     public int level = 0;
+    public int next;
+    public int strength = 0;
+    public int endu = 0;
+    public int body = 0;
+    public int mental = 0;
+    public int dexte = 0;
+    public int accu = 0;
+    public int speed = 0;
+    public int percept = 0;
+    public int surv = 0;
+    public int intel = 0;
+    public int mem = 0;
+    public int chari = 0;
+    public int social = 0;
+    public int lang = 0;
+    
+    public int moral = 0;
+    public int fatigue = 0;
+    public int respect = 0;
+    public int life = 0;
+    public int speed_attr = 0;
+    public int food = 0;
+    public int resdis = 0;
+    public int healdis = 0;
+    public int reswoun = 0;
+    public int healwoun = 0;
     public RatioFactory RF = new RatioFactory();
 
     public void SetAge()
@@ -45,9 +71,38 @@ public class CharacterSave
             xp -= 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
         }
     }
-    
 
-    public void SkipYear(int years)
+    public int SkipStats(float xp, int next_level)
+    {
+        float nextup = next_level;
+        while ((level < RF.level_growth) && (xp > nextup))
+        {
+            xp -= nextup;
+            level++;
+            if (level == RF.level_growth)
+                nextup *= RF.ratio_training;
+            else
+                nextup *= RF.ratio_growth;
+        }
+        while ((level < RF.level_training) && (xp > nextup))
+        {
+            xp -= nextup;
+            level++;
+            if (level == RF.ratio_training)
+                nextup *= RF.ratio_mastering;
+            else
+                nextup *= RF.ratio_training;
+        }
+        while (xp > nextup)
+        {
+            xp -= nextup;
+            nextup *= RF.ratio_mastering;
+            level++;
+        }
+        return ((int) nextup);
+    }
+
+    public float SkipYear(int years)
     {
 
         int yearselder = 0;
@@ -70,7 +125,7 @@ public class CharacterSave
         }
         if (yearselder > 0)
         {
-            xpacc -= 0.5f * (yearselder / 200.0f);
+            xpacc -= (0.5f * (yearselder / 200.0f)) * 365;
             time += yearselder * 365 * 24;
         }
 
@@ -93,6 +148,7 @@ public class CharacterSave
         }
         SetAge();
         xp += xpacc;
+        return (xpacc);
         
     }
 

@@ -135,7 +135,10 @@ public class GameManager : MonoBehaviour
         newman.name = name;
         newman.time = age * 24 * 365;
         newman.xp = xpacc;
+        //newman.SkipYear(age);
         newman.SetAge();
+        newman.next = 150;
+        newman.next = newman.SkipStats(newman.xp, newman.next);
         newman.charSprite = sprite;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);

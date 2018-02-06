@@ -49,7 +49,8 @@ public class PanelDebug : MonoBehaviour
             int year = Convert.ToInt32(SkipYears.text);
             foreach(CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
             {
-                chara.SkipYear(year);
+                float xpacc = chara.SkipYear(year);
+                chara.next = chara.SkipStats(xpacc, chara.next);
             }
             GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += year * 365 * 24;
             GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.SetAge();

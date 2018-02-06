@@ -12,4 +12,11 @@ public class RatioFactory {
     public float exp_teen_value = 2f;
     public float exp_adult_range = 35f;
     public float exp_adult_value = 0.5f;
+
+    public float level_baserequirement = 150;
+    public float level_growth = 10;
+    public float level_training = 20;
+    public float ratio_growth = 1.2f;
+    public float ratio_training = 1.1f;
+    public float ratio_mastering = 1.0f;
 }
