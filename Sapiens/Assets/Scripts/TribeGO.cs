@@ -9,6 +9,7 @@ public class TribeGO : MonoBehaviour {
      public List<CharacterSave> gatherers;*/
     //public TribeSave tribeSave;
     public TribeSave tribeCurrent;
+    public AgeStruct curAge = new AgeStruct();
     public List<GameObject> CharsGO = new List<GameObject>();
     public string profilename = "";
 
@@ -18,7 +19,20 @@ public class TribeGO : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void FixedUpdate ()
+    {
         tribeCurrent.time += Time.deltaTime;
-	}
+        SetAge(tribeCurrent.time);
+        if (curAge.days > tribeCurrent.age.days)
+        {
+            tribeCurrent.SetAge();
+        }
+    }
+
+    public void SetAge(float chartime)
+    {
+        curAge.days = (int)chartime / 24;
+        curAge.years = (int)chartime / (24 * 365);
+        curAge.hours = (int)chartime;
+    }
 }

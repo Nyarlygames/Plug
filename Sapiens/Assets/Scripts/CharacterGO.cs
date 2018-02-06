@@ -14,13 +14,11 @@ public class CharacterGO : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (charCurrent.id == 0) { 
-            charCurrent.time += Time.deltaTime;
-            SetAge(charCurrent.time);
-            if (curAge.days > charCurrent.age.days)
-            {
-                charCurrent.SetAge();
-            }
+        charCurrent.time += Time.deltaTime;
+        SetAge(charCurrent.time);
+        if (curAge.days > charCurrent.age.days)
+        {
+            charCurrent.SetAge();
         }
     }
 
