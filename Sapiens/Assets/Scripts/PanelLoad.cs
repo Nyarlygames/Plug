@@ -63,6 +63,7 @@ public class PanelLoad : MonoBehaviour {
         if (File.Exists("Save/" + filename + "/" + filename))
         {
             SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
+            
         }
         else
         {

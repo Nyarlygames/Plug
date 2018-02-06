@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PanelChar : MonoBehaviour {
 
     GameManager GM;
+    GameObject curChar;
     Dropdown CharacterList;
     Button CharacterListPlus;
     Button CharacterListMinus;
@@ -98,10 +99,11 @@ public class PanelChar : MonoBehaviour {
 
     void CharacterValueChanged(Dropdown CharList)
     {
-        GameObject curChar = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharList.value];
+        curChar = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value];
         CharacterFace.sprite = curChar.GetComponent<SpriteRenderer>().sprite;
         Character_Name.text = "Name : " + curChar.GetComponent<CharacterGO>().charCurrent.name;
         Character_Age.text = "Age : " + curChar.GetComponent<CharacterGO>().charCurrent.age.days;
+        Character_Experience.text = "XP : " + curChar.GetComponent<CharacterGO>().charCurrent.xp;
     }
 
     void CharPlusClick()
@@ -120,6 +122,6 @@ public class PanelChar : MonoBehaviour {
     }
 
     void Update () {
-
+        Character_Experience.text = "XP : " + curChar.GetComponent<CharacterGO>().charCurrent.xp;
     }
 }

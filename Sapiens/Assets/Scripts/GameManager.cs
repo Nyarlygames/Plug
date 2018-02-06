@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 3.5f;
+       // Time.timeScale = 3.5f;
         timers = GameObject.Find("Timers").GetComponent<Text>();
         if (PlayerPrefs.GetString("savefile") != "")
         {
@@ -42,8 +42,8 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        timers.text = "Save time : " + TribeGO.GetComponent<TribeGO>().tribeCurrent.age.days + " days.";
-        timers.text += "\nSession time : " + (int) Time.timeSinceLevelLoad / 24  + " days.";
+        timers.text = "Save time : " + TribeGO.GetComponent<TribeGO>().curAge.hours + " hours " + TribeGO.GetComponent<TribeGO>().curAge.days + " days.";
+        timers.text += "\nSession time : " + (int) Time.timeSinceLevelLoad + " hours " + (int) Time.timeSinceLevelLoad / 24  + " days.";
         if (Input.GetKeyDown(KeyCode.C)) // open char panel
         {
             if (!UIEscape.activeSelf)
@@ -86,8 +86,12 @@ public class GameManager : MonoBehaviour
                 tribecomp.tribeCurrent = newtribe;
                 tribecomp.profilename = "newgame";
 
-                CreatePlayer(0, "new man", 30, "Play/TribeChar/man", tribecomp);
-                CreatePlayer(1, "new woman", 25, "Play/TribeChar/woman", tribecomp);
+                CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp);
+                CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp);
+                CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp);
+                CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp);
+                CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp);
+                CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp);
 
                 sdata = new SaveData();
                 sdata.tribesave = tribecomp.tribeCurrent;

@@ -306,9 +306,11 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MapSave.cs" />
     <Compile Include="Assets\Scripts\PanelChar.cs" />
+    <Compile Include="Assets\Scripts\PanelDebug.cs" />
     <Compile Include="Assets\Scripts\PanelEscape.cs" />
     <Compile Include="Assets\Scripts\PanelLoad.cs" />
     <Compile Include="Assets\Scripts\PanelSave.cs" />
+    <Compile Include="Assets\Scripts\RatioFactory.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SaveManagerScript.cs" />
     <Compile Include="Assets\Scripts\TribeGO.cs" />
