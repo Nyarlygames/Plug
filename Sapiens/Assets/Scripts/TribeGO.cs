@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class TribeGO : MonoBehaviour {
     
-    /* public List<CharacterSave> members;
-     public CharacterSave leader;
-     public List<CharacterSave> gatherers;*/
-    //public TribeSave tribeSave;
     public TribeSave tribeCurrent;
     public AgeStruct curAge = new AgeStruct();
     public List<GameObject> CharsGO = new List<GameObject>();

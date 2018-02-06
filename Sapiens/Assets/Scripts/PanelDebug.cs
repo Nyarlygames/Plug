@@ -10,6 +10,9 @@ public class PanelDebug : MonoBehaviour
     Text RatioSpeed;
     Text CharName;
     Text CharAge;
+    Text SkipYears;
+    Text SkipDays;
+    Text SkipHours;
     public float init_speed;
     // Use this for initialization
     void Start ()
@@ -17,9 +20,14 @@ public class PanelDebug : MonoBehaviour
         TimeSlider = GameObject.Find("TimeSlider").GetComponent<Slider>();
         Button temp = GameObject.Find("Debug_CharCreateButton").GetComponent<Button>();
         temp.onClick.AddListener(CreateCharClick);
+        temp = GameObject.Find("Debug_SkipButton").GetComponent<Button>();
+        temp.onClick.AddListener(SkipClick);
         RatioSpeed = GameObject.Find("TimeSlider_Info").GetComponent<Text>();
         CharName = GameObject.Find("Debug_CharCreateNameText").GetComponent<Text>();
         CharAge = GameObject.Find("Debug_CharCreateAgeText").GetComponent<Text>();
+        SkipYears = GameObject.Find("Debug_SkipYearsT").GetComponent<Text>();
+        SkipDays = GameObject.Find("Debug_SkipDaysT").GetComponent<Text>();
+        SkipHours = GameObject.Find("Debug_SkipHoursT").GetComponent<Text>();
         TimeSlider.onValueChanged.AddListener(delegate {
             ScaleChange(TimeSlider);
         });
@@ -32,6 +40,26 @@ public class PanelDebug : MonoBehaviour
     {
         Time.timeScale = scale.value;
         RatioSpeed.text = "time ratio : x" + Time.timeScale;
+    }
+
+    void SkipClick()
+    {
+        try
+        {
+            int year = Convert.ToInt32(SkipYears.text);
+            foreach(CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
+            {
+                chara.SkipYear(year);
+            }
+            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += year * 365 * 24;
+            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.SetAge();
+            GameObject.Find("GameManager").GetComponent<GameManager>().timeSinceReload += year * 365 * 24;
+            Debug.Log("skipped : " + year + " years");
+        }
+        catch (FormatException)
+        {
+
+        }
     }
 
     void CreateCharClick()

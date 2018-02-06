@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
+    public float timeSinceReload = 0.0f;
     RatioFactory RF = new RatioFactory();
 
     void Start()
     {
+        timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
         if (PlayerPrefs.GetString("savefile") != "")
         {
@@ -43,8 +45,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        timers.text = "Save time : " + TribeGO.GetComponent<TribeGO>().curAge.hours + " hours " + TribeGO.GetComponent<TribeGO>().curAge.days + " days.";
-        timers.text += "\nSession time : " + (int) Time.timeSinceLevelLoad + " hours " + (int) Time.timeSinceLevelLoad / 24  + " days.";
+        timeSinceReload += Time.deltaTime;
+        timers.text = "Save time : " + (int) TribeGO.GetComponent<TribeGO>().curAge.hours + " hours " + (int) TribeGO.GetComponent<TribeGO>().curAge.days + " days.";
+        timers.text += "\nSession time : " + (int)timeSinceReload + " hours " + (int)timeSinceReload / 24  + " days.";
         if (Input.GetKeyDown(KeyCode.C)) // open char panel
         {
             if (!UIEscape.activeSelf)

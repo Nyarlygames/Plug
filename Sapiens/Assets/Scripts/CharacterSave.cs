@@ -22,7 +22,7 @@ public class CharacterSave
     {
         age.days = (int) time / 24;
         age.years = (int) time / (24 * 365);
-        age.hours = (int)time;
+        age.hours = (int) time;
     }
 
     public void DailyXpUp()
@@ -42,10 +42,60 @@ public class CharacterSave
         }
         else // elder
         {
-            xp -= 0.5f * ((age.years - RF.exp_adult_range) / 200);
+            xp -= 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
         }
     }
     
+
+    public void SkipYear(int years)
+    {
+
+        int yearselder = 0;
+        int yearsadult = 0;
+        int yearsteen = 0;
+        int yearsbaby = 0;
+        int yearsskip = age.years + years;
+        float xpacc = 0;
+        
+        for (int countdown = age.years; countdown < age.years + years; countdown++)
+        {
+            if (countdown < (int)RF.exp_baby_range)
+                yearsbaby++;
+            if ((countdown >= (int)RF.exp_baby_range) && (countdown < (int)RF.exp_teen_range))
+                yearsteen++;
+            if ((countdown >= (int)RF.exp_teen_range) && (countdown < (int)RF.exp_adult_range))
+                yearsadult++;
+            if (countdown >= (int)RF.exp_adult_range)
+                yearselder++;
+        }
+        if (yearselder > 0)
+        {
+            xpacc -= 0.5f * (yearselder / 200.0f);
+            time += yearselder * 365 * 24;
+        }
+
+        if (yearsadult > 0)
+        {
+            xpacc += RF.exp_adult_value * 365; 
+            time += yearsadult * 365 * 24;
+        }
+
+        if (yearsteen > 0)
+        {
+            xpacc += RF.exp_teen_value * 365;
+            time += yearsteen * 365 * 24;
+        }
+
+        if (yearsbaby > 0)
+        {
+            xpacc += RF.exp_baby_value * 365;
+            time += yearsbaby * 365 * 24;
+        }
+        SetAge();
+        xp += xpacc;
+        
+    }
+
    /* public void SetChar(string naming, int identifier)
     {
         name = naming;

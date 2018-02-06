@@ -102,7 +102,7 @@ public class PanelChar : MonoBehaviour {
         curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
         CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
         Character_Name.text = "Name : " + curChar.name;
-        Character_Age.text = "Age : " + curChar.age.days / 365 + " days : " + curChar.age.days % 365;
+        Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days % 365 + " days.";
         Character_Experience.text = "XP : " + curChar.xp;
     }
 
