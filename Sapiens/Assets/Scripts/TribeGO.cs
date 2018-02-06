@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class TribeGO : MonoBehaviour {
-
-    public float time = 0;
+    
     /* public List<CharacterSave> members;
      public CharacterSave leader;
      public List<CharacterSave> gatherers;*/
@@ -19,7 +18,7 @@ public class TribeGO : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
+	void FixedUpdate () {
+        tribeCurrent.time += Time.deltaTime;
 	}
 }

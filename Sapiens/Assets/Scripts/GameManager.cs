@@ -7,90 +7,57 @@ using System.IO;
 public class GameManager : MonoBehaviour
 {
     public SaveManagerScript SaveManager = new SaveManagerScript();
-    //public List<GameObject> CharsGO = new List<GameObject>();
-    //public List<GameObject> GroupsGO = new List<GameObject>();
     public GameObject TribeGO;
+    public GameObject UIEscape;
+    public GameObject UITribe;
     public SaveData sdata;
-
+    public float scaleBeforeEscape = 0.0f;
 
     void Start()
     {
-        PlayerPrefs.SetString("savefile", "default");
         if (PlayerPrefs.GetString("savefile") != "")
         {
-            sdata = SaveManager.LoadSave(PlayerPrefs.GetString("savefile"));
-            TribeGO = SaveManager.LoadGO(sdata);
+            sdata = SaveManager.LoadSave(PlayerPrefs.GetString("savefile")); // load savegame state
             if ((sdata != null))
             {
-                // load savegame state
-                Debug.Log("Loaded " + sdata.savefile);
+                TribeGO = SaveManager.LoadGO(sdata); // create tribe go
+                Debug.Log("Loaded : " + PlayerPrefs.GetString("savefile"));
             }
             else
-                Debug.Log("Failed to load " + sdata.savefile);
+                Debug.Log("Failed loading : " + PlayerPrefs.GetString("savefile"));
         }
         else
         {
             //new game
-            Debug.Log("New Game");
             CreateTribeGO("newgame");
-            //CreateTribeGO("newgame");
+            Debug.Log("Loaded : new game");
         }
-        /* CreatePlayer("manfather", 0, null, null);
-         CreatePlayer("womanmother", 1, null, null);
-         CreatePlayer("son", 2, PlayerScripts[0], PlayerScripts[1]);*/
-
-        /*  CharacterSave ps = new CharacterSave();
-          ps.id = 0;
-          ps.name = "man";
-          CreatePlayer(ps);
-          ps = new CharacterSave();
-          ps.id = 1;
-          ps.name = "woman";
-          CreatePlayer(ps);
-          ps = new CharacterSave();
-          ps.id = 2;
-          ps.name = "son";
-          CreatePlayer(ps);*/
+        UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
+        UITribe = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_TribePanel"), Vector3.zero, Quaternion.identity);
     }
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.S)) // save the game
+        if (Input.GetKeyDown(KeyCode.T)) // open tribe
         {
-            SaveManager.SaveGame(sdata, TribeGO);
-           /* SaveManager.SavePlayer(PlayerGos[0].GetComponent<Character>());
-            SaveManager.SavePlayer(PlayerGos[1].GetComponent<Character>());
-            SaveManager.SavePlayer(PlayerGos[2].GetComponent<Character>());
-            if (PlayerGos[0].GetComponent<Character>().playerSave != null)
-            {
-                Debug.Log("Saved time : " + PlayerGos[0].GetComponent<Character>().time);
-            }
-            if (PlayerGos[1].GetComponent<Character>().playerSave != null)
-            {
-                Debug.Log("Saved time : " + PlayerGos[0].GetComponent<Character>().time);
-            }
-            if (PlayerGos[2].GetComponent<Character>().playerSave != null)
-            {
-                Debug.Log("Saved time : " + PlayerGos[0].GetComponent<Character>().time);
-            }*/
         }
-
-        if (Input.GetKeyDown(KeyCode.L)) // load the game
+        if (Input.GetKeyDown(KeyCode.Escape)) // open escape
         {
-           /* if (PlayerGos.Count == 0)
+            if (!UIEscape.activeSelf)
             {
-                CharacterSave playerSave = SaveManager.LoadPlayer("C:/Users/Nyarly/Desktop/Sapiens/Player0.dat");
-                CreatePlayer(playerSave);
-                if (playerSave != null)
+                scaleBeforeEscape = Time.timeScale;
+                Time.timeScale = 0.0f;
+                UIEscape.SetActive(!UIEscape.activeSelf);
+            }
+            else
+            {
+                if ((!UIEscape.GetComponent<PanelEscape>().UISave.activeSelf) && (!UIEscape.GetComponent<PanelEscape>().UILoad.activeSelf))
                 {
-                    Debug.Log("Loaded time : " + PlayerGos[playerSave.id].GetComponent<Character>().playerSave.time);
+                    Time.timeScale = scaleBeforeEscape;
+                    UIEscape.SetActive(!UIEscape.activeSelf);
                 }
-                PlayerPrefs.SetInt("PlayerNum", 1);
-            }*/
-
+            }
         }
-
     }
 
     void CreateTribeGO(string hackkey)
@@ -106,47 +73,32 @@ public class GameManager : MonoBehaviour
                 tribecomp.tribeCurrent = newtribe;
                 tribecomp.profilename = "newgame";
 
-                CharacterSave newman = new CharacterSave();
-                newman.id = 0;
-                newman.name = "New man";
-                newman.time = 800;
-                newman.charSprite = "Play/TribeChar/man";
-                tribecomp.tribeCurrent.members.Add(newman);
-                GameObject CharGO = new GameObject(newman.name);
-                CharGO.AddComponent<CharacterGO>();
-                CharGO.GetComponent<CharacterGO>().charCurrent = newman;
-                CharGO.AddComponent<SpriteRenderer>();
-                CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newman.charSprite);
-                tribecomp.CharsGO.Add(CharGO);
-
-                CharacterSave newwoman = new CharacterSave();
-                newwoman.id = 1;
-                newwoman.name = "New woman";
-                newwoman.time = 300;
-                newwoman.charSprite = "Play/TribeChar/woman";
-                tribecomp.tribeCurrent.members.Add(newwoman);
-                CharGO = new GameObject(newwoman.name);
-                CharGO.AddComponent<CharacterGO>();
-                CharGO.GetComponent<CharacterGO>().charCurrent = newwoman;
-                CharGO.AddComponent<SpriteRenderer>();
-                CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newwoman.charSprite);
-                tribecomp.CharsGO.Add(CharGO);
+                CreatePlayer(0, "new man", 30, "Play/TribeChar/man", tribecomp);
+                CreatePlayer(1, "new woman", 25, "Play/TribeChar/woman", tribecomp);
 
                 sdata = new SaveData();
                 sdata.tribesave = tribecomp.tribeCurrent;
-                sdata.savefile = "default";
+                sdata.savefile = "noname";
                 break;
             default:
                 break;
         }
-       /* PlayerGos.Add(new GameObject(playerSave.name));
-        PlayerGos[playerSave.id].AddComponent<Character>();
-        PlayerGos[playerSave.id].GetComponent<Character>().playerSave = playerSave;*/
     }
-    void CreatePlayer(CharacterSave playerSave)
+
+    void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp)
     {
-      /*  PlayerGos.Add(new GameObject(playerSave.name));
-        PlayerGos[playerSave.id].AddComponent<Character>();
-        PlayerGos[playerSave.id].GetComponent<Character>().playerSave = playerSave;*/
+        CharacterSave newman = new CharacterSave();
+        newman.id = id;
+        newman.name = name;
+        newman.time = age * 24 * 365;
+        newman.SetAge();
+        newman.charSprite = sprite;
+        tribecomp.tribeCurrent.members.Add(newman);
+        GameObject CharGO = new GameObject(newman.name);
+        CharGO.AddComponent<CharacterGO>();
+        CharGO.GetComponent<CharacterGO>().charCurrent = newman;
+        CharGO.AddComponent<SpriteRenderer>();
+        CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newman.charSprite);
+        tribecomp.CharsGO.Add(CharGO);
     }
 }

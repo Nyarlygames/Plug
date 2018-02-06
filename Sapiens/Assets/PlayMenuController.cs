@@ -70,7 +70,8 @@ public class PlayMenuController : MonoBehaviour {
     void NG_Click()
     {
         //new game
-        SceneManager.LoadScene("NewGame", LoadSceneMode.Single);
+        PlayerPrefs.SetString("savefile", "");
+        SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
     }
 
     void LoadButton_Click()

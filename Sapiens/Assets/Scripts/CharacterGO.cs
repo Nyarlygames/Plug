@@ -3,22 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterGO : MonoBehaviour {
-
-    public float time = 0;
+    
     public CharacterSave charCurrent;
-
-    // Use this for initialization
+    public AgeStruct curAge = new AgeStruct();
+    
     void Start () {
-        /*if (playerSave != null)
-            time = playerSave.time;
-        else
-            Debug.Log("not loaded");*/
 
 	}
-	
-	// Update is called once per frame
-	void Update () {
-        charCurrent.time += Time.time;
-       // time += Time.time;
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (charCurrent.id == 0) { 
+            charCurrent.time += Time.deltaTime;
+            SetAge(charCurrent.time);
+            if (curAge.days > charCurrent.age.days)
+            {
+                charCurrent.SetAge();
+            }
+        }
+    }
+
+    public void SetAge(float chartime)
+    {
+        curAge.days = (int)chartime / 24;
+        curAge.years = (int)chartime / (24 * 365);
+        curAge.hours = (int)chartime;
     }
 }

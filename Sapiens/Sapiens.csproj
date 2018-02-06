@@ -287,7 +287,6 @@
     <Compile Include="Assets\CharacterScript.cs" />
     <Compile Include="Assets\ControlsScript.cs" />
     <Compile Include="Assets\DuskDawnScript.cs" />
-    <Compile Include="Assets\EscapePanelScript.cs" />
     <Compile Include="Assets\EventManagerScript.cs" />
     <Compile Include="Assets\EventStruct.cs" />
     <Compile Include="Assets\FogOfWar.cs" />
@@ -301,10 +300,14 @@
     <Compile Include="Assets\OptionsMenu.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
     <Compile Include="Assets\ResourcesPanelScript.cs" />
+    <Compile Include="Assets\Scripts\AgeStruct.cs" />
     <Compile Include="Assets\Scripts\CharacterGO.cs" />
     <Compile Include="Assets\Scripts\CharacterSave.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MapSave.cs" />
+    <Compile Include="Assets\Scripts\PanelEscape.cs" />
+    <Compile Include="Assets\Scripts\PanelLoad.cs" />
+    <Compile Include="Assets\Scripts\PanelSave.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SaveManagerScript.cs" />
     <Compile Include="Assets\Scripts\TribeGO.cs" />

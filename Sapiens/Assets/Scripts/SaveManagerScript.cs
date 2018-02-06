@@ -6,16 +6,7 @@ using System.IO;
 
 
 public class SaveManagerScript {
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
+    
     public GameObject LoadGO(SaveData sdata)
     {
         GameObject Tribe = new GameObject(sdata.tribesave.tribename);
@@ -60,9 +51,7 @@ public class SaveManagerScript {
     }
 
     public void SaveGame(SaveData previous, GameObject Tribe) {
-
-        //TODO :  update previoussave data with tribego component
-
+        
         if (Directory.Exists(previous.savefolder + previous.savefile + "/") == false)
         {
             Directory.CreateDirectory(previous.savefolder + previous.savefile + "/");
