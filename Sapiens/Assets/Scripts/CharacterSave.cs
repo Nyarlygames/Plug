@@ -16,7 +16,8 @@ public class CharacterSave
     public AgeStruct age = new AgeStruct();
     public float xp = 0;
     public int level = 0;
-    public int next;
+    public float next;
+    public float last;
     public int strength = 0;
     public int endu = 0;
     public int body = 0;
@@ -56,23 +57,44 @@ public class CharacterSave
         if (age.years < RF.exp_baby_range)
         {
             xp += RF.exp_baby_value;
+            last += RF.exp_baby_value;
         }
         else if (age.years < RF.exp_teen_range)
         {
             xp += RF.exp_teen_value;
+            last += RF.exp_teen_value;
 
         }
         else if (age.years < RF.exp_adult_range)
         {
             xp += RF.exp_adult_value;
+            last += RF.exp_adult_value;
         }
         else // elder
         {
             xp -= 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
+           // last += 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
+        }
+        if (last >= next) // level up
+        {
+            level++;
+            last = 0;
+            if (level > RF.level_training)
+            {
+                next =Mathf.Round(next * RF.ratio_mastering);
+            }
+            if (level > RF.level_growth)
+            {
+                next = Mathf.Round(next * RF.ratio_training);
+            }
+            if (level <= RF.level_growth)
+            {
+                next = Mathf.Round(next * RF.ratio_growth);
+            }
         }
     }
 
-    public int SkipStats(float xp, int next_level)
+    public float SkipStats(float xp, float next_level)
     {
         float nextup = next_level;
         while ((level < RF.level_growth) && (xp > nextup))
@@ -99,7 +121,8 @@ public class CharacterSave
             nextup *= RF.ratio_mastering;
             level++;
         }
-        return ((int) nextup);
+        last = xp;
+        return (Mathf.Round(nextup));
     }
 
     public float SkipYear(int years)

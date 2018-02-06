@@ -180,7 +180,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.7d (06/02/2018)'
+  m_Text: 'Version : 0.0.7e (06/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2856,6 +2856,32 @@ MonoBehaviour:
           years: 0
         xp: 0
         level: 0
+        next: 0
+        last: 0
+        strength: 0
+        endu: 0
+        body: 0
+        mental: 0
+        dexte: 0
+        accu: 0
+        speed: 0
+        percept: 0
+        surv: 0
+        intel: 0
+        mem: 0
+        chari: 0
+        social: 0
+        lang: 0
+        moral: 0
+        fatigue: 0
+        respect: 0
+        life: 0
+        speed_attr: 0
+        food: 0
+        resdis: 0
+        healdis: 0
+        reswoun: 0
+        healwoun: 0
         RF:
           exp_baby_range: 10
           exp_baby_value: 1
@@ -2863,6 +2889,12 @@ MonoBehaviour:
           exp_teen_value: 2
           exp_adult_range: 35
           exp_adult_value: 0.5
+          level_baserequirement: 150
+          level_growth: 10
+          level_training: 20
+          ratio_growth: 1.2
+          ratio_training: 1.1
+          ratio_mastering: 1
       gatherers: []
       tribename: 
     mapsave:
