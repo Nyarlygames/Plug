@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PanelChar : MonoBehaviour {
 
     GameManager GM;
-    GameObject curChar;
+    CharacterSave curChar;
     Dropdown CharacterList;
     Button CharacterListPlus;
     Button CharacterListMinus;
@@ -99,11 +99,11 @@ public class PanelChar : MonoBehaviour {
 
     void CharacterValueChanged(Dropdown CharList)
     {
-        curChar = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value];
-        CharacterFace.sprite = curChar.GetComponent<SpriteRenderer>().sprite;
-        Character_Name.text = "Name : " + curChar.GetComponent<CharacterGO>().charCurrent.name;
-        Character_Age.text = "Age : " + curChar.GetComponent<CharacterGO>().charCurrent.age.days;
-        Character_Experience.text = "XP : " + curChar.GetComponent<CharacterGO>().charCurrent.xp;
+        curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
+        CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
+        Character_Name.text = "Name : " + curChar.name;
+        Character_Age.text = "Age : " + curChar.age.days / 365 + " days : " + curChar.age.days % 365;
+        Character_Experience.text = "XP : " + curChar.xp;
     }
 
     void CharPlusClick()
@@ -121,7 +121,9 @@ public class PanelChar : MonoBehaviour {
             CharacterList.value--;
     }
 
-    void Update () {
-        Character_Experience.text = "XP : " + curChar.GetComponent<CharacterGO>().charCurrent.xp;
+    void Update ()
+    {
+        Character_Age.text = "Age : " + curChar.age.days / 365 + " days : " + curChar.age.days % 365;
+        Character_Experience.text = "XP : " + curChar.xp;
     }
 }

@@ -106,10 +106,10 @@ MonoBehaviour:
     y: 30
     width: 2560
     height: 1307
-  m_MinSize: {x: 683, y: 342}
-  m_MaxSize: {x: 12008, y: 8042}
+  m_MinSize: {x: 681, y: 342}
+  m_MaxSize: {x: 12006, y: 8042}
   vertical: 0
-  controlID: 108
+  controlID: 9
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -130,8 +130,8 @@ MonoBehaviour:
     y: 0
     width: 1856
     height: 1307
-  m_MinSize: {x: 406, y: 342}
-  m_MaxSize: {x: 8006, y: 8042}
+  m_MinSize: {x: 404, y: 342}
+  m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
   controlID: 10
 --- !u!114 &7
@@ -154,8 +154,8 @@ MonoBehaviour:
     y: 0
     width: 1856
     height: 935
-  m_MinSize: {x: 406, y: 221}
-  m_MaxSize: {x: 8006, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
   controlID: 11
 --- !u!114 &8
@@ -176,8 +176,8 @@ MonoBehaviour:
     y: 0
     width: 457
     height: 935
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 13}
   m_Panes:
   - {fileID: 13}
@@ -369,9 +369,9 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: be2ffbff
-    m_LastClickedID: -315458
-    m_ExpandedIDs: 2a35fdff98fbffff00000000262d0000
+    m_SelectedIDs: b22efdff
+    m_LastClickedID: -184654
+    m_ExpandedIDs: aadbfdff72f4fdff2c35ffff1443ffffc2ccffff9efbffff00000000ae3d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -457,9 +457,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.04087688, y: -0.0020940301, z: 0.00008435313, w: -0.99916196}
   m_Size:
-    m_Target: 993.74384
+    m_Target: 1072.0747
     speed: 2
-    m_Value: 993.74384
+    m_Value: 1072.0747
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -537,19 +537,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Resources/Play/TribeChar
+    - Assets/Resources/Play/Prefabs
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Resources/Play/TribeChar
+  - Assets/Resources/Play/Prefabs
   m_LastFoldersGridSize: -1
   m_LastProjectPath: D:\Projects\Plug\Sapiens
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 146}
-    m_SelectedIDs: 102b0000
-    m_LastClickedID: 11024
-    m_ExpandedIDs: 00000000fe2700000a280000902800003c2a0000442a0000e02a0000102b0000902b0000962b0000802d000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 158}
+    m_SelectedIDs: 942b0000
+    m_LastClickedID: 11156
+    m_ExpandedIDs: 00000000fc270000082800008e2800003a2a0000422a0000de2a00000e2b00008e2b0000942b0000b42d000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -577,7 +577,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000fe2700000a280000902800003c2a0000442a0000e02a0000102b0000902b0000962b0000802d0000
+    m_ExpandedIDs: 00000000fc270000082800008e2800003a2a0000422a0000de2a00000e2b00008e2b0000942b0000b42d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -602,9 +602,9 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: be2ffbff
-    m_LastClickedInstanceID: -315458
-    m_HadKeyboardFocusLastEvent: 0
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 56260000083400000000000002280000fe0500003c280000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

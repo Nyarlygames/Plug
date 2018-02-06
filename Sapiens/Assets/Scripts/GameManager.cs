@@ -14,10 +14,10 @@ public class GameManager : MonoBehaviour
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
+    RatioFactory RF = new RatioFactory();
 
     void Start()
     {
-       // Time.timeScale = 3.5f;
         timers = GameObject.Find("Timers").GetComponent<Text>();
         if (PlayerPrefs.GetString("savefile") != "")
         {
@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
             if ((sdata != null))
             {
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
-                Debug.Log("Loaded : " + PlayerPrefs.GetString("savefile"));
+                GameObject.Find("UI_SaveName").GetComponent<Text>().text = "Save name : " + PlayerPrefs.GetString("savefile");
             }
             else
                 Debug.Log("Failed loading : " + PlayerPrefs.GetString("savefile"));
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
         {
             //new game without save file
             CreateTribeGO("newgame");
+            GameObject.Find("UI_SaveName").GetComponent<Text>().text = "New tribe";
             Debug.Log("Loaded : new game");
         }
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
@@ -102,12 +103,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp)
+    public void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp)
     {
+        int countdown = age;
+        float xpacc = 0;
+        if (countdown > RF.exp_adult_range)
+        {
+            xpacc -= 0.5f * (((countdown - (int) RF.exp_adult_range) * 365) / 200) ;
+            countdown = (int)RF.exp_adult_range;
+        }
+        if (countdown > RF.exp_teen_range)
+        {
+            xpacc += RF.exp_adult_value * (countdown - RF.exp_teen_range) * 365;
+            countdown = (int)RF.exp_teen_range;
+        }
+        if (countdown > RF.exp_baby_range)
+        {
+            xpacc += RF.exp_teen_value * (countdown - RF.exp_baby_range) * 365;
+            countdown = (int)RF.exp_baby_range;
+        }
+        if (countdown > 0)
+        {
+            xpacc += RF.exp_baby_value * countdown *365;
+        }
+
         CharacterSave newman = new CharacterSave();
         newman.id = id;
         newman.name = name;
         newman.time = age * 24 * 365;
+        newman.xp = xpacc;
         newman.SetAge();
         newman.charSprite = sprite;
         tribecomp.tribeCurrent.members.Add(newman);
