@@ -7,10 +7,28 @@ using UnityEngine;
 public class MapSave
 {
     
-    public List<List<int>> map;
+    //public List<List<int>> map;
     public int sizex = 0;
     public int sizey = 0;
     public int tilesizex = 0;
     public int tilesizey = 0;
+    public int basevalue = 0;
+    public int nextobject = 0;
+    public string render = "";
+    public string orientation = "orthogonal";
+    
+    public List<List<TileSave>> tiles = new List<List<TileSave>>();
+    public List<TileSetsSave> tilesets = new List<TileSetsSave>();
+    public List<LayerSave> layers = new List<LayerSave>();
+    public List<ObjectGroupSave> objectgroups = new List<ObjectGroupSave>();
+    public List<ObjectSave> objects = new List<ObjectSave>();
 
+    public string GetValueFromKey(string key, string line)
+    {
+        int start = line.IndexOf(key + "=\"") + (key + "=\"").Length;
+        string cut = line.Substring(start);
+        int end = start + cut.IndexOf("\"");
+        string value = line.Substring(start, end - start);
+        return (value);
+    }
 }

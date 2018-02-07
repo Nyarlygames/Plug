@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using System;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -11,14 +13,20 @@ public class GameManager : MonoBehaviour
     public GameObject TribeGO;
     public GameObject UIEscape;
     public GameObject UIChar;
+    public List<GameObject> TilesGO = new List<GameObject>();
+    public List<GameObject> ObjectsGO = new List<GameObject>();
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
     public float timeSinceReload = 0.0f;
     RatioFactory RF = new RatioFactory();
+    public MapSave map = new MapSave();
+    //public List<Sprite> spritelist = new List<Sprite>();
 
     void Start()
     {
+
+        /* Tribe */
         timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
         if (PlayerPrefs.GetString("savefile") != "")
@@ -26,6 +34,8 @@ public class GameManager : MonoBehaviour
             sdata = SaveManager.LoadSave(PlayerPrefs.GetString("savefile")); // load savegame state
             if ((sdata != null))
             {
+                SaveManager.LoadMap(PlayerPrefs.GetString("mapfile"), map);
+                SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = "Save name : " + PlayerPrefs.GetString("savefile");
             }
@@ -35,12 +45,17 @@ public class GameManager : MonoBehaviour
         else
         {
             //new game without save file
+            PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
+            SaveManager.LoadMap(PlayerPrefs.GetString("mapfile"), map); // create map from file
+            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
             CreateTribeGO("newgame");
             GameObject.Find("UI_SaveName").GetComponent<Text>().text = "New tribe";
             Debug.Log("Loaded : new game");
         }
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
+        UIEscape.name = "UI_EscapePanel";
         UIChar = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_CharPanel"), Vector3.zero, Quaternion.identity);
+        UIChar.name = "UI_CharPanel";
     }
 
     void Update()
@@ -89,13 +104,13 @@ public class GameManager : MonoBehaviour
                 TribeGO tribecomp = TribeGO.GetComponent<TribeGO>();
                 tribecomp.tribeCurrent = newtribe;
                 tribecomp.profilename = "newgame";
-
-                CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp);
-                CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp);
-                CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp);
-                CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp);
-                CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp);
-                CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp);
+                GameObject Tribe_Members = new GameObject("Tribe_Members");
+                CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp, Tribe_Members);
+                CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp, Tribe_Members);
+                CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp, Tribe_Members);
+                CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp, Tribe_Members);
+                CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp, Tribe_Members);
+                CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp, Tribe_Members);
 
                 sdata = new SaveData();
                 sdata.tribesave = tribecomp.tribeCurrent;
@@ -106,7 +121,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp)
+    public void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp, GameObject Tribe_Members)
     {
         int countdown = age;
         float xpacc = 0;
@@ -145,6 +160,8 @@ public class GameManager : MonoBehaviour
         CharGO.GetComponent<CharacterGO>().charCurrent = newman;
         CharGO.AddComponent<SpriteRenderer>();
         CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newman.charSprite);
+        CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100 / 2, map.tilesizey * map.sizey / 100 / 2, 0.0f);
+        CharGO.transform.SetParent(Tribe_Members.transform);
         tribecomp.CharsGO.Add(CharGO);
     }
 }

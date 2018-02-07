@@ -1081,7 +1081,7 @@ MonoBehaviour:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2492,6 +2492,7 @@ GameObject:
   - component: {fileID: 1791408155}
   - component: {fileID: 1791408154}
   - component: {fileID: 1791408153}
+  - component: {fileID: 1791408157}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -2562,6 +2563,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1791408157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1791408152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0baa7e720944ef84abd3379326773c8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1835562112
 GameObject:
   m_ObjectHideFlags: 0
@@ -2911,6 +2923,8 @@ MonoBehaviour:
   TribeGO: {fileID: 0}
   UIEscape: {fileID: 0}
   UIChar: {fileID: 0}
+  TilesGO: []
+  ObjectsGO: []
   sdata:
     savefolder: Save/
     savefile: 
@@ -2983,9 +2997,30 @@ MonoBehaviour:
       sizey: 0
       tilesizex: 0
       tilesizey: 0
+      basevalue: 0
+      nextobject: 0
+      render: 
+      orientation: orthogonal
+      tilesets: []
+      layers: []
+      objectgroups: []
+      objects: []
   scaleBeforeEscape: 0
   timers: {fileID: 0}
   timeSinceReload: 0
+  map:
+    sizex: 0
+    sizey: 0
+    tilesizex: 0
+    tilesizey: 0
+    basevalue: 0
+    nextobject: 0
+    render: 
+    orientation: orthogonal
+    tilesets: []
+    layers: []
+    objectgroups: []
+    objects: []
 --- !u!4 &2074311092
 Transform:
   m_ObjectHideFlags: 0

@@ -69,7 +69,13 @@ public class PanelDebug : MonoBehaviour
         {
             int age = Convert.ToInt32(CharAge.text);
             TribeGO tribeGO = GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>();
-            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), "Play/TribeChar/Man2", tribeGO);
+            GameObject Tribe_Members = GameObject.Find("Tribe_Members");
+            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), "Play/TribeChar/Man2", tribeGO, Tribe_Members);
+            GameObject Charlist = GameObject.Find("UI_CharPanel");
+            if (Charlist != null)
+            {
+                Charlist.GetComponent<PanelChar>().SetExistingChars();
+            }
             Debug.Log("Char : " + CharName.text + " created.");
         }
         catch (FormatException)

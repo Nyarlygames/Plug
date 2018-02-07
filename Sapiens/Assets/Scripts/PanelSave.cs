@@ -28,7 +28,9 @@ public class PanelSave : MonoBehaviour {
     void SaveClick()
     {
         GM.sdata.savefile = GameObject.Find("SavePanel_SaveName").GetComponent<Text>().text;
-        GM.SaveManager.SaveGame(GM.sdata, GM.TribeGO);
+        GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = GM.sdata.savefile;
+        GM.TribeGO.GetComponent<TribeGO>().name = GM.sdata.savefile;
+        GM.SaveManager.SaveGame(GM.sdata, GM.TribeGO, GM.map);
         GameObject.Find("UI_SaveName").GetComponent<Text>().text = "Save name : " + GM.sdata.savefile;
         GameObject.Find("SavePanel_Status").GetComponent<Text>().text = "Saved : " + GM.sdata.savefile;
 
