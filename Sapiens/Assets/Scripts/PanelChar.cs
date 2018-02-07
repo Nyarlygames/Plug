@@ -14,17 +14,23 @@ public class PanelChar : MonoBehaviour {
     Text Character_Strength;
     Text Character_Endurance;
     Text Character_Body;
-    Text Character_Mental;
-    Text Character_Dexterity;
-    Text Character_Accuracy;
     Text Character_SpeedStat;
+
+    Text Character_Dexterity;
     Text Character_Perception;
-    Text Character_Survival;
-    Text Character_Intel;
-    Text Character_Memory;
-    Text Character_Charisma;
+    Text Character_Accuracy;
+    Text Character_Autonomy;
+
+    Text Character_Spirit;
     Text Character_Social;
+    Text Character_Mental;
     Text Character_Language;
+
+    Text Character_Level;
+    Text Character_NextXP;
+    Text Character_NextLevel;
+    Image Character_NextLevelBar;
+
     Text Character_Age;
     Text Character_Experience;
     Text Character_Moral;
@@ -46,20 +52,27 @@ public class PanelChar : MonoBehaviour {
         GameObject.Find("CharacterSelector+").GetComponent<Button>().onClick.AddListener(CharPlusClick);
         GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharMinusClick);
         CharacterFace = GameObject.Find("CharacterFace").GetComponent<Image>();
+
         Character_Strength = GameObject.Find("Character_Strength").GetComponent<Text>();
         Character_Endurance = GameObject.Find("Character_Endurance").GetComponent<Text>();
         Character_Body = GameObject.Find("Character_Body").GetComponent<Text>();
-        Character_Mental = GameObject.Find("Character_Mental").GetComponent<Text>();
-        Character_Dexterity = GameObject.Find("Character_Dexterity").GetComponent<Text>();
-        Character_Accuracy = GameObject.Find("Character_Accuracy").GetComponent<Text>();
         Character_SpeedStat = GameObject.Find("Character_SpeedStat").GetComponent<Text>();
+
+        Character_Dexterity = GameObject.Find("Character_Dexterity").GetComponent<Text>();
         Character_Perception = GameObject.Find("Character_Perception").GetComponent<Text>();
-        Character_Survival = GameObject.Find("Character_Survival").GetComponent<Text>();
-        Character_Intel = GameObject.Find("Character_Intel").GetComponent<Text>();
-        Character_Memory = GameObject.Find("Character_Memory").GetComponent<Text>();
-        Character_Charisma = GameObject.Find("Character_Charisma").GetComponent<Text>();
+        Character_Accuracy = GameObject.Find("Character_Accuracy").GetComponent<Text>();
+        Character_Autonomy = GameObject.Find("Character_Autonomy").GetComponent<Text>();
+
+        Character_Spirit = GameObject.Find("Character_Spirit").GetComponent<Text>();
         Character_Social = GameObject.Find("Character_Social").GetComponent<Text>();
+        Character_Mental = GameObject.Find("Character_Mental").GetComponent<Text>();
         Character_Language = GameObject.Find("Character_Language").GetComponent<Text>();
+        Character_Level = GameObject.Find("Character_Level").GetComponent<Text>();
+        Character_NextXP = GameObject.Find("Character_NextXP").GetComponent<Text>();
+        Character_NextLevel = GameObject.Find("Character_NextLevel").GetComponent<Text>();
+        Character_NextLevelBar = GameObject.Find("Character_NextLevelBar").GetComponent<Image>();
+        Character_NextLevelBar.fillMethod = Image.FillMethod.Horizontal;
+
         Character_Age = GameObject.Find("Character_Age").GetComponent<Text>();
         Character_Experience = GameObject.Find("Character_Experience").GetComponent<Text>();
         Character_Moral = GameObject.Find("Character_Moral").GetComponent<Text>();
@@ -102,8 +115,6 @@ public class PanelChar : MonoBehaviour {
         curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
         CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
         Character_Name.text = "Name : " + curChar.name;
-        Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days % 365 + " days.";
-        Character_Experience.text = "XP : " + curChar.xp;
     }
 
     void CharPlusClick()
@@ -123,7 +134,23 @@ public class PanelChar : MonoBehaviour {
 
     void Update ()
     {
-        Character_Age.text = "Age : " + curChar.age.days / 365 + " days : " + curChar.age.days % 365;
+        Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days + " days.";
         Character_Experience.text = "XP : " + curChar.xp;
+        Character_Level.text = curChar.level.ToString();
+        Character_NextLevel.text = (curChar.level + 1).ToString();
+        Character_NextXP.text = "Next level : " + ((int)curChar.last).ToString() + " / " + ((int)curChar.next).ToString();
+        Character_NextLevelBar.fillAmount = curChar.last / curChar.next;
+        Character_Strength.text = "Strength : " + curChar.strength;
+        Character_Endurance.text = "Endurance : " + curChar.endu;
+        Character_Body.text = "Body : " + curChar.body;
+        Character_SpeedStat.text = "Speed : " + curChar.speed;
+        Character_Dexterity.text = "Dexterity : " + curChar.dexte;
+        Character_Perception.text = "Perception : " + curChar.percept;
+        Character_Accuracy.text = "Accuracy : " + curChar.accu;
+        Character_Autonomy.text = "Autonomy : " + curChar.autonomy;
+        Character_Spirit.text = "Spirit : " + curChar.spirit;
+        Character_Social.text = "Social : " + curChar.social;
+        Character_Mental.text = "Mental : " + curChar.mental;
+        Character_Language.text = "Language : " + curChar.lang;
     }
 }

@@ -38,7 +38,7 @@ public class CharacterSave
     public int fatigue = 0;
     public int respect = 0;
     public int life = 0;
-    public int speed_attr = 0;
+    public int move = 0;
     public int food = 0;
     public int resdis = 0;
     public int healdis = 0;
@@ -74,7 +74,9 @@ public class CharacterSave
         else // elder
         {
             xp -= 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
-           // last += 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
+            last += 0.5f * ((age.years - RF.exp_adult_range) / 200.0f);
+            if (last < 0) // remove when activities
+                last = 0;
         }
         if (last >= next) // level up
         {
