@@ -11,4 +11,6 @@ public class ObjectSave
     public float y = 0;
     public int width = 0;
     public int height = 0;
+    public int offsetx = 0;
+    public int offsety = 0;
 }

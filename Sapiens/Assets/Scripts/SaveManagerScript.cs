@@ -102,6 +102,32 @@ public class SaveManagerScript {
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
             }
         }
+        GameObject emptyGO = new GameObject("Objects");
+        foreach(ObjectSave obj in mapfile.objects) { 
+            GameObject tilego = new GameObject("[" + obj.x + "/" + obj.y + "]" + obj.id);
+            tilego.AddComponent<ObjectGO>();
+            ObjectGO curObj = tilego.GetComponent<ObjectGO>();
+            curObj.objectCur = obj;
+            tilego.AddComponent<SpriteRenderer>();
+            TileSetSave tileset = new TileSetSave();
+            if (curObj.objectCur.gid > mapfile.basevalue)
+            {
+                foreach (TileSetsSave tss in mapfile.tilesets)
+                {
+                    if ((curObj.objectCur.gid >= tss.first) && (curObj.objectCur.gid < tss.first + tss.spritecount))
+                    {
+                        tileset = tss.tilesets[curObj.objectCur.gid - tss.first];
+                        break;
+                    }
+                }
+                if (tileset.spritefile != "")
+                {
+                    tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
+                }
+            }
+            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx) / 100, (curObj.objectCur.y + curObj.objectCur.offsetx) / 100, 0.0f);
+            tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
+        }
     }
 
     public void LoadMap(string mapfile, MapSave map)
@@ -160,6 +186,7 @@ public class SaveManagerScript {
                                 newid = reader.ReadLine();
                         }
                     }
+                    map.tiles.Reverse();
                 }
                 else
                 {
@@ -178,7 +205,6 @@ public class SaveManagerScript {
                 line = reader.ReadLine();
                 while (!line.Contains("</objectgroup>"))
                 {
-
                     ObjectSave obj = new ObjectSave();
                     obj.id = Convert.ToInt32(map.GetValueFromKey("id", line));
                     obj.gid = Convert.ToInt32(map.GetValueFromKey("gid", line));
@@ -186,9 +212,12 @@ public class SaveManagerScript {
                     obj.y = Convert.ToSingle(map.GetValueFromKey("y", line));
                     obj.width = Convert.ToInt32(map.GetValueFromKey("width", line));
                     obj.height = Convert.ToInt32(map.GetValueFromKey("height", line));
+                    obj.offsetx = objectlayer.offsetx;
+                    obj.offsety = objectlayer.offsety;
                     map.objects.Add(obj);
                     line = reader.ReadLine();
                 }
+                //map.objects.Reverse();
             }
             if (line.Contains("<tileset"))
             {

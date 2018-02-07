@@ -307,6 +307,7 @@
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LayerSave.cs" />
     <Compile Include="Assets\Scripts\MapSave.cs" />
+    <Compile Include="Assets\Scripts\ObjectGO.cs" />
     <Compile Include="Assets\Scripts\ObjectGroupSave.cs" />
     <Compile Include="Assets\Scripts\ObjectSave.cs" />
     <Compile Include="Assets\Scripts\PanelChar.cs" />
