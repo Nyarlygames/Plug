@@ -40,8 +40,6 @@ public class SaveManagerScript {
         if (File.Exists("Save/"+filename+"/"+filename))
         {
             SaveData sdata = new SaveData();
-            sdata.savefile = filename;
-            sdata.savefolder = "Save/";
             BinaryFormatter bf = new BinaryFormatter();
             FileStream file = File.Open(sdata.savefolder + filename + "/"  + filename, FileMode.Open);
             sdata = (SaveData)bf.Deserialize(file); // load saveX file names
@@ -64,6 +62,10 @@ public class SaveManagerScript {
         BinaryFormatter bf = new BinaryFormatter();
         previous.tribesave = Tribe.GetComponent<TribeGO>().tribeCurrent;
         previous.mapsave = Map;
+        if(PlayerPrefs.GetString("mapfile") != "")
+        {
+            previous.mapfile = PlayerPrefs.GetString("mapfile");
+        }
         FileStream file = File.Open(previous.savefolder + previous.savefile + "/" + previous.savefile, FileMode.OpenOrCreate);
         bf.Serialize(file, previous);
         file.Close();

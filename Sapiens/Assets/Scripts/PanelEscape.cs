@@ -21,8 +21,14 @@ public class PanelEscape : MonoBehaviour
         temp.onClick.AddListener(LoadClick);
         temp = GameObject.Find("Escape_Back").GetComponent<Button>();
         temp.onClick.AddListener(BackClick);
+        GameObject Menus = GameObject.Find("Menus");
         UISave = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_SavePanel"), Vector3.zero, Quaternion.identity);
+        UISave.name = "UI_SavePanel";
+        UISave.transform.SetParent(Menus.transform);
+        UISave.SetActive(false);
         UILoad = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_LoadPanel"), Vector3.zero, Quaternion.identity);
+        UILoad.name = "UI_LoadPanel";
+        UILoad.transform.SetParent(Menus.transform);
     }
 	
 	void Update () {
@@ -31,7 +37,7 @@ public class PanelEscape : MonoBehaviour
 
     void MenuClick()
     {
-        SceneManager.LoadScene("PlayMenu", LoadSceneMode.Single);
+        SceneManager.LoadScene("NewGame", LoadSceneMode.Single);
     }
     void SaveClick()
     {

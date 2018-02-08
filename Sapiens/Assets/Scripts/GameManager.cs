@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
         /* Tribe */
         timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
@@ -34,10 +33,10 @@ public class GameManager : MonoBehaviour
             sdata = SaveManager.LoadSave(PlayerPrefs.GetString("savefile")); // load savegame state
             if ((sdata != null))
             {
-                SaveManager.LoadMap(PlayerPrefs.GetString("mapfile"), map);
+                SaveManager.LoadMap(sdata.mapfile, map);
                 SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
-                GameObject.Find("UI_SaveName").GetComponent<Text>().text = "Save name : " + PlayerPrefs.GetString("savefile");
+                GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
             else
                 Debug.Log("Failed loading : " + PlayerPrefs.GetString("savefile"));
@@ -46,16 +45,25 @@ public class GameManager : MonoBehaviour
         {
             //new game without save file
             PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
-            SaveManager.LoadMap(PlayerPrefs.GetString("mapfile"), map); // create map from file
+            sdata = new SaveData();
+
+            sdata.savefile = "";
+            sdata.savefolder = "Save/";
+            sdata.mapfile = PlayerPrefs.GetString("mapfile");
+            SaveManager.LoadMap(sdata.mapfile, map); // create map from file
             SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
             CreateTribeGO("newgame");
             GameObject.Find("UI_SaveName").GetComponent<Text>().text = PlayerPrefs.GetString("NewName");
+            TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = PlayerPrefs.GetString("NewName"); 
             Debug.Log("Loaded : new game");
         }
+        GameObject Menus = new GameObject("Menus");
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
         UIEscape.name = "UI_EscapePanel";
+        UIEscape.transform.SetParent(Menus.transform);
         UIChar = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_CharPanel"), Vector3.zero, Quaternion.identity);
         UIChar.name = "UI_CharPanel";
+        UIChar.transform.SetParent(Menus.transform);
     }
 
     void Update()

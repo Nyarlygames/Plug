@@ -5,7 +5,7 @@ Assets/Scenes/OptionsMenu.unity
 Assets/Scenes/PlayMenu.unity
 Assets/Scenes/NewGame.unity
 Assets/Scenes/Sapiens_Load.unity
-Assets/Scenes/LoadMenu.unity
+Assets/Scenes/MenuLoad.unity
 SceneListEnd?
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PanelChar
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.UI_DebugScript
@@ -106,6 +106,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 9ca6347af5ceb6b0d1c105af31b6722e UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.FogOfWar
 dfe329ef4dafdbde7660d41984124691 Assembly-CSharp.dll:.LogController
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Menu_Load
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour
 60b2bb652410a5867a5ab9a01cd38461 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkDiscovery
@@ -132,7 +133,7 @@ c2275a8bfbb9f9942cad75ecdfded41d UnityEngine.HoloLens.dll:UnityEngine.XR.WSA.Spa
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PanelLoad
 d58a4646a7ac49e1ef45830fbc9301a8 Assembly-CSharp.dll:.CharacterScript
 ae98edcce5933568fdd27bad9775b78e Assembly-CSharp.dll:.GatherZoneScript
-6734599d1e0ef3316f9cfeec55da5411 Assembly-CSharp.dll:.NewGameController
+05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.NewGameController
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
 6cd53dab9d53e105b10f9b85aaa82edb Assembly-CSharp.dll:.GameManager
@@ -175,4 +176,3 @@ e3546cfa646d94346d8b7c61f9f2fe53 Assembly-CSharp.dll:.PanelDebug
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.CharacterPanelScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.TribePanelScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.PlayMenuController
-05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.Menu_Load

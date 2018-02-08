@@ -334,7 +334,11 @@ public class NewGameController : MonoBehaviour {
     void LaunchButton_Click()
     {
         PlayerPrefs.SetString("NewName", GameObject.Find("TribeName").GetComponent<Text>().text);
-        SceneManager.LoadScene("Sapiens", LoadSceneMode.Single);
+        PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
+        PlayerPrefs.SetString("savefile", "");
+        GameObject testGO = new GameObject("testgo");
+        DontDestroyOnLoad(testGO);
+        SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
     }
     void BackButton_Click()
     {

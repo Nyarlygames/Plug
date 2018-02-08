@@ -55,7 +55,7 @@ public class PanelLoad : MonoBehaviour {
     void LoadClick()
     {
         string filename = GameObject.Find("LoadPanel_SaveName").GetComponent<Text>().text;
-        PlayerPrefs.SetString("savefile", GameObject.Find("LoadPanel_SaveName").GetComponent<Text>().text);
+        PlayerPrefs.SetString("savefile", filename);
 
         if (File.Exists("Save/" + filename + "/" + filename))
         {
