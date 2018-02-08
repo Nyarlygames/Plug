@@ -6,7 +6,7 @@ using System;
 public class LayerSave
 {
 
-    //public List<List<int>> map;
+    public List<List<TileSave>> tiles = new List<List<TileSave>>();
     public int sizex = 0;
     public int sizey = 0;
     public string name ="";

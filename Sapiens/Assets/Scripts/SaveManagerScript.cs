@@ -73,33 +73,35 @@ public class SaveManagerScript {
     public void LoadMapGO(MapSave mapfile, List<GameObject> TilesGO, List<GameObject> ObjectsGO)
     {
         GameObject emptyMap = new GameObject("Map");
-        for (int y = 0; y < mapfile.sizey; y++)
-        {
-            for (int x = 0; x < mapfile.sizex; x++)
+        foreach (LayerSave lay in mapfile.layers) {
+            for (int y = 0; y < mapfile.sizey; y++)
             {
-                GameObject tilego = new GameObject("[" + y + "/" + x + "]");
-                tilego.AddComponent<TileGO>();
-                TileGO curtile = tilego.GetComponent<TileGO>();
-                curtile.tileCur = mapfile.tiles[y][x];
-                tilego.AddComponent<SpriteRenderer>();
-                TileSetSave tileset = new TileSetSave();
-                if (curtile.tileCur.id > mapfile.basevalue)
+                for (int x = 0; x < mapfile.sizex; x++)
                 {
-                    foreach (TileSetsSave tss in mapfile.tilesets)
+                    GameObject tilego = new GameObject("[" + y + "/" + x + "]");
+                    tilego.AddComponent<TileGO>();
+                    TileGO curtile = tilego.GetComponent<TileGO>();
+                    curtile.tileCur = lay.tiles[y][x];
+                    tilego.AddComponent<SpriteRenderer>();
+                    TileSetSave tileset = new TileSetSave();
+                    if (curtile.tileCur.id > mapfile.basevalue)
                     {
-                        if ((curtile.tileCur.id >= tss.first) && (curtile.tileCur.id < tss.first + tss.spritecount))
+                        foreach (TileSetsSave tss in mapfile.tilesets)
                         {
-                            tileset = tss.tilesets[curtile.tileCur.id - tss.first];
-                            break;
+                            if ((curtile.tileCur.id >= tss.first) && (curtile.tileCur.id < tss.first + tss.spritecount))
+                            {
+                                tileset = tss.tilesets[curtile.tileCur.id - tss.first];
+                                break;
+                            }
+                        }
+                        if (tileset.spritefile != "")
+                        {
+                            tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                         }
                     }
-                    if (tileset.spritefile != "")
-                    {
-                        tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
-                    }
+                    tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, 0.0f);
+                    tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
                 }
-                tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex/2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey/2.0f) / 100.0f, 0.0f);
-                tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
             }
         }
         GameObject emptyGO = new GameObject("Objects");
@@ -155,8 +157,6 @@ public class SaveManagerScript {
             {
                 LayerSave ground = new LayerSave();
                 ground.name = map.GetValueFromKey("name", line);
-                if (ground.name == "Ground")
-                {
                     ground.sizex = Convert.ToInt32(map.GetValueFromKey("width", line));
                     ground.sizey = Convert.ToInt32(map.GetValueFromKey("height", line));
                     map.layers.Add(ground);
@@ -167,20 +167,20 @@ public class SaveManagerScript {
                         string newid = reader.ReadLine();
                         for (int j = 0; j < ground.sizey; j++)
                         {
-                            map.tiles.Add(new List<TileSave>());
+                            ground.tiles.Add(new List<TileSave>());
                             for (int i = 0; i < ground.sizex; i++)
                             {
                                 TileSave tilesave = new TileSave();
                                 if (newid.Length >= 2)
                                 {
                                     tilesave.id = Convert.ToInt32(newid.Substring(0, 1));
-                                    map.tiles[j].Add(tilesave);
+                                    ground.tiles[j].Add(tilesave);
                                     newid = newid.Substring(2);
                                 }
                                 else
                                 {
                                     tilesave.id = Convert.ToInt32(newid);
-                                    map.tiles[j].Add(tilesave);
+                                    ground.tiles[j].Add(tilesave);
                                 }
                                 tilesave.posx = i;
                                 tilesave.posy = j;
@@ -189,12 +189,7 @@ public class SaveManagerScript {
                                 newid = reader.ReadLine();
                         }
                     }
-                    map.tiles.Reverse();
-                }
-                else
-                {
-                    // TODO: Moar layers ? for triggers ? ???
-                }
+                    ground.tiles.Reverse();
             }
             if (line.Contains("<objectgroup"))
             {
