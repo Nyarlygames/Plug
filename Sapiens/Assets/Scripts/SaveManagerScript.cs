@@ -98,7 +98,7 @@ public class SaveManagerScript {
                         tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                     }
                 }
-                tilego.GetComponent<Transform>().position = new Vector3(x * mapfile.tilesizex / 100, y * mapfile.tilesizey / 100, 0.0f);
+                tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex/2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey/2.0f) / 100.0f, 0.0f);
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
             }
         }
@@ -123,16 +123,19 @@ public class SaveManagerScript {
                 if (tileset.spritefile != "")
                 {
                     tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
+                    if (curObj.objectCur.width != tileset.width)
+                    {
+                        curObj.GetComponent<Transform>().localScale = new Vector3((float)curObj.objectCur.width / tileset.width, (float)curObj.objectCur.height / tileset.height, 0.0f);
+                    }
                 }
             }
-            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx) / 100, (curObj.objectCur.y + curObj.objectCur.offsetx) / 100, 0.0f);
+            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width/2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height/2))) / 100.0f, -2.0f);
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
         }
     }
 
     public void LoadMap(string mapfile, MapSave map)
     {
-
         StreamReader reader = new StreamReader(mapfile);
         string line = reader.ReadLine();
         while (!reader.EndOfStream)

@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
         CharGO.GetComponent<CharacterGO>().charCurrent = newman;
         CharGO.AddComponent<SpriteRenderer>();
         CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newman.charSprite);
-        CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100 / 2, map.tilesizey * map.sizey / 100 / 2, 0.0f);
+        CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
         CharGO.transform.SetParent(Tribe_Members.transform);
         tribecomp.CharsGO.Add(CharGO);
     }

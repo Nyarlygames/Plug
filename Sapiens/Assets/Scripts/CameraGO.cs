@@ -16,9 +16,9 @@ public class CameraGO : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        tribePos = GM.TribeGO.GetComponent<TribeGO>().CharsGO[0].GetComponent<Transform>();
+       /* tribePos = GM.TribeGO.GetComponent<TribeGO>().CharsGO[0].GetComponent<Transform>();
         Vector3 temp = tribePos.position;
         temp.z -= 5.0f;
-        camPos.position = temp;
+        camPos.position = temp;*/
 	}
 }
