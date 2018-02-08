@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
+    public float ZGround = 0.0f;
+    public float ZObjects = -1.0f;
+    public float ZCharacters=-2.0f;
     public float timeSinceReload = 0.0f;
     RatioFactory RF = new RatioFactory();
     public MapSave map = new MapSave();
@@ -44,7 +47,6 @@ public class GameManager : MonoBehaviour
         else
         {
             //new game without save file
-            PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
             sdata = new SaveData();
 
             sdata.savefile = "";
@@ -52,9 +54,23 @@ public class GameManager : MonoBehaviour
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
             SaveManager.LoadMap(sdata.mapfile, map); // create map from file
             SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
-            CreateTribeGO("newgame");
-            GameObject.Find("UI_SaveName").GetComponent<Text>().text = PlayerPrefs.GetString("NewName");
-            TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = PlayerPrefs.GetString("NewName"); 
+
+            GameObject NewTribeGO = GameObject.Find("newTribeGO");
+            if (NewTribeGO != null)
+            {
+                TribeGO NewTribe = NewTribeGO.GetComponent<TribeGO>();
+                CreateTribeGO(NewTribe);
+                GameObject.Find("UI_SaveName").GetComponent<Text>().text = PlayerPrefs.GetString("NewName");
+                TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = PlayerPrefs.GetString("NewName");
+
+                Destroy(NewTribeGO);
+            }
+            else
+            {
+                TribeGO = new GameObject("DEBUGTribe");
+                TribeGO.AddComponent<TribeGO>();
+                TribeGO.GetComponent<TribeGO>().tribeCurrent = new TribeSave();
+            }
             Debug.Log("Loaded : new game");
         }
         GameObject Menus = new GameObject("Menus");
@@ -99,37 +115,42 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void CreateTribeGO(string hackkey)
+    void CreateTribeGO(TribeGO NGTribe)
     {
-        switch (hackkey)
+        TribeSave newtribe = new TribeSave();
+        newtribe.tribename = NGTribe.tribeCurrent.tribename;
+        newtribe.SetAge();
+        TribeGO = new GameObject(newtribe.tribename);
+        TribeGO.AddComponent<TribeGO>();
+        TribeGO tribecomp = TribeGO.GetComponent<TribeGO>();
+        tribecomp.tribeCurrent = newtribe;
+        tribecomp.profilename = "newgame"; // options ?
+        GameObject Tribe_Members = new GameObject("Tribe_Members");
+        for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
-            case "newgame" :
-                TribeSave newtribe = new TribeSave();
-                newtribe.tribename = "NewTribe";
-                newtribe.SetAge();
-                TribeGO = new GameObject(newtribe.tribename);
-                TribeGO.AddComponent<TribeGO>();
-                TribeGO tribecomp = TribeGO.GetComponent<TribeGO>();
-                tribecomp.tribeCurrent = newtribe;
-                tribecomp.profilename = "newgame";
-                GameObject Tribe_Members = new GameObject("Tribe_Members");
-                CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp, Tribe_Members);
-                CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp, Tribe_Members);
-                CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp, Tribe_Members);
-                CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp, Tribe_Members);
-                CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp, Tribe_Members);
-                CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp, Tribe_Members);
-
-                sdata = new SaveData();
-                sdata.tribesave = tribecomp.tribeCurrent;
-                sdata.savefile = "noname";
-                break;
-            default:
-                break;
+            // save pic
+            if (Directory.Exists("Assets/Resources/Save/newgame/") == false)
+            {
+                Directory.CreateDirectory("Assets/Resources/Save/newgame/");
+            }
+            byte[] bytes = NGTribe.customchars[i].EncodeToPNG();
+            FileStream file = File.Open("Assets/Resources/Save/newgame/customchar_" + i + ".png", FileMode.OpenOrCreate);
+            BinaryWriter binary = new BinaryWriter(file);
+            binary.Write(bytes);
+            file.Close();
+            CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, 30, NGTribe.customchars[i], tribecomp, Tribe_Members);
         }
+        /*CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp, Tribe_Members);
+        CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp, Tribe_Members);
+        CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp, Tribe_Members);
+        CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp, Tribe_Members);
+        CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp, Tribe_Members);
+        CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp, Tribe_Members);*/
+
+        sdata.tribesave = tribecomp.tribeCurrent;
     }
 
-    public void CreatePlayer(int id, string name, int age, string sprite, TribeGO tribecomp, GameObject Tribe_Members)
+    public void CreatePlayer(int id, string name, int age, Texture2D sprite, TribeGO tribecomp, GameObject Tribe_Members)
     {
         int countdown = age;
         float xpacc = 0;
@@ -161,14 +182,20 @@ public class GameManager : MonoBehaviour
         newman.SetAge();
         newman.next = 150.0f;
         newman.next = newman.SkipStats(newman.xp, newman.next);
-        newman.charSprite = sprite;
+        newman.charSprite = "Save/newgame/customchar_" + id;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
         CharGO.AddComponent<CharacterGO>();
         CharGO.GetComponent<CharacterGO>().charCurrent = newman;
         CharGO.AddComponent<SpriteRenderer>();
-        CharGO.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(newman.charSprite);
-        CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
+        Sprite FaceSprite = Sprite.Create(sprite, new Rect(0, 0, sprite.width, sprite.height), new Vector2(0.5f, 0.5f));
+        CharGO.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+        // CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
+        newman.x = id*4;
+        newman.y = 3;
+        newman.z = ZCharacters;
+        CharGO.GetComponent<Transform>().position = new Vector3(newman.x, newman.y, newman.z);
+        
         CharGO.transform.SetParent(Tribe_Members.transform);
         tribecomp.CharsGO.Add(CharGO);
     }

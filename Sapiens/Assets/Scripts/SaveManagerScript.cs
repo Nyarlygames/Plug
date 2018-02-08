@@ -8,7 +8,8 @@ using System.Globalization;
 
 
 public class SaveManagerScript {
-    
+
+    GameManager GM;
     public GameObject LoadGO(SaveData sdata)
     {
         GameObject Tribe = new GameObject(sdata.tribesave.tribename);
@@ -26,7 +27,10 @@ public class SaveManagerScript {
                     newchar.AddComponent<CharacterGO>();
                     newchar.GetComponent<CharacterGO>().charCurrent = chara;
                     newchar.AddComponent<SpriteRenderer>();
-                    newchar.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>(chara.charSprite);
+                    Texture2D sprite = Resources.Load<Texture2D>(chara.charSprite);
+                    Sprite FaceSprite = Sprite.Create(sprite, new Rect(0, 0, sprite.width, sprite.height), new Vector2(0.5f, 0.5f));
+                    newchar.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+                    newchar.GetComponent<Transform>().position = new Vector3(chara.x, chara.y, chara.z);
                     newchar.transform.SetParent(Tribe_Members.transform);
                     tribego.CharsGO.Add(newchar);
                 }
@@ -74,6 +78,7 @@ public class SaveManagerScript {
 
     public void LoadMapGO(MapSave mapfile, List<GameObject> TilesGO, List<GameObject> ObjectsGO)
     {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject emptyMap = new GameObject("Map");
         foreach (LayerSave lay in mapfile.layers) {
             for (int y = 0; y < mapfile.sizey; y++)
@@ -101,13 +106,13 @@ public class SaveManagerScript {
                             tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                         }
                     }
-                    tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, 0.0f);
+                    tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround);
                     tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
                 }
             }
         }
-        GameObject emptyGO = new GameObject("Objects");
-        foreach(ObjectSave obj in mapfile.objects) { 
+        GameObject emptyGO = new GameObject("Objects");        
+        foreach (ObjectSave obj in mapfile.objects) { 
             GameObject tilego = new GameObject("[" + obj.x + "/" + obj.y + "]" + obj.id);
             tilego.AddComponent<ObjectGO>();
             ObjectGO curObj = tilego.GetComponent<ObjectGO>();
@@ -133,7 +138,7 @@ public class SaveManagerScript {
                     }
                 }
             }
-            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width/2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height/2))) / 100.0f, -2.0f);
+            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width/2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height/2))) / 100.0f, GM.ZObjects);
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 using UnityEngine.SceneManagement;
 
 public class NewGameController : MonoBehaviour {
@@ -38,6 +39,17 @@ public class NewGameController : MonoBehaviour {
     GameObject newbase;
     GameObject newbeards;
 
+    GameObject newTribeGO;
+    TribeSave newTribe;
+    GameObject newcharb;
+    Text tribe_members;
+    Text newtribename;
+    Text newname;
+    TribeGO tribecomp;
+
+    Texture2D NewFace;
+    Texture2D[] NewPicBase;
+
     int selected_clothes = 0;
     int selected_beards = 0;
     int selected_hairs = 0;
@@ -50,6 +62,8 @@ public class NewGameController : MonoBehaviour {
 
     void Start ()
     {
+
+        NewPicBase = Resources.LoadAll<Texture2D>("Play/CharCustom/Females/Bases/");
         basesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
         basesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
         hairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
@@ -95,9 +109,12 @@ public class NewGameController : MonoBehaviour {
                 GameObject.Find("BackButton").GetComponent<Image>().sprite = t as Sprite;
             }
         }
-        
+
+        newcharb = GameObject.Find("NewChar_B");
         Button temp = GameObject.Find("Launch").GetComponent<Button>();
         temp.onClick.AddListener(LaunchButton_Click);
+        temp = GameObject.Find("NewChar_B").GetComponent<Button>();
+        temp.onClick.AddListener(NewChar_B_Click);
         temp = GameObject.Find("BackButton").GetComponent<Button>();
         temp.onClick.AddListener(BackButton_Click);
         temp = GameObject.Find("NewFemale_B").GetComponent<Button>();
@@ -119,7 +136,10 @@ public class NewGameController : MonoBehaviour {
         GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(nclothes_Click);
         GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(pclothes_Click);
 
+        newtribename = GameObject.Find("TribeName").GetComponent<Text>();
         newp = GameObject.Find("New_P");
+        tribe_members = GameObject.Find("TribeMembers_T").GetComponent<Text>();
+        newname = GameObject.Find("NewName_T").GetComponent<Text>();
         nbeards = GameObject.Find("NextBeard_B");
         pbeards = GameObject.Find("PreviousBeard_B");
         njewels = GameObject.Find("NextJewel_B");
@@ -138,11 +158,78 @@ public class NewGameController : MonoBehaviour {
         newhairs = GameObject.Find("New_Hairs");
         newclothes = GameObject.Find("New_Clothes");
         newpaints = GameObject.Find("New_Paints");
+
+
+        newTribe = new TribeSave();
+        newTribe.tribename = newtribename.text;
+        newTribeGO = new GameObject("newTribeGO");
+        newTribeGO.AddComponent<TribeGO>();
+        tribecomp = newTribeGO.GetComponent<TribeGO>();
+        tribecomp.profilename = "newgame"; // options profile ?
+        tribecomp.tribeCurrent = newTribe;
+        DontDestroyOnLoad(newTribeGO);
+
         newp.SetActive(false);
     }
 
     void Update()
     {
+    }
+    void NewChar_B_Click()
+    {
+        tribe_members.text += "\n" + newname.text;
+        CharacterSave newchar = new CharacterSave();
+        newchar.name = newname.text;
+        newTribe.members.Add(newchar);
+        NewFace = new Texture2D(NewPicBase[0].width, NewPicBase[0].height, TextureFormat.ARGB32, false);
+        Sprite[] debasesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
+        Sprite[] debasesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
+        Sprite[] dehairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
+        Sprite[] dehairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
+        Sprite[] dejewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
+        Sprite[] debeardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
+        Sprite[] depaintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
+        Sprite[] depaintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
+        Sprite[] declothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
+        Sprite[] declothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
+        for (int y = 0; y < NewFace.height; y++)
+        {
+            for (int x = 0; x < NewFace.width; x++)
+            {
+                if (activesex == 0)
+                {
+                    if (debasesF[selected_bases].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, debasesF[selected_bases].texture.GetPixel(x, y));
+                    if (declothesF[selected_clothes].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, declothesF[selected_clothes].texture.GetPixel(x, y));
+                    if (depaintsF[selected_paints].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, depaintsF[selected_paints].texture.GetPixel(x, y));
+                    if (dehairsF[selected_hairs].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, dehairsF[selected_hairs].texture.GetPixel(x, y));
+                    if (dejewelsF[selected_beards].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, dejewelsF[selected_beards].texture.GetPixel(x, y));
+                    
+                }
+                else
+                {
+                    if (debasesM[selected_bases].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, debasesM[selected_bases].texture.GetPixel(x, y));
+                    if (declothesM[selected_clothes].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, declothesM[selected_clothes].texture.GetPixel(x, y));
+                    if (depaintsM[selected_paints].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, depaintsM[selected_paints].texture.GetPixel(x, y));
+                    if (dehairsM[selected_hairs].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, dehairsM[selected_hairs].texture.GetPixel(x, y));
+                    if (debeardsM[selected_beards].texture.GetPixel(x, y).a > 0.1f)
+                        NewFace.SetPixel(x, y, debeardsM[selected_beards].texture.GetPixel(x, y));
+
+                }
+            }
+        }
+        NewFace.Apply();
+        tribecomp.customchars.Add(NewFace);
+        //Sprite newFaceSprite = Sprite.Create(NewFace, new Rect(0, 0, NewFace.width, NewFace.height), new Vector2(0.5f, 0.5f));
+        
     }
     void nbeards_Click()
     {
@@ -286,7 +373,6 @@ public class NewGameController : MonoBehaviour {
         selected_jewels = 0;
         selected_bases = 0;
         activesex = 0;
-        newp.SetActive(true);
         nbeards.SetActive(false);
         pbeards.SetActive(false);
         njewels.SetActive(true);
@@ -303,6 +389,7 @@ public class NewGameController : MonoBehaviour {
             newpaints.GetComponent<Image>().sprite = paintsF[selected_paints];
         if (jewelsF.Length > 0)
            newjewels.GetComponent<Image>().sprite = jewelsF[selected_jewels];
+        newp.SetActive(true);
     }
     void MakeMale_Click()
     {
@@ -313,7 +400,6 @@ public class NewGameController : MonoBehaviour {
         selected_jewels = 0;
         selected_bases = 0;
         activesex = 1;
-        newp.SetActive(true);
         nbeards.SetActive(true);
         pbeards.SetActive(true);
         njewels.SetActive(false);
@@ -330,18 +416,21 @@ public class NewGameController : MonoBehaviour {
             newpaints.GetComponent<Image>().sprite = paintsM[selected_paints];
         if (beardsM.Length > 0)
             newjewels.GetComponent<Image>().sprite = beardsM[selected_jewels];
+        newp.SetActive(true);
     }
     void LaunchButton_Click()
     {
-        PlayerPrefs.SetString("NewName", GameObject.Find("TribeName").GetComponent<Text>().text);
+        PlayerPrefs.SetString("NewName", newtribename.text);
+        newTribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = newtribename.text;
         PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
         PlayerPrefs.SetString("savefile", "");
-        GameObject testGO = new GameObject("testgo");
-        DontDestroyOnLoad(testGO);
+        
+
         SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
     }
     void BackButton_Click()
     {
+        Destroy(newTribeGO);
         SceneManager.LoadScene("PlayMenu", LoadSceneMode.Single);
     }
     

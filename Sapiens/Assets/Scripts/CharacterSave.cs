@@ -9,6 +9,9 @@ public class CharacterSave
 
     public float time = 0;
     public int id = 0;
+    public float x;
+    public float y;
+    public float z;
     public CharacterSave father;
     public CharacterSave mother;
     public string name = "";

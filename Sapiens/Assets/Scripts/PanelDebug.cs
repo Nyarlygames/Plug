@@ -102,7 +102,7 @@ public class PanelDebug : MonoBehaviour
         {
             TribeGO tribeGO = GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>();
             GameObject Tribe_Members = GameObject.Find("Tribe_Members");
-            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), "Play/TribeChar/Man2", tribeGO, Tribe_Members);
+            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), Resources.Load<Texture2D>("Play/CharCustom/Males/Bases/MALE_BASE_01.png"), tribeGO, Tribe_Members);
             GameObject Charlist = GameObject.Find("UI_CharPanel");
             if (Charlist != null)
             {

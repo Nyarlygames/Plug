@@ -13,7 +13,7 @@ public class PanelSave : MonoBehaviour {
         temp.onClick.AddListener(BackClick);
         temp = GameObject.Find("SavePanel_Save").GetComponent<Button>();
         temp.onClick.AddListener(SaveClick);
-        GameObject.Find("SavePanel_SaveName").GetComponent<Text>().text = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename;
+        GameObject.Find("SavePanel_Text").GetComponent<InputField>().text = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename;
     }
 	
 	// Update is called once per frame
