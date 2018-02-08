@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                TribeGO = new GameObject("DEBUGTribe");
+                TribeGO = new GameObject("Tribe_Members");
                 TribeGO.AddComponent<TribeGO>();
                 TribeGO.GetComponent<TribeGO>().tribeCurrent = new TribeSave();
             }
@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
             BinaryWriter binary = new BinaryWriter(file);
             binary.Write(bytes);
             file.Close();
-            CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, 30, NGTribe.customchars[i], tribecomp, Tribe_Members);
+            CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], NGTribe.customchars[i], tribecomp, Tribe_Members);
         }
         /*CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp, Tribe_Members);
         CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp, Tribe_Members);
@@ -150,9 +150,9 @@ public class GameManager : MonoBehaviour
         sdata.tribesave = tribecomp.tribeCurrent;
     }
 
-    public void CreatePlayer(int id, string name, int age, Texture2D sprite, TribeGO tribecomp, GameObject Tribe_Members)
+    public void CreatePlayer(int id, string name, CharacterSave cs, Texture2D sprite, TribeGO tribecomp, GameObject Tribe_Members)
     {
-        int countdown = age;
+        int countdown = cs.age.years;
         float xpacc = 0;
         if (countdown > RF.exp_adult_range)
         {
@@ -177,7 +177,8 @@ public class GameManager : MonoBehaviour
         CharacterSave newman = new CharacterSave();
         newman.id = id;
         newman.name = name;
-        newman.time = age * 24 * 365;
+        newman.time = cs.age.years * 24 * 365;
+        newman.sexe = cs.sexe;
         newman.xp = xpacc;
         newman.SetAge();
         newman.next = 150.0f;

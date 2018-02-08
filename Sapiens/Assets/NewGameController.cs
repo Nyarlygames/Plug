@@ -177,58 +177,69 @@ public class NewGameController : MonoBehaviour {
     }
     void NewChar_B_Click()
     {
-        tribe_members.text += "\n" + newname.text;
-        CharacterSave newchar = new CharacterSave();
-        newchar.name = newname.text;
-        newTribe.members.Add(newchar);
-        NewFace = new Texture2D(NewPicBase[0].width, NewPicBase[0].height, TextureFormat.ARGB32, false);
-        Sprite[] debasesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
-        Sprite[] debasesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
-        Sprite[] dehairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
-        Sprite[] dehairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
-        Sprite[] dejewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
-        Sprite[] debeardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
-        Sprite[] depaintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
-        Sprite[] depaintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
-        Sprite[] declothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
-        Sprite[] declothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
-        for (int y = 0; y < NewFace.height; y++)
+        try
         {
-            for (int x = 0; x < NewFace.width; x++)
+            CharacterSave newchar = new CharacterSave();
+            newchar.name = newname.text;
+            if (GameObject.Find("NewAge_T").GetComponent<Text>().text != "")
+                newchar.age.years = System.Convert.ToInt32(GameObject.Find("NewAge_T").GetComponent<Text>().text);
+            else
+                newchar.age.years = 0;
+            newchar.sexe = activesex;
+            newTribe.members.Add(newchar);
+            NewFace = new Texture2D(NewPicBase[0].width, NewPicBase[0].height, TextureFormat.ARGB32, false);
+            Sprite[] debasesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
+            Sprite[] debasesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
+            Sprite[] dehairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
+            Sprite[] dehairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
+            Sprite[] dejewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
+            Sprite[] debeardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
+            Sprite[] depaintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
+            Sprite[] depaintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
+            Sprite[] declothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
+            Sprite[] declothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
+            for (int y = 0; y < NewFace.height; y++)
             {
-                if (activesex == 0)
+                for (int x = 0; x < NewFace.width; x++)
                 {
-                    if (debasesF[selected_bases].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, debasesF[selected_bases].texture.GetPixel(x, y));
-                    if (declothesF[selected_clothes].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, declothesF[selected_clothes].texture.GetPixel(x, y));
-                    if (depaintsF[selected_paints].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, depaintsF[selected_paints].texture.GetPixel(x, y));
-                    if (dehairsF[selected_hairs].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, dehairsF[selected_hairs].texture.GetPixel(x, y));
-                    if (dejewelsF[selected_beards].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, dejewelsF[selected_beards].texture.GetPixel(x, y));
-                    
-                }
-                else
-                {
-                    if (debasesM[selected_bases].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, debasesM[selected_bases].texture.GetPixel(x, y));
-                    if (declothesM[selected_clothes].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, declothesM[selected_clothes].texture.GetPixel(x, y));
-                    if (depaintsM[selected_paints].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, depaintsM[selected_paints].texture.GetPixel(x, y));
-                    if (dehairsM[selected_hairs].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, dehairsM[selected_hairs].texture.GetPixel(x, y));
-                    if (debeardsM[selected_beards].texture.GetPixel(x, y).a > 0.1f)
-                        NewFace.SetPixel(x, y, debeardsM[selected_beards].texture.GetPixel(x, y));
+                    if (activesex == 0)
+                    {
+                        if (debasesF[selected_bases].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, debasesF[selected_bases].texture.GetPixel(x, y));
+                        if (declothesF[selected_clothes].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, declothesF[selected_clothes].texture.GetPixel(x, y));
+                        if (depaintsF[selected_paints].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, depaintsF[selected_paints].texture.GetPixel(x, y));
+                        if (dehairsF[selected_hairs].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, dehairsF[selected_hairs].texture.GetPixel(x, y));
+                        if (dejewelsF[selected_beards].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, dejewelsF[selected_beards].texture.GetPixel(x, y));
 
+                    }
+                    else
+                    {
+                        if (debasesM[selected_bases].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, debasesM[selected_bases].texture.GetPixel(x, y));
+                        if (declothesM[selected_clothes].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, declothesM[selected_clothes].texture.GetPixel(x, y));
+                        if (depaintsM[selected_paints].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, depaintsM[selected_paints].texture.GetPixel(x, y));
+                        if (dehairsM[selected_hairs].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, dehairsM[selected_hairs].texture.GetPixel(x, y));
+                        if (debeardsM[selected_beards].texture.GetPixel(x, y).a > 0.01f)
+                            NewFace.SetPixel(x, y, debeardsM[selected_beards].texture.GetPixel(x, y));
+
+                    }
                 }
             }
+            NewFace.Apply();
+            tribecomp.customchars.Add(NewFace);
+            tribe_members.text += "\n" + newname.text;
         }
-        NewFace.Apply();
-        tribecomp.customchars.Add(NewFace);
-        //Sprite newFaceSprite = Sprite.Create(NewFace, new Rect(0, 0, NewFace.width, NewFace.height), new Vector2(0.5f, 0.5f));
+        catch (System.FormatException)
+        {
+            Debug.Log("Age is not an int");
+        }
         
     }
     void nbeards_Click()

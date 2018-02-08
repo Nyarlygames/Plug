@@ -49,7 +49,8 @@ public class PanelDebug : MonoBehaviour
         {
             Dropdown.OptionData opt = new Dropdown.OptionData();
             opt.text = res.width+"/"+res.height;
-            DDopt.Add(opt);
+            if ((res.width > 800) && (res.height > 600))
+                DDopt.Add(opt);
         }
         ScreenSizes.options = DDopt;
     }
@@ -60,13 +61,9 @@ public class PanelDebug : MonoBehaviour
         string opt = ScreenSizes.captionText.text;
         int width = Convert.ToInt32(opt.Substring(0, opt.IndexOf("/")));
         int height = Convert.ToInt32(opt.Substring(opt.IndexOf("/")+1));
-        Debug.Log("A " + GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution);
         //GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution = new Vector2(width, height);
-        Debug.Log("B " + GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution);
-        Debug.Log("A " + Screen.currentResolution);
         //Screen.SetResolution
         Screen.SetResolution(width, height, false);
-        Debug.Log("B " + Screen.currentResolution);
     }
 
     public void ScaleChange(Slider scale)
@@ -102,7 +99,9 @@ public class PanelDebug : MonoBehaviour
         {
             TribeGO tribeGO = GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>();
             GameObject Tribe_Members = GameObject.Find("Tribe_Members");
-            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), Resources.Load<Texture2D>("Play/CharCustom/Males/Bases/MALE_BASE_01.png"), tribeGO, Tribe_Members);
+            CharacterSave addedChar = new CharacterSave();
+            addedChar.age.years = Convert.ToInt32(CharAge.text);
+            GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, addedChar, Resources.Load<Texture2D>("Play/CharCustom/Males/Bases/MALE_BASE_01"), tribeGO, Tribe_Members);
             GameObject Charlist = GameObject.Find("UI_CharPanel");
             if (Charlist != null)
             {

@@ -12,6 +12,7 @@ public class CharacterSave
     public float x;
     public float y;
     public float z;
+    public int sexe;
     public CharacterSave father;
     public CharacterSave mother;
     public string name = "";

@@ -24,7 +24,7 @@ ff05dcdf90651c3d98a9cad3df5e471e UnityEngine.Timeline.dll:UnityEngine.Timeline.C
 6af7378a45ad6da4992a71ef50ddc2eb UnityEngine.Timeline.dll:UnityEngine.Timeline.PlayableTrack
 9ca6347af5ceb6b0d1c105af31b6722e UnityEngine.Timeline.dll:UnityEngine.Timeline.TimelineAsset
 2e1fe8b150d7dbcabb8643fcf18264f8 Assembly-CSharp.dll:.TribeScript
-df40619076965a2c7b2660dfb81c068f Assembly-CSharp.dll:.TribeGO
+72bcf899574c1503dfefb98af3ad8573 Assembly-CSharp.dll:.TribeGO
 a35dc9cca2faebc5f5f1aeb9e8e47bbe UnityEngine.UI.dll:UnityEngine.UI.AspectRatioFitter
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.UI.dll:UnityEngine.EventSystems.BaseInput
 49cd62a578efc0a599b810a2b66cd49c UnityEngine.UI.dll:UnityEngine.UI.Button
@@ -136,9 +136,9 @@ ae98edcce5933568fdd27bad9775b78e Assembly-CSharp.dll:.GatherZoneScript
 05524b8f659e7bfe5756d1335fec24ba Assembly-CSharp.dll:.NewGameController
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.CallbackExecutor
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Advertisements.dll:UnityEngine.Advertisements.Editor.Placeholder
-6cd53dab9d53e105b10f9b85aaa82edb Assembly-CSharp.dll:.GameManager
+fcde841cc4872d153ff70017cd497a87 Assembly-CSharp.dll:.GameManager
 2ec3796f59d51766bb1db8fda8a512b4 Assembly-CSharp.dll:.MapObjectScript
-d357f7fdb3dd46bf4ec04e1d99873931 Assembly-CSharp.dll:.CharacterGO
+a61033040a7b45cba71d744b0a75ccb8 Assembly-CSharp.dll:.CharacterGO
 d4b2bf2dcd2df0b12def40fdc49eb26b Assembly-CSharp.dll:.ObjectGO
 fc1e0f4d8439d9928083474691511a13 UnityEngine.Networking.dll:UnityEngine.Networking.NetworkAnimator
 05524b8f659e7bfe5756d1335fec24ba UnityEngine.Networking.dll:UnityEngine.Networking.NetworkBehaviour

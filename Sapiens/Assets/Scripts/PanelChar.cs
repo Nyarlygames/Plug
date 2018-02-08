@@ -94,7 +94,10 @@ public class PanelChar : MonoBehaviour {
         CharacterList.onValueChanged.AddListener(delegate {
             CharacterValueChanged(CharacterList);
         });
-        CharacterValueChanged(CharacterList);
+        if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Count > 0)
+        {
+            CharacterValueChanged(CharacterList);
+        }
     }
 
     public void SetExistingChars()
@@ -113,9 +116,12 @@ public class PanelChar : MonoBehaviour {
 
     void CharacterValueChanged(Dropdown CharList)
     {
-        curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
-        CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
-        Character_Name.text = "Name : " + curChar.name;
+        if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Count > 0)
+        {
+            curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
+            CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
+            Character_Name.text = "Name : " + curChar.name;
+        }
     }
 
     void CharPlusClick()
@@ -135,23 +141,30 @@ public class PanelChar : MonoBehaviour {
 
     void Update ()
     {
-        Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days + " days.";
-        Character_Experience.text = "XP : " + curChar.xp;
-        Character_Level.text = curChar.level.ToString();
-        Character_NextLevel.text = (curChar.level + 1).ToString();
-        Character_NextXP.text = "Next level : " + ((int)curChar.last).ToString() + " / " + ((int)curChar.next).ToString();
-        Character_NextLevelBar.fillAmount = curChar.last / curChar.next;
-        Character_Strength.text = "Strength : " + curChar.strength;
-        Character_Endurance.text = "Endurance : " + curChar.endu;
-        Character_Body.text = "Body : " + curChar.body;
-        Character_SpeedStat.text = "Speed : " + curChar.speed;
-        Character_Dexterity.text = "Dexterity : " + curChar.dexte;
-        Character_Perception.text = "Perception : " + curChar.percept;
-        Character_Accuracy.text = "Accuracy : " + curChar.accu;
-        Character_Autonomy.text = "Autonomy : " + curChar.autonomy;
-        Character_Spirit.text = "Spirit : " + curChar.spirit;
-        Character_Social.text = "Social : " + curChar.social;
-        Character_Mental.text = "Mental : " + curChar.mental;
-        Character_Language.text = "Language : " + curChar.lang;
+        if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Count > 0)
+        {
+            if (curChar == null) // added first with debug while char panel open
+            {
+                curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[0];
+            }
+            Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days + " days.";
+            Character_Experience.text = "XP : " + curChar.xp;
+            Character_Level.text = curChar.level.ToString();
+            Character_NextLevel.text = (curChar.level + 1).ToString();
+            Character_NextXP.text = "Next level : " + ((int)curChar.last).ToString() + " / " + ((int)curChar.next).ToString();
+            Character_NextLevelBar.fillAmount = curChar.last / curChar.next;
+            Character_Strength.text = "Strength : " + curChar.strength;
+            Character_Endurance.text = "Endurance : " + curChar.endu;
+            Character_Body.text = "Body : " + curChar.body;
+            Character_SpeedStat.text = "Speed : " + curChar.speed;
+            Character_Dexterity.text = "Dexterity : " + curChar.dexte;
+            Character_Perception.text = "Perception : " + curChar.percept;
+            Character_Accuracy.text = "Accuracy : " + curChar.accu;
+            Character_Autonomy.text = "Autonomy : " + curChar.autonomy;
+            Character_Spirit.text = "Spirit : " + curChar.spirit;
+            Character_Social.text = "Social : " + curChar.social;
+            Character_Mental.text = "Mental : " + curChar.mental;
+            Character_Language.text = "Language : " + curChar.lang;
+        }
     }
 }
