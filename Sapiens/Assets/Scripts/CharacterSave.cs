@@ -140,7 +140,6 @@ public class CharacterSave
         int yearsadult = 0;
         int yearsteen = 0;
         int yearsbaby = 0;
-        int yearsskip = age.years + years;
         float xpacc = 0;
         
         for (int countdown = age.years; countdown < age.years + years; countdown++)

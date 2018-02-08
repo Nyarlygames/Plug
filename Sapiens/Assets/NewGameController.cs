@@ -6,40 +6,60 @@ using UnityEngine.SceneManagement;
 
 public class NewGameController : MonoBehaviour {
 
-    public int Points = 20; 
-    public int Force = 0;
-    public int Endurance = 0;
-    public int Constitution = 0;
-    public int Mental = 0;
-    public int Dexterite = 0;
-    public int Precision = 0;
-    public int Vitesse = 0;
-    public int Perception = 0;
-    public int Survie = 0;
-    public int Intelligence = 0;
-    public int Memoire = 0;
-    public int Charisme = 0;
-    public int Social = 0;
-    public int Langage = 0;
-    Text Total_Text;
-    Text Force_Text;
-    Text Endurance_Text;
-    Text Constitution_Text;
-    Text Mental_Text;
-    Text Dexterite_Text;
-    Text Precision_Text;
-    Text Vitesse_Text;
-    Text Perception_Text;
-    Text Survie_Text;
-    Text Intelligence_Text;
-    Text Memoire_Text;
-    Text Charisme_Text;
-    Text Social_Text;
-    Text Langage_Text;
+
+    Sprite[] basesF;
+    Sprite[] basesM;
+    Sprite[] hairsF;
+    Sprite[] hairsM;
+    Sprite[] jewelsF;
+    Sprite[] beardsM;
+    Sprite[] paintsF;
+    Sprite[] paintsM;
+    Sprite[] clothesF;
+    Sprite[] clothesM;
     
-    void Start () {
+    GameObject newp;
+    GameObject nbeards;
+    GameObject pbeards;
+    GameObject njewels;
+    GameObject pjewels;
+    GameObject nhairs;
+    GameObject phairs;
+    GameObject npaints;
+    GameObject ppaints;
+    GameObject nclothes;
+    GameObject pclothes;
+    GameObject nbase;
+    GameObject pbase;
+    GameObject newhairs;
+    GameObject newclothes;
+    GameObject newjewels;
+    GameObject newpaints;
+    GameObject newbase;
+    GameObject newbeards;
+
+    int selected_clothes = 0;
+    int selected_beards = 0;
+    int selected_hairs = 0;
+    int selected_paints = 0;
+    int selected_jewels = 0;
+    int selected_bases = 0;
+
+    int activesex = 0;
 
 
+    void Start ()
+    {
+        basesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
+        basesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
+        hairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
+        hairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
+        jewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
+        beardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
+        paintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
+        paintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
+        clothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
+        clothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
 
         Object[] textures;
         //switch button texts or pic to correct language
@@ -75,444 +95,250 @@ public class NewGameController : MonoBehaviour {
                 GameObject.Find("BackButton").GetComponent<Image>().sprite = t as Sprite;
             }
         }
-
-
-
-
-
-
-        Button temp = GameObject.Find("+Force").GetComponent<Button>();
-        temp.onClick.AddListener(ForceUpButton_Click);
-        temp = GameObject.Find("-Force").GetComponent<Button>();
-        temp.onClick.AddListener(ForceDownButton_Click);
-        temp = GameObject.Find("+Endurance").GetComponent<Button>();
-        temp.onClick.AddListener(EnduranceUpButton_Click);
-        temp = GameObject.Find("-Endurance").GetComponent<Button>();
-        temp.onClick.AddListener(EnduranceDownButton_Click);
-        temp = GameObject.Find("+Constitution").GetComponent<Button>();
-        temp.onClick.AddListener(ConstitutionUpButton_Click);
-        temp = GameObject.Find("-Constitution").GetComponent<Button>();
-        temp.onClick.AddListener(ConstitutionDownButton_Click);
-        temp = GameObject.Find("+Mental").GetComponent<Button>();
-        temp.onClick.AddListener(MentalUpButton_Click);
-        temp = GameObject.Find("-Mental").GetComponent<Button>();
-        temp.onClick.AddListener(MentalDownButton_Click);
-        temp = GameObject.Find("+Dexterite").GetComponent<Button>();
-        temp.onClick.AddListener(DexteriteUpButton_Click);
-        temp = GameObject.Find("-Dexterite").GetComponent<Button>();
-        temp.onClick.AddListener(DexteriteDownButton_Click);
-        temp = GameObject.Find("+Precision").GetComponent<Button>();
-        temp.onClick.AddListener(PrecisionUpButton_Click);
-        temp = GameObject.Find("-Precision").GetComponent<Button>();
-        temp.onClick.AddListener(PrecisionDownButton_Click);
-        temp = GameObject.Find("+Vitesse").GetComponent<Button>();
-        temp.onClick.AddListener(VitesseUpButton_Click);
-        temp = GameObject.Find("-Vitesse").GetComponent<Button>();
-        temp.onClick.AddListener(VitesseDownButton_Click);
-        temp = GameObject.Find("+Perception").GetComponent<Button>();
-        temp.onClick.AddListener(PerceptionUpButton_Click);
-        temp = GameObject.Find("-Perception").GetComponent<Button>();
-        temp.onClick.AddListener(PerceptionDownButton_Click);
-        temp = GameObject.Find("+Survie").GetComponent<Button>();
-        temp.onClick.AddListener(SurvieUpButton_Click);
-        temp = GameObject.Find("-Survie").GetComponent<Button>();
-        temp.onClick.AddListener(SurvieDownButton_Click);
-        temp = GameObject.Find("+Intelligence").GetComponent<Button>();
-        temp.onClick.AddListener(IntelligenceUpButton_Click);
-        temp = GameObject.Find("-Intelligence").GetComponent<Button>();
-        temp.onClick.AddListener(IntelligenceDownButton_Click);
-        temp = GameObject.Find("+Memoire").GetComponent<Button>();
-        temp.onClick.AddListener(MemoireUpButton_Click);
-        temp = GameObject.Find("-Memoire").GetComponent<Button>();
-        temp.onClick.AddListener(MemoireDownButton_Click);
-        temp = GameObject.Find("+Charisme").GetComponent<Button>();
-        temp.onClick.AddListener(CharismeUpButton_Click);
-        temp = GameObject.Find("-Charisme").GetComponent<Button>();
-        temp.onClick.AddListener(CharismeDownButton_Click);
-        temp = GameObject.Find("+Social").GetComponent<Button>();
-        temp.onClick.AddListener(SocialUpButton_Click);
-        temp = GameObject.Find("-Social").GetComponent<Button>();
-        temp.onClick.AddListener(SocialDownButton_Click);
-         temp = GameObject.Find("+Langage").GetComponent<Button>();
-        temp.onClick.AddListener(LangageUpButton_Click);
-        temp = GameObject.Find("-Langage").GetComponent<Button>();
-        temp.onClick.AddListener(LangageDownButton_Click);
-        temp = GameObject.Find("Launch").GetComponent<Button>();
+        
+        Button temp = GameObject.Find("Launch").GetComponent<Button>();
         temp.onClick.AddListener(LaunchButton_Click);
         temp = GameObject.Find("BackButton").GetComponent<Button>();
         temp.onClick.AddListener(BackButton_Click);
+        temp = GameObject.Find("NewFemale_B").GetComponent<Button>();
+        temp.onClick.AddListener(MakeFemale_Click);
+        temp = GameObject.Find("NewMale_B").GetComponent<Button>();
+        temp.onClick.AddListener(MakeMale_Click);
 
 
-        Total_Text = GameObject.Find("Total").GetComponent<Text>();
-        Total_Text.text = Points.ToString();
-        Force_Text = GameObject.Find("Force_Int").GetComponent<Text>();
-        Force_Text.text = Force.ToString();
-        Endurance_Text = GameObject.Find("Endurance_Int").GetComponent<Text>();
-        Endurance_Text.text = Endurance.ToString();
-        Constitution_Text = GameObject.Find("Constitution_Int").GetComponent<Text>();
-        Constitution_Text.text = Constitution.ToString();
-        Mental_Text = GameObject.Find("Mental_Int").GetComponent<Text>();
-        Mental_Text.text = Mental.ToString();
-        Dexterite_Text = GameObject.Find("Dexterite_Int").GetComponent<Text>();
-        Dexterite_Text.text = Dexterite.ToString();
-        Precision_Text = GameObject.Find("Precision_Int").GetComponent<Text>();
-        Precision_Text.text = Precision.ToString();
-        Vitesse_Text = GameObject.Find("Vitesse_Int").GetComponent<Text>();
-        Vitesse_Text.text = Vitesse.ToString();
-        Perception_Text = GameObject.Find("Perception_Int").GetComponent<Text>();
-        Perception_Text.text = Perception.ToString();
-        Survie_Text = GameObject.Find("Survie_Int").GetComponent<Text>();
-        Survie_Text.text = Survie.ToString();
-        Intelligence_Text = GameObject.Find("Intelligence_Int").GetComponent<Text>();
-        Intelligence_Text.text = Intelligence.ToString();
-        Memoire_Text = GameObject.Find("Memoire_Int").GetComponent<Text>();
-        Memoire_Text.text = Memoire.ToString();
-        Charisme_Text = GameObject.Find("Charisme_Int").GetComponent<Text>();
-        Charisme_Text.text = Charisme.ToString();
-        Social_Text = GameObject.Find("Social_Int").GetComponent<Text>();
-        Social_Text.text = Social.ToString();
-        Langage_Text = GameObject.Find("Langage_Int").GetComponent<Text>();
-        Langage_Text.text = Langage.ToString();
+        GameObject.Find("NextBeard_B").GetComponent<Button>().onClick.AddListener(nbeards_Click);
+        GameObject.Find("PreviousBeard_B").GetComponent<Button>().onClick.AddListener(pbeards_Click);
+        GameObject.Find("NextJewel_B").GetComponent<Button>().onClick.AddListener(njewels_Click);
+        GameObject.Find("PreviousJewel_B").GetComponent<Button>().onClick.AddListener(pjewels_Click);
+        GameObject.Find("NextHair_B").GetComponent<Button>().onClick.AddListener(nhairs_Click);
+        GameObject.Find("PreviousHair_B").GetComponent<Button>().onClick.AddListener(phairs_Click);
+        GameObject.Find("NextBase_B").GetComponent<Button>().onClick.AddListener(nbases_Click);
+        GameObject.Find("PreviousBase_B").GetComponent<Button>().onClick.AddListener(pbases_Click);
+        GameObject.Find("NextPaint_B").GetComponent<Button>().onClick.AddListener(npaints_Click);
+        GameObject.Find("PreviousPaint_B").GetComponent<Button>().onClick.AddListener(ppaints_Click);
+        GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(nclothes_Click);
+        GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(pclothes_Click);
 
+        newp = GameObject.Find("New_P");
+        nbeards = GameObject.Find("NextBeard_B");
+        pbeards = GameObject.Find("PreviousBeard_B");
+        njewels = GameObject.Find("NextJewel_B");
+        pjewels = GameObject.Find("PreviousJewel_B");
+        nhairs = GameObject.Find("NextHair_B");
+        phairs = GameObject.Find("PreviousHair_B");
+        nbase = GameObject.Find("NextBase_B");
+        pbase = GameObject.Find("PreviousBase_B");
+        npaints = GameObject.Find("NextPaint_B");
+        ppaints = GameObject.Find("PreviousPaint_B");
+        nclothes = GameObject.Find("NextClothes_B");
+        pclothes = GameObject.Find("PreviousClothes_B");
+        newjewels = GameObject.Find("New_Jewels");
+        newbeards = GameObject.Find("New_Beards");
+        newbase = GameObject.Find("New_Base");
+        newhairs = GameObject.Find("New_Hairs");
+        newclothes = GameObject.Find("New_Clothes");
+        newpaints = GameObject.Find("New_Paints");
+        newp.SetActive(false);
     }
-	
-	void Update () {
 
+    void Update()
+    {
+    }
+    void nbeards_Click()
+    {
+        if (activesex == 1)
+        {
+            if (selected_beards < beardsM.Length - 1)
+                selected_beards++;
+            newbeards.GetComponent<Image>().sprite = beardsM[selected_beards];
+        }
+    }
+    void pbeards_Click()
+    {
+        if (activesex == 1)
+        {
+            if (selected_beards > 0)
+                selected_beards--;
+            newbeards.GetComponent<Image>().sprite = beardsM[selected_beards];
+        }
+    }
+    void njewels_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_jewels < jewelsF.Length - 1)
+                selected_jewels++;
+            newjewels.GetComponent<Image>().sprite = jewelsF[selected_jewels];
+        }
+    }
+    void pjewels_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_jewels > 0)
+                selected_jewels--;
+            newjewels.GetComponent<Image>().sprite = jewelsF[selected_jewels];
+        }
+    }
+    void nbases_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_bases < basesF.Length - 1)
+                selected_bases++;
+            newbase.GetComponent<Image>().sprite = basesF[selected_bases];
+        }
+        else
+        {
+            if (selected_bases < basesM.Length - 1)
+                selected_bases++;
+            newbase.GetComponent<Image>().sprite = basesM[selected_bases];
+        }
+    }
+    void pbases_Click()
+    {
+        if (selected_bases > 0)
+            selected_bases--;
+        if (activesex == 0)
+            newbase.GetComponent<Image>().sprite = basesF[selected_bases];
+        else
+            newbase.GetComponent<Image>().sprite = basesM[selected_bases];
+    }
+    void nhairs_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_hairs < hairsF.Length - 1)
+                selected_hairs++;
+            newhairs.GetComponent<Image>().sprite = hairsF[selected_hairs];
+        }
+        else
+        {
+            if (selected_hairs < hairsM.Length - 1)
+                selected_hairs++;
+            newhairs.GetComponent<Image>().sprite = hairsM[selected_hairs];
+        }
+    }
+    void phairs_Click()
+    {
+        if (selected_hairs > 0)
+            selected_hairs--;
+        if (activesex == 0)
+            newhairs.GetComponent<Image>().sprite = hairsF[selected_hairs];
+        else
+            newhairs.GetComponent<Image>().sprite = hairsM[selected_hairs];
     }
 
+    void npaints_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_paints < paintsF.Length - 1)
+                selected_paints++;
+            newpaints.GetComponent<Image>().sprite = paintsF[selected_paints];
+        }
+        else
+        {
+            if (selected_paints < paintsM.Length - 1)
+                selected_paints++;
+            newpaints.GetComponent<Image>().sprite = paintsM[selected_paints];
+        }
+    }
+    void ppaints_Click()
+    {
+        if (selected_paints > 0)
+            selected_paints--;
+        if (activesex == 0)
+            newpaints.GetComponent<Image>().sprite = paintsF[selected_paints];
+        else
+            newpaints.GetComponent<Image>().sprite = paintsM[selected_paints];
+    }
+    void nclothes_Click()
+    {
+        if (activesex == 0)
+        {
+            if (selected_clothes < clothesF.Length - 1)
+                selected_clothes++;
+            newclothes.GetComponent<Image>().sprite = clothesF[selected_clothes];
+        }
+        else
+        {
+            if (selected_clothes < clothesM.Length - 1)
+                selected_clothes++;
+            newclothes.GetComponent<Image>().sprite = clothesM[selected_clothes];
+        }
+    }
+    void pclothes_Click()
+    {
+        if (selected_clothes > 0)
+            selected_clothes--;
+        if (activesex == 0)
+            newclothes.GetComponent<Image>().sprite = clothesF[selected_clothes];
+        else
+            newclothes.GetComponent<Image>().sprite = clothesM[selected_clothes];
+    }
+    void MakeFemale_Click()
+    {
+        selected_clothes = 0;
+        selected_beards = 0;
+        selected_hairs = 0;
+        selected_paints = 0;
+        selected_jewels = 0;
+        selected_bases = 0;
+        activesex = 0;
+        newp.SetActive(true);
+        nbeards.SetActive(false);
+        pbeards.SetActive(false);
+        njewels.SetActive(true);
+        pjewels.SetActive(true);
+        newjewels.SetActive(true);
+        newbeards.SetActive(false);
+        if (basesF.Length > 0)
+           newbase.GetComponent<Image>().sprite = basesF[selected_bases];
+        if (hairsF.Length > 0)
+            newhairs.GetComponent<Image>().sprite = hairsF[selected_hairs];
+        if (clothesF.Length > 0)
+            newclothes.GetComponent<Image>().sprite = clothesF[selected_clothes];
+        if (paintsF.Length > 0)
+            newpaints.GetComponent<Image>().sprite = paintsF[selected_paints];
+        if (jewelsF.Length > 0)
+           newjewels.GetComponent<Image>().sprite = jewelsF[selected_jewels];
+    }
+    void MakeMale_Click()
+    {
+        selected_clothes = 0;
+        selected_beards = 0;
+        selected_hairs = 0;
+        selected_paints = 0;
+        selected_jewels = 0;
+        selected_bases = 0;
+        activesex = 1;
+        newp.SetActive(true);
+        nbeards.SetActive(true);
+        pbeards.SetActive(true);
+        njewels.SetActive(false);
+        pjewels.SetActive(false);
+        newjewels.SetActive(false);
+        newbeards.SetActive(true);
+        if (basesM.Length > 0)
+            newbase.GetComponent<Image>().sprite = basesM[selected_bases];
+        if (hairsM.Length > 0)
+            newhairs.GetComponent<Image>().sprite = hairsM[selected_hairs];
+        if (clothesM.Length > 0)
+            newclothes.GetComponent<Image>().sprite = clothesM[selected_clothes];
+        if (paintsM.Length > 0)
+            newpaints.GetComponent<Image>().sprite = paintsM[selected_paints];
+        if (beardsM.Length > 0)
+            newjewels.GetComponent<Image>().sprite = beardsM[selected_jewels];
+    }
     void LaunchButton_Click()
     {
-        PlayerPrefs.SetInt("Skills", Points);
-        PlayerPrefs.SetInt("Force", Force);
-        PlayerPrefs.SetInt("Endurance", Endurance);
-        PlayerPrefs.SetInt("Constitution", Constitution);
-        PlayerPrefs.SetInt("Mental", Mental);
-        PlayerPrefs.SetInt("Dexterite", Dexterite);
-        PlayerPrefs.SetInt("Precision", Precision);
-        PlayerPrefs.SetInt("Vitesse", Vitesse);
-        PlayerPrefs.SetInt("Perception", Perception);
-        PlayerPrefs.SetInt("Survie", Survie);
-        PlayerPrefs.SetInt("Intelligence", Intelligence);
-        PlayerPrefs.SetInt("Memoire", Memoire);
-        PlayerPrefs.SetInt("Charisme", Charisme);
-        PlayerPrefs.SetInt("Social", Social);
-        PlayerPrefs.SetString("Name", GameObject.Find("TribeName").GetComponent<Text>().text);
-        PlayerPrefs.SetInt("Langage", Langage);
-        PlayerPrefs.SetString("Seed", GameObject.Find("SeedName").GetComponent<Text>().text);
+        PlayerPrefs.SetString("NewName", GameObject.Find("TribeName").GetComponent<Text>().text);
         SceneManager.LoadScene("Sapiens", LoadSceneMode.Single);
     }
     void BackButton_Click()
     {
         SceneManager.LoadScene("PlayMenu", LoadSceneMode.Single);
     }
-
-    void ForceUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Force++;
-            Force_Text.text = Force.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void ForceDownButton_Click()
-    {
-        if (Force > 0)
-        {
-            Force--;
-            Points++;
-            Force_Text.text = Force.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-
-    void EnduranceUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Endurance++;
-            Endurance_Text.text = Endurance.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void EnduranceDownButton_Click()
-    {
-        if (Endurance > 0)
-        {
-            Endurance--;
-            Points++;
-            Endurance_Text.text = Endurance.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void ConstitutionUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Constitution++;
-            Constitution_Text.text = Constitution.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void ConstitutionDownButton_Click()
-    {
-        if (Constitution > 0)
-        {
-            Constitution--;
-            Points++;
-            Constitution_Text.text = Constitution.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void MentalUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Mental++;
-            Mental_Text.text = Mental.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void MentalDownButton_Click()
-    {
-        if (Mental > 0)
-        {
-            Mental--;
-            Points++;
-            Mental_Text.text = Mental.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void DexteriteUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Dexterite++;
-            Dexterite_Text.text = Dexterite.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void DexteriteDownButton_Click()
-    {
-        if (Dexterite > 0)
-        {
-            Dexterite--;
-            Points++;
-            Dexterite_Text.text = Dexterite.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void PrecisionUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Precision++;
-            Precision_Text.text = Precision.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void PrecisionDownButton_Click()
-    {
-        if (Precision > 0)
-        {
-            Precision--;
-            Points++;
-            Precision_Text.text = Precision.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void VitesseUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Vitesse++;
-            Vitesse_Text.text = Vitesse.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void VitesseDownButton_Click()
-    {
-        if (Vitesse > 0)
-        {
-            Vitesse--;
-            Points++;
-            Vitesse_Text.text = Vitesse.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void PerceptionUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Perception++;
-            Perception_Text.text = Perception.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void PerceptionDownButton_Click()
-    {
-        if (Perception > 0)
-        {
-            Perception--;
-            Points++;
-            Perception_Text.text = Perception.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void SurvieUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Survie++;
-            Survie_Text.text = Survie.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void SurvieDownButton_Click()
-    {
-        if (Survie > 0)
-        {
-            Survie--;
-            Points++;
-            Survie_Text.text = Survie.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void IntelligenceUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Intelligence++;
-            Intelligence_Text.text = Intelligence.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void IntelligenceDownButton_Click()
-    {
-        if (Intelligence > 0)
-        {
-            Intelligence--;
-            Points++;
-            Intelligence_Text.text = Intelligence.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void MemoireUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Memoire++;
-            Memoire_Text.text = Memoire.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void MemoireDownButton_Click()
-    {
-        if (Memoire > 0)
-        {
-            Memoire--;
-            Points++;
-            Memoire_Text.text = Memoire.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void CharismeUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Charisme++;
-            Charisme_Text.text = Charisme.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void CharismeDownButton_Click()
-    {
-        if (Charisme > 0)
-        {
-            Charisme--;
-            Points++;
-            Charisme_Text.text = Charisme.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void SocialUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Social++;
-            Social_Text.text = Social.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void SocialDownButton_Click()
-    {
-        if (Social > 0)
-        {
-            Social--;
-            Points++;
-            Social_Text.text = Social.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void LangageUpButton_Click()
-    {
-        if (Points > 0)
-        {
-            Points--;
-            Langage++;
-            Langage_Text.text = Langage.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
-    void LangageDownButton_Click()
-    {
-        if (Langage > 0)
-        {
-            Langage--;
-            Points++;
-            Langage_Text.text = Langage.ToString();
-            Total_Text.text = Points.ToString();
-        }
-
-    }
+    
 }

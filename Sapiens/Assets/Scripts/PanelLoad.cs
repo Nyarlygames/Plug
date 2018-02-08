@@ -6,11 +6,8 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class PanelLoad : MonoBehaviour {
-
-    GameManager GM;
-
+    
 	void Start () {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         Button temp = GameObject.Find("LoadPanel_Back").GetComponent<Button>();
         temp.onClick.AddListener(BackClick);
         temp = GameObject.Find("LoadPanel_Load").GetComponent<Button>();

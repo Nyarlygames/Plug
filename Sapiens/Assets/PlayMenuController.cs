@@ -71,11 +71,12 @@ public class PlayMenuController : MonoBehaviour {
     {
         //new game
         PlayerPrefs.SetString("savefile", "");
-        SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
+        SceneManager.LoadScene("NewGame", LoadSceneMode.Single);
     }
 
     void LoadButton_Click()
     {
+        SceneManager.LoadScene("MenuLoad", LoadSceneMode.Single);
         //Load save menu
     }
 

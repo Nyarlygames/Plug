@@ -17,21 +17,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewGame.unity
     guid: f7d21e8b705fea045b34b4681fd62605
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sapiens.unity
     guid: 70070146f49957b46bb07128df072f7b
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/CharacterPanel.unity
     guid: fa90a50704d778e448720deeb3905adc
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TribePanel.unity
     guid: 0c244036faa4c1647b6c2c85bb775f36
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ResourcesPanel.unity
     guid: 3e10ae672292bbe4f9928c2488e59ad4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MapPanel.unity
     guid: 4a0e19fc9205aac448bfe6e3903f95a0
   - enabled: 1
     path: Assets/Scenes/Sapiens_Load.unity
     guid: 4af1e2895edd0264e9977211314876ae
+  - enabled: 1
+    path: Assets/Scenes/LoadMenu.unity
+    guid: 77aa2903fa2e8504eb4082089c8569ef

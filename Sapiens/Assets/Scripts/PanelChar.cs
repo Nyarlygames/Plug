@@ -53,6 +53,7 @@ public class PanelChar : MonoBehaviour {
         GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharMinusClick);
         CharacterFace = GameObject.Find("CharacterFace").GetComponent<Image>();
 
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         Character_Strength = GameObject.Find("Character_Strength").GetComponent<Text>();
         Character_Endurance = GameObject.Find("Character_Endurance").GetComponent<Text>();
         Character_Body = GameObject.Find("Character_Body").GetComponent<Text>();

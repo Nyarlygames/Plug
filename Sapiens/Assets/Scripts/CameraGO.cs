@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class CameraGO : MonoBehaviour {
 
-    GameManager GM;
+  /*  GameManager GM;
     Transform tribePos;
-    Transform camPos;
+    Transform camPos;*/
 	// Use this for initialization
 	void Start () {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        camPos = gameObject.GetComponent<Transform>();
+        /*GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        camPos = gameObject.GetComponent<Transform>();*/
     }
 	
 	// Update is called once per frame

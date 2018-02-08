@@ -13,6 +13,7 @@ public class PanelDebug : MonoBehaviour
     Text SkipYears;
     Text SkipDays;
     Text SkipHours;
+    Dropdown ScreenSizes;
     public float init_speed;
     // Use this for initialization
     void Start ()
@@ -22,18 +23,50 @@ public class PanelDebug : MonoBehaviour
         temp.onClick.AddListener(CreateCharClick);
         temp = GameObject.Find("Debug_SkipButton").GetComponent<Button>();
         temp.onClick.AddListener(SkipClick);
+        temp = GameObject.Find("Debug_ScreenSize").GetComponent<Button>();
+        temp.onClick.AddListener(SetScreenSizeClick);
         RatioSpeed = GameObject.Find("TimeSlider_Info").GetComponent<Text>();
         CharName = GameObject.Find("Debug_CharCreateNameText").GetComponent<Text>();
         CharAge = GameObject.Find("Debug_CharCreateAgeText").GetComponent<Text>();
         SkipYears = GameObject.Find("Debug_SkipYearsT").GetComponent<Text>();
-        SkipDays = GameObject.Find("Debug_SkipDaysT").GetComponent<Text>();
-        SkipHours = GameObject.Find("Debug_SkipHoursT").GetComponent<Text>();
+        //SkipDays = GameObject.Find("Debug_SkipDaysT").GetComponent<Text>();
+        //SkipHours = GameObject.Find("Debug_SkipHoursT").GetComponent<Text>();
         TimeSlider.onValueChanged.AddListener(delegate {
             ScaleChange(TimeSlider);
         });
         TimeSlider.value = 3.5f;
         Time.timeScale = 3.5f;
         RatioSpeed.text = "time ratio : x" + Time.timeScale;
+        ScreenSizes = GameObject.Find("Debug_ScreenSizeSelector").GetComponent<Dropdown>();
+        SetExistingSize();
+    }
+
+
+    public void SetExistingSize()
+    {
+        List<Dropdown.OptionData> DDopt = new List<Dropdown.OptionData>();
+        foreach (Resolution res in Screen.resolutions)
+        {
+            Dropdown.OptionData opt = new Dropdown.OptionData();
+            opt.text = res.width+"/"+res.height;
+            DDopt.Add(opt);
+        }
+        ScreenSizes.options = DDopt;
+    }
+
+
+    public void SetScreenSizeClick()
+    {
+        string opt = ScreenSizes.captionText.text;
+        int width = Convert.ToInt32(opt.Substring(0, opt.IndexOf("/")));
+        int height = Convert.ToInt32(opt.Substring(opt.IndexOf("/")+1));
+        Debug.Log("A " + GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution);
+        //GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution = new Vector2(width, height);
+        Debug.Log("B " + GameObject.Find("UI_Debug").GetComponent<CanvasScaler>().referenceResolution);
+        Debug.Log("A " + Screen.currentResolution);
+        //Screen.SetResolution
+        Screen.SetResolution(width, height, false);
+        Debug.Log("B " + Screen.currentResolution);
     }
 
     public void ScaleChange(Slider scale)
@@ -67,7 +100,6 @@ public class PanelDebug : MonoBehaviour
     {
         try
         {
-            int age = Convert.ToInt32(CharAge.text);
             TribeGO tribeGO = GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>();
             GameObject Tribe_Members = GameObject.Find("Tribe_Members");
             GameObject.Find("GameManager").GetComponent<GameManager>().CreatePlayer(tribeGO.tribeCurrent.members.Count, CharName.text, Convert.ToInt32(CharAge.text), "Play/TribeChar/Man2", tribeGO, Tribe_Members);
@@ -86,6 +118,5 @@ public class PanelDebug : MonoBehaviour
 
     // Update is called once per frame
     void Update () {
-		
-	}
+    }
 }

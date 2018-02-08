@@ -6,8 +6,6 @@ using UnityEngine;
 [Serializable]
 public class MapSave
 {
-    
-    //public List<List<int>> map;
     public int sizex = 0;
     public int sizey = 0;
     public int tilesizex = 0;

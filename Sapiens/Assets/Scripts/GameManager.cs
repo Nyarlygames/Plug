@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             SaveManager.LoadMap(PlayerPrefs.GetString("mapfile"), map); // create map from file
             SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
             CreateTribeGO("newgame");
-            GameObject.Find("UI_SaveName").GetComponent<Text>().text = "New tribe";
+            GameObject.Find("UI_SaveName").GetComponent<Text>().text = PlayerPrefs.GetString("NewName");
             Debug.Log("Loaded : new game");
         }
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
