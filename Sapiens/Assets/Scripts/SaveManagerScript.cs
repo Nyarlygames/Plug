@@ -102,13 +102,12 @@ public class SaveManagerScript {
                                 if ((curtile.tileCur.id == tss.first + ts.id))
                                 {
                                     tileset = ts;
+                                    tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                                     break;
                                 }
                             }
-                        }
-                        if (tileset.spritefile != "")
-                        {
-                            tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
+                            if (tileset.id > 0)
+                                break;
                         }
                     }
                     Vector3 placement = Vector3.zero;
@@ -156,20 +155,41 @@ public class SaveManagerScript {
                         if ((curObj.objectCur.gid == tss.first + ts.id))
                         {
                             tileset = ts;
+                            if (tileset.modifiers.Count > 0)
+                                curObj.objectCur.modifiers = tileset.modifiers;
+                            string test = "";
+                            tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
+                            if (curObj.objectCur.width != tileset.width)
+                            {
+                                curObj.GetComponent<Transform>().localScale = new Vector3((float)curObj.objectCur.width / tileset.width, (float)curObj.objectCur.height / tileset.height, 0.0f);
+                            }
                             break;
                         }
                     }
-                }
-                if (tileset.spritefile != "")
-                {
-                    tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
-                    if (curObj.objectCur.width != tileset.width)
-                    {
-                        curObj.GetComponent<Transform>().localScale = new Vector3((float)curObj.objectCur.width / tileset.width, (float)curObj.objectCur.height / tileset.height, 0.0f);
-                    }
+                    if (tileset.id > 0)
+                        break;
                 }
             }
-            tilego.GetComponent<Transform>().position = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width/2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height/2))) / 100.0f, GM.ZObjects);
+            Vector3 placement = Vector3.zero;
+            switch (mapfile.orientation)
+            {
+                case "orthogonal":
+                    placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
+                    break;
+                case "staggered":
+                    if (curObj.objectCur.y % 2 == 1)
+                        placement = new Vector3((curObj.objectCur.x +curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey/2) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
+                    else
+                        placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey / 2) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f + (mapfile.tilesizey / 2.0f / 100.0f), GM.ZObjects);
+                    break;
+                case "isometric":
+                    placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey/2) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
+                    break;
+                default:
+                    placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
+                    break;
+            }
+            tilego.GetComponent<Transform>().position = placement;
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
         }
     }
