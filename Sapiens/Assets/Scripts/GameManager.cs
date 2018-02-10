@@ -19,15 +19,38 @@ public class GameManager : MonoBehaviour
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
     public float ZGround = 0.0f;
-    public float ZObjects = -1.0f;
-    public float ZCharacters=-2.0f;
+    public float ZObjects = 10.0f;
+    public float ZCharacters = 0.0f;
     public float timeSinceReload = 0.0f;
     RatioFactory RF = new RatioFactory();
     public MapSave map = new MapSave();
-    //public List<Sprite> spritelist = new List<Sprite>();
+    public Sprite[] basesF;
+    public Sprite[] basesM;
+    public Sprite[] hairsF;
+    public Sprite[] hairsM;
+    public Sprite[] jewelsF;
+    public Sprite[] beardsM;
+    public Sprite[] paintsF;
+    public Sprite[] paintsM;
+    public Sprite[] clothesF;
+    public Sprite[] clothesM;
 
     void Start()
     {
+        ZGround = 20.0f;
+        ZObjects = 10.0f;
+        ZCharacters = 0.0f;
+        basesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
+        basesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
+        hairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
+        hairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
+        jewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
+        beardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
+        paintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
+        paintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
+        clothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
+        clothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
+
         /* Tribe */
         timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
@@ -48,7 +71,6 @@ public class GameManager : MonoBehaviour
         {
             //new game without save file
             sdata = new SaveData();
-
             sdata.savefile = "";
             sdata.savefolder = "Save/";
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
@@ -93,7 +115,9 @@ public class GameManager : MonoBehaviour
             {
                 UIChar.SetActive(!UIChar.activeSelf);
                 if (UIChar.activeSelf)
+                {
                     UIChar.GetComponent<PanelChar>().SetExistingChars();
+                }
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape)) // open escape
@@ -128,29 +152,12 @@ public class GameManager : MonoBehaviour
         GameObject Tribe_Members = new GameObject("Tribe_Members");
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
-            // save pic
-            if (Directory.Exists("Assets/Resources/Save/newgame/") == false)
-            {
-                Directory.CreateDirectory("Assets/Resources/Save/newgame/");
-            }
-            byte[] bytes = NGTribe.customchars[i].EncodeToPNG();
-            FileStream file = File.Open("Assets/Resources/Save/newgame/customchar_" + i + ".png", FileMode.OpenOrCreate);
-            BinaryWriter binary = new BinaryWriter(file);
-            binary.Write(bytes);
-            file.Close();
-            CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], NGTribe.customchars[i], tribecomp, Tribe_Members);
+            CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);
         }
-        /*CreatePlayer(0, "father 30", 30, "Play/TribeChar/man", tribecomp, Tribe_Members);
-        CreatePlayer(1, "mother 36", 36, "Play/TribeChar/woman", tribecomp, Tribe_Members);
-        CreatePlayer(2, "woman 16", 16, "Play/TribeChar/Woman1", tribecomp, Tribe_Members);
-        CreatePlayer(3, "baby 0", 0, "Play/TribeChar/Son", tribecomp, Tribe_Members);
-        CreatePlayer(4, "daughter 8", 8, "Play/TribeChar/daughter", tribecomp, Tribe_Members);
-        CreatePlayer(5, "son 11", 11, "Play/TribeChar/Son", tribecomp, Tribe_Members);*/
-
         sdata.tribesave = tribecomp.tribeCurrent;
     }
 
-    public void CreatePlayer(int id, string name, CharacterSave cs, Texture2D sprite, TribeGO tribecomp, GameObject Tribe_Members)
+    public void CreatePlayer(int id, string name, CharacterSave cs, TribeGO tribecomp, GameObject Tribe_Members)
     {
         int countdown = cs.age.years;
         float xpacc = 0;
@@ -180,17 +187,82 @@ public class GameManager : MonoBehaviour
         newman.time = cs.age.years * 24 * 365;
         newman.sexe = cs.sexe;
         newman.xp = xpacc;
+        newman.Pic_base = cs.Pic_base;
+        newman.Pic_beard = cs.Pic_beard;
+        newman.Pic_clothes = cs.Pic_clothes;
+        newman.Pic_hairs = cs.Pic_hairs;
+        newman.Pic_jewels = cs.Pic_jewels;
+        newman.Pic_paints = cs.Pic_paints;
         newman.SetAge();
         newman.next = 150.0f;
         newman.next = newman.SkipStats(newman.xp, newman.next);
-        newman.charSprite = "Save/newgame/customchar_" + id;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
         CharGO.AddComponent<CharacterGO>();
         CharGO.GetComponent<CharacterGO>().charCurrent = newman;
-        CharGO.AddComponent<SpriteRenderer>();
-        Sprite FaceSprite = Sprite.Create(sprite, new Rect(0, 0, sprite.width, sprite.height), new Vector2(0.5f, 0.5f));
-        CharGO.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+
+
+        GameObject body = new GameObject(newman.name + "_Body");
+        Transform bodyT = body.GetComponent<Transform>();
+        bodyT.SetParent(CharGO.GetComponent<Transform>());
+        bodyT.position = new Vector3(bodyT.position.x, bodyT.position.y, ZCharacters + 5);
+        body.AddComponent<SpriteRenderer>();
+        Sprite FaceSprite;
+        if (cs.sexe == 0)
+            FaceSprite = basesF[cs.Pic_base];
+        else
+            FaceSprite = basesM[cs.Pic_base];
+        body.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+
+        GameObject paints = new GameObject(newman.name + "_Paints");
+        Transform paintsT = paints.GetComponent<Transform>();
+        paintsT.SetParent(CharGO.GetComponent<Transform>());
+        paintsT.position = new Vector3(paintsT.position.x, paintsT.position.y, ZCharacters + 4);
+        paints.AddComponent<SpriteRenderer>();
+        Sprite PaintSprite;
+        if (cs.sexe == 0)
+            PaintSprite = paintsF[cs.Pic_paints];
+        else
+            PaintSprite = paintsM[cs.Pic_paints];
+        paints.GetComponent<SpriteRenderer>().sprite = PaintSprite;
+
+        GameObject hairs = new GameObject(newman.name + "_Hairs");
+        Transform hairsT = hairs.GetComponent<Transform>();
+        hairsT.SetParent(CharGO.GetComponent<Transform>());
+        hairsT.position = new Vector3(hairsT.position.x, hairsT.position.y, ZCharacters + 3);
+        hairs.AddComponent<SpriteRenderer>();
+        Sprite HairsSprite;
+        if (cs.sexe == 0)
+            HairsSprite = hairsF[cs.Pic_hairs];
+        else
+            HairsSprite = hairsM[cs.Pic_hairs];
+        hairs.GetComponent<SpriteRenderer>().sprite = HairsSprite;
+
+        GameObject extra = new GameObject(newman.name + "_Extra");
+        Transform extraT = extra.GetComponent<Transform>();
+        extraT.SetParent(CharGO.GetComponent<Transform>());
+        extraT.position = new Vector3(extraT.position.x, extraT.position.y, ZCharacters + 2);
+        extra.AddComponent<SpriteRenderer>();
+        Sprite ExtraSprite;
+        if (cs.sexe == 0)
+            ExtraSprite = jewelsF[cs.Pic_jewels];
+        else
+            ExtraSprite = beardsM[cs.Pic_beard];
+        extra.GetComponent<SpriteRenderer>().sprite = ExtraSprite;
+
+        GameObject clothes = new GameObject(newman.name + "_Clothes");
+        Transform clothesT = clothes.GetComponent<Transform>();
+        clothesT.SetParent(CharGO.GetComponent<Transform>());
+        clothesT.position = new Vector3(clothesT.position.x, clothesT.position.y, ZCharacters + 1);
+        clothes.AddComponent<SpriteRenderer>();
+        Sprite ClothesSprite;
+        if (cs.sexe == 0)
+            ClothesSprite = clothesF[cs.Pic_clothes];
+        else
+            ClothesSprite = clothesM[cs.Pic_clothes];
+        clothes.GetComponent<SpriteRenderer>().sprite = ClothesSprite;
+        
+
         // CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
         newman.x = id*4;
         newman.y = 3;

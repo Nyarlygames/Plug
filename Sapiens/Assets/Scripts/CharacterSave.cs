@@ -16,7 +16,6 @@ public class CharacterSave
     public CharacterSave father;
     public CharacterSave mother;
     public string name = "";
-    public string charSprite;
     public AgeStruct age = new AgeStruct();
     public float xp = 0;
     public int level = 0;
@@ -48,6 +47,14 @@ public class CharacterSave
     public int healdis = 0;
     public int reswoun = 0;
     public int healwoun = 0;
+
+    public int Pic_base = 0;
+    public int Pic_clothes = 0;
+    public int Pic_hairs = 0;
+    public int Pic_paints = 0;
+    public int Pic_jewels = 0;
+    public int Pic_beard = 0;
+
     public RatioFactory RF = new RatioFactory();
 
     public void SetAge()

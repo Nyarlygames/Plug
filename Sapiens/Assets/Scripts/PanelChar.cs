@@ -10,7 +10,7 @@ public class PanelChar : MonoBehaviour {
     Dropdown CharacterList;
     Button CharacterListPlus;
     Button CharacterListMinus;
-    Image CharacterFace;
+    GameObject CharacterFace;
     Text Character_Strength;
     Text Character_Endurance;
     Text Character_Body;
@@ -51,7 +51,7 @@ public class PanelChar : MonoBehaviour {
         
         GameObject.Find("CharacterSelector+").GetComponent<Button>().onClick.AddListener(CharPlusClick);
         GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharMinusClick);
-        CharacterFace = GameObject.Find("CharacterFace").GetComponent<Image>();
+        CharacterFace = GameObject.Find("CharacterFace");
 
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         Character_Strength = GameObject.Find("Character_Strength").GetComponent<Text>();
@@ -119,13 +119,76 @@ public class PanelChar : MonoBehaviour {
         if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Count > 0)
         {
             curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
-            CharacterFace.sprite = GM.TribeGO.GetComponent<TribeGO>().CharsGO[CharacterList.value].GetComponent<SpriteRenderer>().sprite;
+            Transform charT = CharacterFace.GetComponent<Transform>();
+            GameObject body = new GameObject(curChar.name + "_Body");
+            Transform bodyT = body.GetComponent<Transform>();
+            bodyT.SetParent(CharacterFace.GetComponent<Transform>());
+            bodyT.position = new Vector3(charT.position.x, charT.position.y, charT.position.z);
+            body.AddComponent<Image>();
+            Sprite FaceSprite;
+            if (curChar.sexe == 0)
+                FaceSprite = GM.basesF[curChar.Pic_base];
+            else
+                FaceSprite = GM.basesM[curChar.Pic_base];
+            body.GetComponent<Image>().sprite = FaceSprite;
+
+            GameObject paints = new GameObject(curChar.name + "_Paints");
+            Transform paintsT = paints.GetComponent<Transform>();
+            paintsT.SetParent(CharacterFace.GetComponent<Transform>());
+            paintsT.position = new Vector3(charT.position.x, charT.position.y, charT.position.z);
+            paints.AddComponent<Image>();
+            Sprite PaintSprite;
+            if (curChar.sexe == 0)
+                PaintSprite = GM.paintsF[curChar.Pic_paints];
+            else
+                PaintSprite = GM.paintsM[curChar.Pic_paints];
+            paints.GetComponent<Image>().sprite = PaintSprite;
+
+            GameObject hairs = new GameObject(curChar.name + "_Hairs");
+            Transform hairsT = hairs.GetComponent<Transform>();
+            hairsT.SetParent(CharacterFace.GetComponent<Transform>());
+            hairsT.position = new Vector3(charT.position.x, charT.position.y, charT.position.z);
+            hairs.AddComponent<Image>();
+            Sprite HairsSprite;
+            if (curChar.sexe == 0)
+                HairsSprite = GM.hairsF[curChar.Pic_hairs];
+            else
+                HairsSprite = GM.hairsM[curChar.Pic_hairs];
+            hairs.GetComponent<Image>().sprite = HairsSprite;
+
+            GameObject extra = new GameObject(curChar.name + "_Extra");
+            Transform extraT = extra.GetComponent<Transform>();
+            extraT.SetParent(CharacterFace.GetComponent<Transform>());
+            extraT.position = new Vector3(charT.position.x, charT.position.y, charT.position.z);
+            extra.AddComponent<Image>();
+            Sprite ExtraSprite;
+            if (curChar.sexe == 0)
+                ExtraSprite = GM.jewelsF[curChar.Pic_jewels];
+            else
+                ExtraSprite = GM.beardsM[curChar.Pic_beard];
+            extra.GetComponent<Image>().sprite = ExtraSprite;
+
+            GameObject clothes = new GameObject(curChar.name + "_Clothes");
+            Transform clothesT = clothes.GetComponent<Transform>();
+            clothesT.SetParent(CharacterFace.GetComponent<Transform>());
+            clothesT.position = new Vector3(charT.position.x, charT.position.y, charT.position.z);
+            clothes.AddComponent<Image>();
+            Sprite ClothesSprite;
+            if (curChar.sexe == 0)
+                ClothesSprite = GM.clothesF[curChar.Pic_clothes];
+            else
+                ClothesSprite = GM.clothesM[curChar.Pic_clothes];
+            clothes.GetComponent<Image>().sprite = ClothesSprite;
             Character_Name.text = "Name : " + curChar.name;
         }
     }
 
     void CharPlusClick()
     {
+        foreach (Transform child in CharacterFace.GetComponent<Transform>())
+        {
+            Destroy(child.gameObject);
+        }
         if (CharacterList.value >= CharacterList.options.Count -1)
             CharacterList.value = 0;
         else
@@ -133,6 +196,10 @@ public class PanelChar : MonoBehaviour {
     }
     void CharMinusClick()
     {
+        foreach (Transform child in CharacterFace.GetComponent<Transform>())
+        {
+            Destroy(child.gameObject);
+        }
         if (CharacterList.value <= 0)
             CharacterList.value = CharacterList.options.Count;
         else

@@ -12,6 +12,7 @@ public class SaveManagerScript {
     GameManager GM;
     public GameObject LoadGO(SaveData sdata)
     {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject Tribe = new GameObject(sdata.tribesave.tribename);
         GameObject Tribe_Members = new GameObject("Tribe_Members");
         Tribe.AddComponent<TribeGO>();
@@ -26,10 +27,67 @@ public class SaveManagerScript {
                     GameObject newchar = new GameObject(chara.name);
                     newchar.AddComponent<CharacterGO>();
                     newchar.GetComponent<CharacterGO>().charCurrent = chara;
-                    newchar.AddComponent<SpriteRenderer>();
-                    Texture2D sprite = Resources.Load<Texture2D>(chara.charSprite);
-                    Sprite FaceSprite = Sprite.Create(sprite, new Rect(0, 0, sprite.width, sprite.height), new Vector2(0.5f, 0.5f));
-                    newchar.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+
+                    GameObject body = new GameObject(chara.name + "_Body");
+                    Transform bodyT = body.GetComponent<Transform>();
+                    bodyT.SetParent(newchar.GetComponent<Transform>());
+                    bodyT.position = new Vector3(bodyT.position.x, bodyT.position.y, GM.ZCharacters + 5);
+                    body.AddComponent<SpriteRenderer>();
+                    Sprite FaceSprite;
+                    if (chara.sexe == 0)
+                        FaceSprite = GM.basesF[chara.Pic_base];
+                    else
+                        FaceSprite = GM.basesM[chara.Pic_base];
+                    body.GetComponent<SpriteRenderer>().sprite = FaceSprite;
+
+                    GameObject paints = new GameObject(chara.name + "_Paints");
+                    Transform paintsT = paints.GetComponent<Transform>();
+                    paintsT.SetParent(newchar.GetComponent<Transform>());
+                    paintsT.position = new Vector3(paintsT.position.x, paintsT.position.y, GM.ZCharacters + 4);
+                    paints.AddComponent<SpriteRenderer>();
+                    Sprite PaintSprite;
+                    if (chara.sexe == 0)
+                        PaintSprite = GM.paintsF[chara.Pic_paints];
+                    else
+                        PaintSprite = GM.paintsM[chara.Pic_paints];
+                    paints.GetComponent<SpriteRenderer>().sprite = PaintSprite;
+
+                    GameObject hairs = new GameObject(chara.name + "_Hairs");
+                    Transform hairsT = hairs.GetComponent<Transform>();
+                    hairsT.SetParent(newchar.GetComponent<Transform>());
+                    hairsT.position = new Vector3(hairsT.position.x, hairsT.position.y, GM.ZCharacters + 3);
+                    hairs.AddComponent<SpriteRenderer>();
+                    Sprite HairsSprite;
+                    if (chara.sexe == 0)
+                        HairsSprite = GM.hairsF[chara.Pic_hairs];
+                    else
+                        HairsSprite = GM.hairsM[chara.Pic_hairs];
+                    hairs.GetComponent<SpriteRenderer>().sprite = HairsSprite;
+
+                    GameObject extra = new GameObject(chara.name + "_Extra");
+                    Transform extraT = extra.GetComponent<Transform>();
+                    extraT.SetParent(newchar.GetComponent<Transform>());
+                    extraT.position = new Vector3(extraT.position.x, extraT.position.y, GM.ZCharacters + 2);
+                    extra.AddComponent<SpriteRenderer>();
+                    Sprite ExtraSprite;
+                    if (chara.sexe == 0)
+                        ExtraSprite = GM.jewelsF[chara.Pic_jewels];
+                    else
+                        ExtraSprite = GM.beardsM[chara.Pic_beard];
+                    extra.GetComponent<SpriteRenderer>().sprite = ExtraSprite;
+
+                    GameObject clothes = new GameObject(chara.name + "_Clothes");
+                    Transform clothesT = clothes.GetComponent<Transform>();
+                    clothesT.SetParent(newchar.GetComponent<Transform>());
+                    clothesT.position = new Vector3(clothesT.position.x, clothesT.position.y, GM.ZCharacters + 1);
+                    clothes.AddComponent<SpriteRenderer>();
+                    Sprite ClothesSprite;
+                    if (chara.sexe == 0)
+                        ClothesSprite = GM.clothesF[chara.Pic_clothes];
+                    else
+                        ClothesSprite = GM.clothesM[chara.Pic_clothes];
+                    clothes.GetComponent<SpriteRenderer>().sprite = ClothesSprite;
+
                     newchar.GetComponent<Transform>().position = new Vector3(chara.x, chara.y, chara.z);
                     newchar.transform.SetParent(Tribe_Members.transform);
                     tribego.CharsGO.Add(newchar);
@@ -157,7 +215,6 @@ public class SaveManagerScript {
                             tileset = ts;
                             if (tileset.modifiers.Count > 0)
                                 curObj.objectCur.modifiers = tileset.modifiers;
-                            string test = "";
                             tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                             if (curObj.objectCur.width != tileset.width)
                             {

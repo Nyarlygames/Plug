@@ -186,54 +186,19 @@ public class NewGameController : MonoBehaviour {
             else
                 newchar.age.years = 0;
             newchar.sexe = activesex;
-            newTribe.members.Add(newchar);
-            NewFace = new Texture2D(NewPicBase[0].width, NewPicBase[0].height, TextureFormat.ARGB32, false);
-            Sprite[] debasesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Bases/");
-            Sprite[] debasesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Bases/");
-            Sprite[] dehairsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Hairs/");
-            Sprite[] dehairsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Hairs/");
-            Sprite[] dejewelsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Jewels/");
-            Sprite[] debeardsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Beards/");
-            Sprite[] depaintsF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Paints/");
-            Sprite[] depaintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
-            Sprite[] declothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
-            Sprite[] declothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
-            for (int y = 0; y < NewFace.height; y++)
+            newchar.Pic_base = selected_bases;
+            newchar.Pic_clothes = selected_clothes;
+            newchar.Pic_paints = selected_paints;
+            newchar.Pic_hairs = selected_hairs;
+            if (activesex == 0)
             {
-                for (int x = 0; x < NewFace.width; x++)
-                {
-                    if (activesex == 0)
-                    {
-                        if (debasesF[selected_bases].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, debasesF[selected_bases].texture.GetPixel(x, y));
-                        if (declothesF[selected_clothes].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, declothesF[selected_clothes].texture.GetPixel(x, y));
-                        if (depaintsF[selected_paints].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, depaintsF[selected_paints].texture.GetPixel(x, y));
-                        if (dehairsF[selected_hairs].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, dehairsF[selected_hairs].texture.GetPixel(x, y));
-                        if (dejewelsF[selected_beards].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, dejewelsF[selected_beards].texture.GetPixel(x, y));
-
-                    }
-                    else
-                    {
-                        if (debasesM[selected_bases].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, debasesM[selected_bases].texture.GetPixel(x, y));
-                        if (declothesM[selected_clothes].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, declothesM[selected_clothes].texture.GetPixel(x, y));
-                        if (depaintsM[selected_paints].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, depaintsM[selected_paints].texture.GetPixel(x, y));
-                        if (dehairsM[selected_hairs].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, dehairsM[selected_hairs].texture.GetPixel(x, y));
-                        if (debeardsM[selected_beards].texture.GetPixel(x, y).a > 0.01f)
-                            NewFace.SetPixel(x, y, debeardsM[selected_beards].texture.GetPixel(x, y));
-
-                    }
-                }
+                newchar.Pic_jewels = selected_jewels;
             }
-            NewFace.Apply();
-            tribecomp.customchars.Add(NewFace);
+            else
+            {
+                newchar.Pic_beard = selected_beards;
+            }
+            newTribe.members.Add(newchar);
             tribe_members.text += "\n" + newname.text;
         }
         catch (System.FormatException)
@@ -435,8 +400,6 @@ public class NewGameController : MonoBehaviour {
         newTribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = newtribename.text;
         PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
         PlayerPrefs.SetString("savefile", "");
-        
-
         SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
     }
     void BackButton_Click()

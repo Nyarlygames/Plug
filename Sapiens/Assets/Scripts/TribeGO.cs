@@ -8,7 +8,6 @@ public class TribeGO : MonoBehaviour {
     public AgeStruct curAge = new AgeStruct();
     public List<GameObject> CharsGO = new List<GameObject>();
     public string profilename = "";
-    public List<Texture2D> customchars = new List<Texture2D>();
 
     // Use this for initialization
     void Start () {

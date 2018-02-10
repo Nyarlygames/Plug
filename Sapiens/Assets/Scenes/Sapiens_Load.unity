@@ -407,7 +407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.10b (10/02/2018)'
+  m_Text: 'Version : 0.0.10c (10/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4128,7 +4128,6 @@ MonoBehaviour:
         z: 0
         sexe: 0
         name: 
-        charSprite: 
         age:
           hours: 0
           days: 0
@@ -4159,6 +4158,12 @@ MonoBehaviour:
         healdis: 0
         reswoun: 0
         healwoun: 0
+        Pic_base: 0
+        Pic_clothes: 0
+        Pic_hairs: 0
+        Pic_paints: 0
+        Pic_jewels: 0
+        Pic_beard: 0
         RF:
           exp_baby_range: 10
           exp_baby_value: 1
@@ -4190,8 +4195,8 @@ MonoBehaviour:
   scaleBeforeEscape: 0
   timers: {fileID: 0}
   ZGround: 0
-  ZObjects: -1
-  ZCharacters: -2
+  ZObjects: 0
+  ZCharacters: 0
   timeSinceReload: 0
   map:
     sizex: 0
@@ -4206,6 +4211,16 @@ MonoBehaviour:
     layers: []
     objectgroups: []
     objects: []
+  basesF: []
+  basesM: []
+  hairsF: []
+  hairsM: []
+  jewelsF: []
+  beardsM: []
+  paintsF: []
+  paintsM: []
+  clothesF: []
+  clothesM: []
 --- !u!4 &2074311092
 Transform:
   m_ObjectHideFlags: 0
