@@ -80,7 +80,9 @@ public class SaveManagerScript {
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject emptyMap = new GameObject("Map");
+        int drawback = 99;
         foreach (LayerSave lay in mapfile.layers) {
+
             for (int y = 0; y < mapfile.sizey; y++)
             {
                 for (int x = 0; x < mapfile.sizex; x++)
@@ -95,10 +97,13 @@ public class SaveManagerScript {
                     {
                         foreach (TileSetsSave tss in mapfile.tilesets)
                         {
-                            if ((curtile.tileCur.id >= tss.first) && (curtile.tileCur.id < tss.first + tss.spritecount))
+                            foreach (TileSetSave ts in tss.tilesets)
                             {
-                                tileset = tss.tilesets[curtile.tileCur.id - tss.first];
-                                break;
+                                if ((curtile.tileCur.id == tss.first + ts.id))
+                                {
+                                    tileset = ts;
+                                    break;
+                                }
                             }
                         }
                         if (tileset.spritefile != "")
@@ -106,10 +111,33 @@ public class SaveManagerScript {
                             tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                         }
                     }
-                    tilego.GetComponent<Transform>().position = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround);
+                    Vector3 placement = Vector3.zero;
+                    switch (mapfile.orientation)
+                    {
+                        case "orthogonal":
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            break;
+                        case "staggered":
+                            if (y % 2 == 1)
+                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            else
+                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            break;
+                        case "isometric":
+                            if (y % 2 == 1)
+                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            else
+                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            break;
+                        default:
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                            break;
+                    }
+                    tilego.GetComponent<Transform>().position = placement;
                     tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
                 }
             }
+            drawback--;
         }
         GameObject emptyGO = new GameObject("Objects");        
         foreach (ObjectSave obj in mapfile.objects) { 
@@ -123,10 +151,13 @@ public class SaveManagerScript {
             {
                 foreach (TileSetsSave tss in mapfile.tilesets)
                 {
-                    if ((curObj.objectCur.gid >= tss.first) && (curObj.objectCur.gid < tss.first + tss.spritecount))
+                    foreach (TileSetSave ts in tss.tilesets)
                     {
-                        tileset = tss.tilesets[curObj.objectCur.gid - tss.first];
-                        break;
+                        if ((curObj.objectCur.gid == tss.first + ts.id))
+                        {
+                            tileset = ts;
+                            break;
+                        }
                     }
                 }
                 if (tileset.spritefile != "")
@@ -178,22 +209,20 @@ public class SaveManagerScript {
                             for (int i = 0; i < ground.sizex; i++)
                             {
                                 TileSave tilesave = new TileSave();
-                                if (newid.Length >= 2)
+                                if (newid.IndexOf(",") >0)
                                 {
-                                    tilesave.id = Convert.ToInt32(newid.Substring(0, 1));
-                                    ground.tiles[j].Add(tilesave);
-                                    newid = newid.Substring(2);
+                                    tilesave.id = Convert.ToInt32(newid.Substring(0, newid.IndexOf(",")));
+                                    newid = newid.Substring(newid.IndexOf(",")+1);
                                 }
                                 else
                                 {
                                     tilesave.id = Convert.ToInt32(newid);
-                                    ground.tiles[j].Add(tilesave);
                                 }
+                                ground.tiles[j].Add(tilesave);
                                 tilesave.posx = i;
                                 tilesave.posy = j;
                             }
-                            if (j < ground.sizey) // to prevent reading </data>
-                                newid = reader.ReadLine();
+                        newid = reader.ReadLine();
                         }
                     }
                     ground.tiles.Reverse();
@@ -208,21 +237,23 @@ public class SaveManagerScript {
                     objectlayer.offsety = Convert.ToInt32(map.GetValueFromKey("offsety", line));
                 map.objectgroups.Add(objectlayer);
                 line = reader.ReadLine();
-                while (!line.Contains("</objectgroup>"))
+                if (line.Contains("<object"))
                 {
-                    ObjectSave obj = new ObjectSave();
-                    obj.id = Convert.ToInt32(map.GetValueFromKey("id", line));
-                    obj.gid = Convert.ToInt32(map.GetValueFromKey("gid", line));
-                    obj.x = Convert.ToSingle(map.GetValueFromKey("x", line), CultureInfo.InvariantCulture.NumberFormat);
-                    obj.y = Convert.ToSingle(map.GetValueFromKey("y", line));
-                    obj.width = Convert.ToInt32(map.GetValueFromKey("width", line));
-                    obj.height = Convert.ToInt32(map.GetValueFromKey("height", line));
-                    obj.offsetx = objectlayer.offsetx;
-                    obj.offsety = objectlayer.offsety;
-                    map.objects.Add(obj);
-                    line = reader.ReadLine();
+                    while (!line.Contains("</objectgroup>"))
+                    {
+                        ObjectSave obj = new ObjectSave();
+                        obj.id = Convert.ToInt32(map.GetValueFromKey("id", line));
+                        obj.gid = Convert.ToInt32(map.GetValueFromKey("gid", line));
+                        obj.x = Convert.ToSingle(map.GetValueFromKey("x", line), CultureInfo.InvariantCulture.NumberFormat);
+                        obj.y = Convert.ToSingle(map.GetValueFromKey("y", line));
+                        obj.width = Convert.ToInt32(map.GetValueFromKey("width", line));
+                        obj.height = Convert.ToInt32(map.GetValueFromKey("height", line));
+                        obj.offsetx = objectlayer.offsetx;
+                        obj.offsety = objectlayer.offsety;
+                        map.objects.Add(obj);
+                        line = reader.ReadLine();
+                    }
                 }
-                //map.objects.Reverse();
             }
             if (line.Contains("<tileset"))
             {
@@ -240,12 +271,24 @@ public class SaveManagerScript {
                         tilesets.tileheight = Convert.ToInt32(map.GetValueFromKey("tileheight", linetileset));
                         tilesets.spritecount = Convert.ToInt32(map.GetValueFromKey("tilecount", linetileset));
                     }
-                    if (linetileset.Contains("<image"))
+                    if (linetileset.Contains("<tile "))
                     {
                         TileSetSave tileset = new TileSetSave();
-                        tileset.height = Convert.ToInt32(map.GetValueFromKey("height", linetileset));
-                        tileset.spritefile = map.GetValueFromKey("source", linetileset);
-                        tileset.width = Convert.ToInt32(map.GetValueFromKey("width", linetileset));
+                        tileset.id = Convert.ToInt32(map.GetValueFromKey("id", linetileset));
+                        linetileset = readertileset.ReadLine();
+                        while (!linetileset.Contains("</tile>"))
+                        {
+                            if (linetileset.Contains("<property")) { 
+                                tileset.modifiers.Add(map.GetValueFromKey("name", linetileset), map.GetValueFromKey("value", linetileset));
+                            }
+                            if (linetileset.Contains("<image") && (!linetileset.Contains("format")))
+                            {
+                                tileset.height = Convert.ToInt32(map.GetValueFromKey("height", linetileset));
+                                tileset.spritefile = map.GetValueFromKey("source", linetileset);
+                                tileset.width = Convert.ToInt32(map.GetValueFromKey("width", linetileset));
+                            }
+                            linetileset = readertileset.ReadLine();
+                        }
                         tilesets.tilesets.Add(tileset);
                     }
                     linetileset = readertileset.ReadLine();

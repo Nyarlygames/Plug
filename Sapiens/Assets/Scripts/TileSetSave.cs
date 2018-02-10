@@ -7,6 +7,8 @@ using UnityEngine;
 public class TileSetSave
 {
     public string spritefile;
+    public int id;
+    public Dictionary<string, string> modifiers = new Dictionary<string, string>();
     public int height = 0;
     public int width = 0;
 
