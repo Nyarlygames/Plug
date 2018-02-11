@@ -13,5 +13,5 @@ public class ObjectSave
     public int height = 0;
     public int offsetx = 0;
     public int offsety = 0;
-    public Dictionary<string, string> modifiers;
+    public Dictionary<string, string> modifiers = new Dictionary<string, string>();
 }

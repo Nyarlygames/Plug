@@ -214,7 +214,16 @@ public class SaveManagerScript {
                         {
                             tileset = ts;
                             if (tileset.modifiers.Count > 0)
-                                curObj.objectCur.modifiers = tileset.modifiers;
+                            {
+                                foreach (string key in tileset.modifiers.Keys)
+                                {
+                                    string testkey = "";
+                                    curObj.objectCur.modifiers.TryGetValue(key, out testkey);
+                                    if (testkey == "")
+                                        curObj.objectCur.modifiers.Add(key, tileset.modifiers[key]);
+                                }
+                                
+                            }
                             tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                             if (curObj.objectCur.width != tileset.width)
                             {
@@ -327,8 +336,23 @@ public class SaveManagerScript {
                         obj.height = Convert.ToInt32(map.GetValueFromKey("height", line));
                         obj.offsetx = objectlayer.offsetx;
                         obj.offsety = objectlayer.offsety;
-                        map.objects.Add(obj);
+
                         line = reader.ReadLine();
+                        if (line.Contains("<properties"))
+                        {
+                            while ((!line.Contains("</object>")) && (!line.Contains("</properties")))
+                            {
+                                if (line.Contains("<property"))
+                                {
+                                    obj.modifiers.Add(map.GetValueFromKey("name", line), map.GetValueFromKey("value", line));
+                                }
+                                line = reader.ReadLine();
+                            }
+                            if (line.Contains("</properties"))
+                                line = reader.ReadLine();
+                            line = reader.ReadLine();
+                        }
+                        map.objects.Add(obj);
                     }
                 }
             }

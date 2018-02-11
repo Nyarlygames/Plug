@@ -264,11 +264,29 @@ public class GameManager : MonoBehaviour
         
 
         // CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
-        newman.x = id*4;
-        newman.y = 3;
+
+        if (PlayerPrefs.GetInt("spawnzone") > 0)
+        {
+            foreach (ObjectSave obj in map.objects)
+            {
+                if (obj.modifiers.ContainsKey("spawner"))
+                {
+                    if (Convert.ToInt32(obj.modifiers["spawner"]) == PlayerPrefs.GetInt("spawnzone"))
+                    {
+                        if (obj.y % 2 == 1)
+                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f, ZCharacters);
+                        else
+                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f + (map.tilesizey / 2.0f / 100.0f), ZCharacters);
+                    }
+                }
+            }
+            PlayerPrefs.SetInt("spawnzone", 0);
+
+        }
+        newman.x = Tribe_Members.GetComponent<Transform>().position.x + id * 4;
+        newman.y = Tribe_Members.GetComponent<Transform>().position.y;
         newman.z = ZCharacters;
         CharGO.GetComponent<Transform>().position = new Vector3(newman.x, newman.y, newman.z);
-        
         CharGO.transform.SetParent(Tribe_Members.transform);
         tribecomp.CharsGO.Add(CharGO);
     }

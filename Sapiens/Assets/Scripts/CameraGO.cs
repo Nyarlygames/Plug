@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class CameraGO : MonoBehaviour {
 
-  /*  GameManager GM;
+    GameManager GM;
     Transform tribePos;
-    Transform camPos;*/
+    Transform camPos;
 	// Use this for initialization
 	void Start () {
-        /*GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        camPos = gameObject.GetComponent<Transform>();*/
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        camPos = gameObject.GetComponent<Transform>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+        if (GameObject.Find("Tribe_Members") != null)
+            tribePos = GameObject.Find("Tribe_Members").GetComponent<Transform>();
+        camPos.position = tribePos.position;
        /* tribePos = GM.TribeGO.GetComponent<TribeGO>().CharsGO[0].GetComponent<Transform>();
         Vector3 temp = tribePos.position;
         temp.z -= 5.0f;
