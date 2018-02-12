@@ -258,7 +258,7 @@ public class NewGameController : MonoBehaviour {
         PlayerPrefs.SetString("NewName", newtribename.text);
         PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
         PlayerPrefs.SetString("savefile", "");
-        PlayerPrefs.SetInt("spawnzone", 1);
+        PlayerPrefs.SetInt("spawnzone", 2); // to add random ?
         SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
     }
     void Update()

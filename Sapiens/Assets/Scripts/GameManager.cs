@@ -261,7 +261,13 @@ public class GameManager : MonoBehaviour
         else
             ClothesSprite = clothesM[cs.Pic_clothes];
         clothes.GetComponent<SpriteRenderer>().sprite = ClothesSprite;
-        
+
+        paints.GetComponent<SpriteRenderer>().enabled = false;
+        extra.GetComponent<SpriteRenderer>().enabled = false;
+        clothes.GetComponent<SpriteRenderer>().enabled = false;
+        hairs.GetComponent<SpriteRenderer>().enabled = false;
+        body.GetComponent<SpriteRenderer>().enabled = false;
+
 
         // CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
 
@@ -283,11 +289,13 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("spawnzone", 0);
 
         }
-        newman.x = Tribe_Members.GetComponent<Transform>().position.x + id * 4;
+        newman.x = Tribe_Members.GetComponent<Transform>().position.x /*+ id * 4*/;
         newman.y = Tribe_Members.GetComponent<Transform>().position.y;
         newman.z = ZCharacters;
         CharGO.GetComponent<Transform>().position = new Vector3(newman.x, newman.y, newman.z);
         CharGO.transform.SetParent(Tribe_Members.transform);
+        
+        //CharGO.GetComponent<SpriteRenderer>().enabled = false;
         tribecomp.CharsGO.Add(CharGO);
     }
 }

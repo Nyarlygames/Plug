@@ -87,11 +87,19 @@ public class SaveManagerScript {
                     else
                         ClothesSprite = GM.clothesM[chara.Pic_clothes];
                     clothes.GetComponent<SpriteRenderer>().sprite = ClothesSprite;
+                    
+                    newchar.GetComponent<Transform>().position =  Vector3.zero;//(chara.x, chara.y, chara.z);
+                    newchar.GetComponent<Transform>().SetParent(Tribe_Members.transform);
 
-                    newchar.GetComponent<Transform>().position = new Vector3(chara.x, chara.y, chara.z);
-                    newchar.transform.SetParent(Tribe_Members.transform);
+                    paints.GetComponent<SpriteRenderer>().enabled = false;
+                    extra.GetComponent<SpriteRenderer>().enabled = false;
+                    clothes.GetComponent<SpriteRenderer>().enabled = false;
+                    hairs.GetComponent<SpriteRenderer>().enabled = false;
+                    body.GetComponent<SpriteRenderer>().enabled = false;
+
                     tribego.CharsGO.Add(newchar);
                 }
+                Tribe_Members.GetComponent<Transform>().position = new Vector3(sdata.tribesave.members[0].x, sdata.tribesave.members[0].y, GM.ZCharacters);
             }
         }
         return Tribe;
@@ -138,63 +146,112 @@ public class SaveManagerScript {
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject emptyMap = new GameObject("Map");
-        int drawback = 99;
-        foreach (LayerSave lay in mapfile.layers) {
-
-            for (int y = 0; y < mapfile.sizey; y++)
+        int drawback = 10;
+        for (int y = 0; y < mapfile.sizey; y++)
+        {
+            for (int x = 0; x < mapfile.sizex; x++)
             {
-                for (int x = 0; x < mapfile.sizex; x++)
+                /* TILES GROUND */
+                GameObject tilego = new GameObject("[" + y + "/" + x + "]");
+                tilego.AddComponent<TileGO>();
+                TileGO curtile = tilego.GetComponent<TileGO>();
+                curtile.tileCur = mapfile.layer.tiles[y][x];
+                tilego.AddComponent<SpriteRenderer>();
+                TileSetSave tileset = new TileSetSave();
+                if (curtile.tileCur.mapid > mapfile.basevalue)
                 {
-                    GameObject tilego = new GameObject("[" + y + "/" + x + "]");
-                    tilego.AddComponent<TileGO>();
-                    TileGO curtile = tilego.GetComponent<TileGO>();
-                    curtile.tileCur = lay.tiles[y][x];
-                    tilego.AddComponent<SpriteRenderer>();
-                    TileSetSave tileset = new TileSetSave();
-                    if (curtile.tileCur.id > mapfile.basevalue)
+                    foreach (TileSetsSave tss in mapfile.tilesets)
                     {
-                        foreach (TileSetsSave tss in mapfile.tilesets)
+                        foreach (TileSetSave ts in tss.tilesets)
                         {
-                            foreach (TileSetSave ts in tss.tilesets)
+                            if ((curtile.tileCur.mapid == tss.first + ts.id))
                             {
-                                if ((curtile.tileCur.id == tss.first + ts.id))
-                                {
-                                    tileset = ts;
-                                    tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
-                                    break;
-                                }
+                                tileset = ts;
+                                tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
+                                break;
                             }
-                            if (tileset.id > 0)
+                        }
+                        if (tileset.id > 0)
+                            break;
+                    }
+                }
+                Vector3 placement = Vector3.zero;
+                switch (mapfile.orientation)
+                {
+                    case "orthogonal":
+                        placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        break;
+                    case "staggered":
+                        if (y % 2 == 1)
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        else
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        break;
+                    case "isometric":
+                        if (y % 2 == 1)
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        else
+                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        break;
+                    default:
+                        placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                        break;
+                }
+                tilego.GetComponent<Transform>().position = placement;
+                tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
+                
+                /* TRIGGERS */
+                if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
+                {
+                    GameObject tilegotrigger = new GameObject("[" + y + "/" + x + "]_Trigger");
+                    tilegotrigger.AddComponent<TileGO>();
+                    TileGO curtiletrigger = tilegotrigger.GetComponent<TileGO>();
+                    curtiletrigger.tileCur = mapfile.layer.tiles[y][x];
+                    tilegotrigger.AddComponent<SpriteRenderer>();
+                    TileSetSave tilesettrigger = new TileSetSave();
+                    foreach (TileSetsSave tss in mapfile.tilesets)
+                    {
+                        foreach (TileSetSave ts in tss.tilesets)
+                        {
+                            if ((curtiletrigger.tileCur.triggerid == tss.first + ts.id))
+                            {
+                                tilesettrigger = ts;
+                                tilegotrigger.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tilesettrigger.spritefile.Substring(0, tilesettrigger.spritefile.Length - 4));
+                                break;
+                            }
+                        }
+                        if (tilesettrigger.id > 0)
+                            break;
+                    }
+                    if (tilesettrigger.id > 0)
+                    {
+                        Vector3 placementtrigger = Vector3.zero;
+                        switch (mapfile.orientation)
+                        {
+                            case "orthogonal":
+                                placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            case "staggered":
+                                if (y % 2 == 1)
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                else
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            case "isometric":
+                                if (y % 2 == 1)
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                else
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            default:
+                                placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
                                 break;
                         }
+                        tilegotrigger.GetComponent<Transform>().position = placementtrigger;
+                        tilegotrigger.transform.SetParent(tilego.GetComponent<Transform>());
                     }
-                    Vector3 placement = Vector3.zero;
-                    switch (mapfile.orientation)
-                    {
-                        case "orthogonal":
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        case "staggered":
-                            if (y % 2 == 1)
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            else
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        case "isometric":
-                            if (y % 2 == 1)
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            else
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        default:
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                    }
-                    tilego.GetComponent<Transform>().position = placement;
-                    tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
                 }
             }
-            drawback--;
         }
         GameObject emptyGO = new GameObject("Objects");        
         foreach (ObjectSave obj in mapfile.objects) { 
@@ -276,42 +333,75 @@ public class SaveManagerScript {
                 map.render = map.GetValueFromKey("renderorder", line);
                 map.orientation = map.GetValueFromKey("orientation", line);
                 map.nextobject = Convert.ToInt32(map.GetValueFromKey("nextobjectid", line));
+                LayerSave maptiles = new LayerSave();
+                map.layer = maptiles; // here
             }
             if (line.Contains("<layer"))
             {
-                LayerSave ground = new LayerSave();
+                LayerSave ground = map.layer;
                 ground.name = map.GetValueFromKey("name", line);
-                    ground.sizex = Convert.ToInt32(map.GetValueFromKey("width", line));
-                    ground.sizey = Convert.ToInt32(map.GetValueFromKey("height", line));
-                    map.layers.Add(ground);
-                    line = reader.ReadLine();
-                    if (line.Contains("<data encoding=\"csv\""))
-                    {
+                ground.sizex = Convert.ToInt32(map.GetValueFromKey("width", line));
+                ground.sizey = Convert.ToInt32(map.GetValueFromKey("height", line));
+                line = reader.ReadLine();
+                if (line.Contains("<data encoding=\"csv\""))
+                {
 
-                        string newid = reader.ReadLine();
-                        for (int j = 0; j < ground.sizey; j++)
-                        {
+                    string newid = reader.ReadLine();
+                    for (int j = 0; j < ground.sizey; j++)
+                    {
+                        if (ground.name == "Ground")
                             ground.tiles.Add(new List<TileSave>());
-                            for (int i = 0; i < ground.sizex; i++)
+                        for (int i = 0; i < ground.sizex; i++)
+                        {
+                            TileSave tilesave = new TileSave();
+                            if (ground.name == "Ground")
                             {
-                                TileSave tilesave = new TileSave();
-                                if (newid.IndexOf(",") >0)
+                                if (newid.IndexOf(",") > 0)
                                 {
-                                    tilesave.id = Convert.ToInt32(newid.Substring(0, newid.IndexOf(",")));
-                                    newid = newid.Substring(newid.IndexOf(",")+1);
+                                    tilesave.mapid = Convert.ToInt32(newid.Substring(0, newid.IndexOf(",")));
+                                    // newid for other layers
+                                    newid = newid.Substring(newid.IndexOf(",") + 1);
+                                    // same
                                 }
                                 else
                                 {
-                                    tilesave.id = Convert.ToInt32(newid);
+                                    tilesave.mapid = Convert.ToInt32(newid);
                                 }
-                                ground.tiles[j].Add(tilesave);
-                                tilesave.posx = i;
-                                tilesave.posy = j;
                             }
-                        newid = reader.ReadLine();
+                            else if (ground.name == "Triggers")
+                            {
+                                tilesave = ground.tiles[j][i];
+                                if (newid.IndexOf(",") > 0)
+                                {
+                                    tilesave.triggerid = Convert.ToInt32(newid.Substring(0, newid.IndexOf(",")));
+                                    newid = newid.Substring(newid.IndexOf(",") + 1);
+                                }
+                                else
+                                {
+                                    tilesave.triggerid = Convert.ToInt32(newid);
+                                }
+                            }
+                            else if (ground.name == "AddedGround")
+                            {
+                                tilesave = ground.tiles[j][i];
+                                if (newid.IndexOf(",") > 0)
+                                {
+                                    tilesave.addedid = Convert.ToInt32(newid.Substring(0, newid.IndexOf(",")));
+                                    newid = newid.Substring(newid.IndexOf(",") + 1);
+                                }
+                                else
+                                {
+                                    tilesave.addedid = Convert.ToInt32(newid);
+                                }
+                            }
+                            ground.tiles[j].Add(tilesave);
+                            tilesave.posx = i;
+                            tilesave.posy = j;
                         }
+                    newid = reader.ReadLine();
                     }
-                    ground.tiles.Reverse();
+                }
+                ground.tiles.Reverse();
             }
             if (line.Contains("<objectgroup"))
             {

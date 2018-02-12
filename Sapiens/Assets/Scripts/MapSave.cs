@@ -16,7 +16,7 @@ public class MapSave
     public string orientation = "orthogonal";
     
     public List<TileSetsSave> tilesets = new List<TileSetsSave>();
-    public List<LayerSave> layers = new List<LayerSave>();
+    public LayerSave layer = new LayerSave();
     public List<ObjectGroupSave> objectgroups = new List<ObjectGroupSave>();
     public List<ObjectSave> objects = new List<ObjectSave>();
 
