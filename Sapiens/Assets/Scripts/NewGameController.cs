@@ -135,6 +135,8 @@ public class NewGameController : MonoBehaviour {
         temp.onClick.AddListener(StartZone2_Click);
         temp = GameObject.Find("StartZone_Map3_B").GetComponent<Button>();
         temp.onClick.AddListener(StartZone3_Click);
+        temp = GameObject.Find("Skip_B").GetComponent<Button>();
+        temp.onClick.AddListener(Skip_B_Click);
 
 
         GameObject.Find("NextBeard_B").GetComponent<Button>().onClick.AddListener(nbeards_Click);
@@ -216,6 +218,49 @@ public class NewGameController : MonoBehaviour {
         spawnzone = 3;
     }
 
+    void Skip_B_Click()
+    {
+        TribeSave newtribe = new TribeSave();
+        Text skipX = GameObject.Find("Xchars_T").GetComponent<Text>();
+        try
+        {
+            newtribe.tribename = "skip " + newtribename.text;
+            for (int i = 0; i < System.Convert.ToInt32(skipX.text); i++)
+            {
+                CharacterSave newcs = new CharacterSave();
+                newcs.name = i.ToString();
+                newcs.age.years = 0;
+                newcs.sexe = Random.Range(0,2);
+                if (newcs.sexe == 0)
+                {
+                    newcs.Pic_base = Random.Range(0, basesF.Length);
+                    newcs.Pic_clothes = Random.Range(0, clothesF.Length); ;
+                    newcs.Pic_paints = Random.Range(0, paintsF.Length);
+                    newcs.Pic_hairs = Random.Range(0, hairsF.Length);
+                    newcs.Pic_jewels = Random.Range(0, jewelsF.Length); ;
+                }
+                else
+                {
+                    newcs.Pic_base = Random.Range(0, basesM.Length);
+                    newcs.Pic_clothes = Random.Range(0, clothesM.Length);
+                    newcs.Pic_paints = Random.Range(0, paintsM.Length);
+                    newcs.Pic_hairs = Random.Range(0, hairsM.Length);
+                    newcs.Pic_beard = Random.Range(0, beardsM.Length);
+                }
+                newtribe.members.Add(newcs);
+            }
+            newTribeGO.GetComponent<TribeGO>().tribeCurrent = newtribe;
+        }
+        catch (System.FormatException)
+        {
+            Debug.Log("X is not a number");
+        }
+        PlayerPrefs.SetString("NewName", newtribename.text);
+        PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
+        PlayerPrefs.SetString("savefile", "");
+        PlayerPrefs.SetInt("spawnzone", 1);
+        SceneManager.LoadScene("Sapiens_Load", LoadSceneMode.Single);
+    }
     void Update()
     {
     }
@@ -247,7 +292,7 @@ public class NewGameController : MonoBehaviour {
         }
         catch (System.FormatException)
         {
-            Debug.Log("Age is not an int");
+            Debug.Log("Age is not a number");
         }
         
     }
