@@ -5,6 +5,11 @@
   <image width="500" height="500" source="grass.png"/>
  </tile>
  <tile id="3">
+  <properties>
+   <property name="activity" value="gather"/>
+   <property name="capacity" value="50"/>
+   <property name="type" value="trigger"/>
+  </properties>
   <image width="71" height="58" source="Sprite-Herbs.png"/>
  </tile>
 </tileset>

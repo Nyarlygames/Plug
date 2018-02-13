@@ -19,4 +19,6 @@ public class RatioFactory {
     public float ratio_growth = 1.2f;
     public float ratio_training = 1.1f;
     public float ratio_mastering = 1.0f;
+
+    public float tribe_sightradius = 5.0f;
 }

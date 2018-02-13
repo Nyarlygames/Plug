@@ -18,7 +18,8 @@ public class CameraGO : MonoBehaviour {
     {
         if (GameObject.Find("Tribe_Members") != null)
             tribePos = GameObject.Find("Tribe_Members").GetComponent<Transform>();
-        camPos.position = tribePos.position;
+        Vector3 temp = new Vector3(tribePos.position.x, tribePos.position.y, -gameObject.GetComponent<Camera>().orthographicSize);
+        camPos.position = temp;
        /* tribePos = GM.TribeGO.GetComponent<TribeGO>().CharsGO[0].GetComponent<Transform>();
         Vector3 temp = tribePos.position;
         temp.z -= 5.0f;

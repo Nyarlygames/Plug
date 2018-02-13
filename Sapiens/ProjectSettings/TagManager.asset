@@ -7,6 +7,9 @@ TagManager:
   - Tribe
   - CharacterPicSlot
   - Gather
+  - trigger
+  - tile
+  - object
   layers:
   - Default
   - TransparentFX

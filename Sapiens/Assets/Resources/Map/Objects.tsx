@@ -14,6 +14,12 @@
   <image width="106" height="53" source="Sprite-Rocks_01.png"/>
  </tile>
  <tile id="4">
+  <properties>
+   <property name="activity" value="gather"/>
+   <property name="capacity" value="50"/>
+   <property name="init_capacity" value="50"/>
+   <property name="type" value="trigger"/>
+  </properties>
   <image width="71" height="58" source="Sprite-Herbs.png"/>
  </tile>
  <tile id="5">
@@ -27,7 +33,7 @@
  </tile>
  <tile id="13">
   <properties>
-   <property name="spawner" value="mob_cat"/>
+   <property name="spawner_mob" value="cat"/>
   </properties>
   <image width="65" height="29" source="Pion_Animal.png"/>
  </tile>

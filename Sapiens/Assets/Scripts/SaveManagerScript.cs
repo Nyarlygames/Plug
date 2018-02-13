@@ -15,6 +15,21 @@ public class SaveManagerScript {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject Tribe = new GameObject(sdata.tribesave.tribename);
         GameObject Tribe_Members = new GameObject("Tribe_Members");
+        Tribe_Members.AddComponent<SpriteRenderer>();
+        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/PionTribe");
+        Tribe_Members.AddComponent<BoxCollider2D>();
+        Tribe_Members.AddComponent<TribeMembersGO>();
+        GameObject Tribe_Radius = new GameObject("Tribe_Radius");
+        Tribe_Radius.AddComponent<CircleCollider2D>();
+        RatioFactory RF = new RatioFactory();
+        Tribe_Radius.GetComponent<CircleCollider2D>().radius = RF.tribe_sightradius;
+        Tribe_Radius.AddComponent<TribeRadiusGO>();
+        Tribe_Radius.GetComponent<CircleCollider2D>().isTrigger = true;
+        Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
+
+
+
+
         Tribe.AddComponent<TribeGO>();
         TribeGO tribego = Tribe.GetComponent<TribeGO>();
         tribego.tribeCurrent = sdata.tribesave;
@@ -154,6 +169,7 @@ public class SaveManagerScript {
                 /* TILES GROUND */
                 GameObject tilego = new GameObject("[" + y + "/" + x + "]");
                 tilego.AddComponent<TileGO>();
+                tilego.tag = "tile";
                 TileGO curtile = tilego.GetComponent<TileGO>();
                 curtile.tileCur = mapfile.layer.tiles[y][x];
                 tilego.AddComponent<SpriteRenderer>();
@@ -200,14 +216,18 @@ public class SaveManagerScript {
                 tilego.GetComponent<Transform>().position = placement;
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
                 
-                /* TRIGGERS */
-                if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
+                /* TRIGGERS */ // deleted because no need, triggers in objects is better for LD.
+                /*if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
                 {
+                    drawback = 9;
                     GameObject tilegotrigger = new GameObject("[" + y + "/" + x + "]_Trigger");
                     tilegotrigger.AddComponent<TileGO>();
+                    tilegotrigger.tag = "trigger";
                     TileGO curtiletrigger = tilegotrigger.GetComponent<TileGO>();
                     curtiletrigger.tileCur = mapfile.layer.tiles[y][x];
                     tilegotrigger.AddComponent<SpriteRenderer>();
+                    tilegotrigger.AddComponent<BoxCollider2D>();
+                    //tilegotrigger.GetComponent<BoxCollider2D>().center = new Vector2((S.x / 2), 0);
                     TileSetSave tilesettrigger = new TileSetSave();
                     foreach (TileSetsSave tss in mapfile.tilesets)
                     {
@@ -249,13 +269,19 @@ public class SaveManagerScript {
                         }
                         tilegotrigger.GetComponent<Transform>().position = placementtrigger;
                         tilegotrigger.transform.SetParent(tilego.GetComponent<Transform>());
+                        Vector2 S = tilegotrigger.GetComponent<SpriteRenderer>().sprite.bounds.size;
+                        tilegotrigger.GetComponent<BoxCollider2D>().size = S;
+                        tilegotrigger.GetComponent<BoxCollider2D>().isTrigger = true;
                     }
-                }
+                    drawback = 10;
+                }*/
             }
         }
         GameObject emptyGO = new GameObject("Objects");        
-        foreach (ObjectSave obj in mapfile.objects) { 
+        foreach (ObjectSave obj in mapfile.objects)
+        {
             GameObject tilego = new GameObject("[" + obj.x + "/" + obj.y + "]" + obj.id);
+            tilego.tag = "object";
             tilego.AddComponent<ObjectGO>();
             ObjectGO curObj = tilego.GetComponent<ObjectGO>();
             curObj.objectCur = obj;
@@ -270,16 +296,10 @@ public class SaveManagerScript {
                         if ((curObj.objectCur.gid == tss.first + ts.id))
                         {
                             tileset = ts;
-                            if (tileset.modifiers.Count > 0)
+                            foreach (string key in tileset.modifiers.Keys)
                             {
-                                foreach (string key in tileset.modifiers.Keys)
-                                {
-                                    string testkey = "";
-                                    curObj.objectCur.modifiers.TryGetValue(key, out testkey);
-                                    if (testkey == "")
-                                        curObj.objectCur.modifiers.Add(key, tileset.modifiers[key]);
-                                }
-                                
+                                if (curObj.objectCur.modifiers.ContainsKey(key) == false)
+                                    curObj.objectCur.modifiers.Add(key, tileset.modifiers[key]);
                             }
                             tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
                             if (curObj.objectCur.width != tileset.width)
@@ -311,6 +331,14 @@ public class SaveManagerScript {
                 default:
                     placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
                     break;
+            }
+            if (curObj.objectCur.modifiers.ContainsValue("trigger"))
+            {
+                Vector2 S = tilego.GetComponent<SpriteRenderer>().sprite.bounds.size;
+                tilego.AddComponent<BoxCollider2D>();
+                tilego.GetComponent<BoxCollider2D>().size = S;
+                tilego.GetComponent<BoxCollider2D>().isTrigger = true;
+                tilego.tag = "trigger";
             }
             tilego.GetComponent<Transform>().position = placement;
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
@@ -368,7 +396,7 @@ public class SaveManagerScript {
                                     tilesave.mapid = Convert.ToInt32(newid);
                                 }
                             }
-                            else if (ground.name == "Triggers")
+                            /*else if (ground.name == "Triggers")
                             {
                                 tilesave = ground.tiles[j][i];
                                 if (newid.IndexOf(",") > 0)
@@ -393,15 +421,16 @@ public class SaveManagerScript {
                                 {
                                     tilesave.addedid = Convert.ToInt32(newid);
                                 }
-                            }
+                            }*/
                             ground.tiles[j].Add(tilesave);
                             tilesave.posx = i;
                             tilesave.posy = j;
                         }
-                    newid = reader.ReadLine();
+                        newid = reader.ReadLine();
                     }
+                    if (ground.name == "Ground")
+                        ground.tiles.Reverse();
                 }
-                ground.tiles.Reverse();
             }
             if (line.Contains("<objectgroup"))
             {
@@ -452,6 +481,7 @@ public class SaveManagerScript {
                 tilesets.first = Convert.ToInt32(map.GetValueFromKey("firstgid", line));
                 tilesets.source = map.GetValueFromKey("source", line);
                 StreamReader readertileset = new StreamReader("Assets/Resources/Map/" + tilesets.source);
+                int internid = 0;
                 string linetileset = readertileset.ReadLine();
                 while (!readertileset.EndOfStream)
                 {
@@ -467,9 +497,11 @@ public class SaveManagerScript {
                         TileSetSave tileset = new TileSetSave();
                         tileset.id = Convert.ToInt32(map.GetValueFromKey("id", linetileset));
                         linetileset = readertileset.ReadLine();
+                        tileset.internal_id = internid;
                         while (!linetileset.Contains("</tile>"))
                         {
-                            if (linetileset.Contains("<property")) { 
+                            if (linetileset.Contains("<property"))
+                            {
                                 tileset.modifiers.Add(map.GetValueFromKey("name", linetileset), map.GetValueFromKey("value", linetileset));
                             }
                             if (linetileset.Contains("<image") && (!linetileset.Contains("format")))
@@ -480,6 +512,7 @@ public class SaveManagerScript {
                             }
                             linetileset = readertileset.ReadLine();
                         }
+                        internid++;
                         tilesets.tilesets.Add(tileset);
                     }
                     linetileset = readertileset.ReadLine();

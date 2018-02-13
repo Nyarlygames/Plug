@@ -150,6 +150,17 @@ public class GameManager : MonoBehaviour
         tribecomp.tribeCurrent = newtribe;
         tribecomp.profilename = "newgame"; // options ?
         GameObject Tribe_Members = new GameObject("Tribe_Members");
+        Tribe_Members.AddComponent<SpriteRenderer>();
+        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/PionTribe");
+        Tribe_Members.AddComponent<BoxCollider2D>();
+        Tribe_Members.AddComponent<TribeMembersGO>();
+        GameObject Tribe_Radius = new GameObject("Tribe_Radius");
+        Tribe_Radius.AddComponent<CircleCollider2D>();
+        RatioFactory RF = new RatioFactory();
+        Tribe_Radius.GetComponent<CircleCollider2D>().radius = RF.tribe_sightradius;
+        Tribe_Radius.AddComponent<TribeRadiusGO>();
+        Tribe_Radius.GetComponent<CircleCollider2D>().isTrigger = true;
+        Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
             CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);
