@@ -46,7 +46,7 @@ public class NewGameController : MonoBehaviour {
     Text tribe_members;
     Text newtribename;
     Text newname;
-    TribeGO tribecomp;
+    newTribeGO tribecomp;
 
     Texture2D NewFace;
     Texture2D[] NewPicBase;
@@ -179,8 +179,8 @@ public class NewGameController : MonoBehaviour {
         newTribe = new TribeSave();
         newTribe.tribename = newtribename.text;
         newTribeGO = new GameObject("newTribeGO");
-        newTribeGO.AddComponent<TribeGO>();
-        tribecomp = newTribeGO.GetComponent<TribeGO>();
+        newTribeGO.AddComponent<newTribeGO>();
+        tribecomp = newTribeGO.GetComponent<newTribeGO>();
         tribecomp.profilename = "newgame"; // options profile ?
         tribecomp.tribeCurrent = newTribe;
         DontDestroyOnLoad(newTribeGO);
@@ -249,7 +249,7 @@ public class NewGameController : MonoBehaviour {
                 }
                 newtribe.members.Add(newcs);
             }
-            newTribeGO.GetComponent<TribeGO>().tribeCurrent = newtribe;
+            newTribeGO.GetComponent<newTribeGO>().tribeCurrent = newtribe;
         }
         catch (System.FormatException)
         {
@@ -486,7 +486,7 @@ public class NewGameController : MonoBehaviour {
     void LaunchButton_Click()
     {
         PlayerPrefs.SetString("NewName", newtribename.text);
-        newTribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = newtribename.text;
+        newTribeGO.GetComponent<newTribeGO>().tribeCurrent.tribename = newtribename.text;
         PlayerPrefs.SetString("mapfile", "Assets/Resources/Map/TestMapOrtho2.tmx");
         PlayerPrefs.SetString("savefile", "");
         PlayerPrefs.SetInt("spawnzone", spawnzone);

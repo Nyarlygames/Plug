@@ -20,15 +20,13 @@ public class SaveManagerScript {
         Tribe_Members.AddComponent<BoxCollider2D>();
         Tribe_Members.AddComponent<TribeMembersGO>();
         GameObject Tribe_Radius = new GameObject("Tribe_Radius");
-        Tribe_Radius.AddComponent<CircleCollider2D>();
         RatioFactory RF = new RatioFactory();
+        Tribe_Radius.AddComponent<CircleCollider2D>();
         Tribe_Radius.GetComponent<CircleCollider2D>().radius = RF.tribe_sightradius;
         Tribe_Radius.AddComponent<TribeRadiusGO>();
         Tribe_Radius.GetComponent<CircleCollider2D>().isTrigger = true;
         Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
-
-
-
+        Tribe_Radius.tag = "radius";
 
         Tribe.AddComponent<TribeGO>();
         TribeGO tribego = Tribe.GetComponent<TribeGO>();
@@ -114,7 +112,7 @@ public class SaveManagerScript {
 
                     tribego.CharsGO.Add(newchar);
                 }
-                Tribe_Members.GetComponent<Transform>().position = new Vector3(sdata.tribesave.members[0].x, sdata.tribesave.members[0].y, GM.ZCharacters);
+                Tribe_Members.GetComponent<Transform>().position = new Vector3(sdata.tribesave.members[0].x, sdata.tribesave.members[0].y, GM.ZCharacters); // load tribe to char1
             }
         }
         return Tribe;
@@ -147,6 +145,7 @@ public class SaveManagerScript {
         BinaryFormatter bf = new BinaryFormatter();
         previous.tribesave = Tribe.GetComponent<TribeGO>().tribeCurrent;
         previous.mapsave = Map;
+        previous.eventsave = GM.EM.events;
         if(PlayerPrefs.GetString("mapfile") != "")
         {
             previous.mapfile = PlayerPrefs.GetString("mapfile");

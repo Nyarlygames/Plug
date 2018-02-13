@@ -13,6 +13,7 @@ public class TribeSave
     public CharacterSave leader;
     public List<CharacterSave> gatherers;
     public string tribename = "";
+    public float food = 0;
 
     public void SetAge()
     {

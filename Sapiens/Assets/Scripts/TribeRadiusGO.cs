@@ -13,7 +13,7 @@ public class TribeRadiusGO : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        foreach (GameObject trigger in triggers)
+        /*foreach (GameObject trigger in triggers)
         {
             if ((gameObject.GetComponent<Transform>().position.x + gameObject.GetComponent<CircleCollider2D>().radius > trigger.GetComponent<BoxCollider2D>().bounds.center.x - trigger.GetComponent<BoxCollider2D>().bounds.extents.x) &&
                 (gameObject.GetComponent<Transform>().position.x - gameObject.GetComponent<CircleCollider2D>().radius < trigger.GetComponent<BoxCollider2D>().bounds.center.x + trigger.GetComponent<BoxCollider2D>().bounds.extents.x) &&
@@ -22,7 +22,7 @@ public class TribeRadiusGO : MonoBehaviour {
             {
                 Debug.Log("touching " + trigger.name);
             }
-        }
+        }*/
 
 
     }

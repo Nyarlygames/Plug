@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public GameObject UIChar;
     public List<GameObject> TilesGO = new List<GameObject>();
     public List<GameObject> ObjectsGO = new List<GameObject>();
+    public EventsManager EM = new EventsManager();
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
@@ -50,7 +51,6 @@ public class GameManager : MonoBehaviour
         paintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
         clothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
         clothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
-
         /* Tribe */
         timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
             GameObject NewTribeGO = GameObject.Find("newTribeGO");
             if (NewTribeGO != null)
             {
-                TribeGO NewTribe = NewTribeGO.GetComponent<TribeGO>();
+                newTribeGO NewTribe = NewTribeGO.GetComponent<newTribeGO>();
                 CreateTribeGO(NewTribe);
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = PlayerPrefs.GetString("NewName");
                 TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename = PlayerPrefs.GetString("NewName");
@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
         UIChar = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_CharPanel"), Vector3.zero, Quaternion.identity);
         UIChar.name = "UI_CharPanel";
         UIChar.transform.SetParent(Menus.transform);
+        EM = new EventsManager();
+        EM.GM = this;
     }
 
     void Update()
@@ -138,8 +140,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    
 
-    void CreateTribeGO(TribeGO NGTribe)
+    void CreateTribeGO(newTribeGO NGTribe)
     {
         TribeSave newtribe = new TribeSave();
         newtribe.tribename = NGTribe.tribeCurrent.tribename;
@@ -161,6 +164,7 @@ public class GameManager : MonoBehaviour
         Tribe_Radius.AddComponent<TribeRadiusGO>();
         Tribe_Radius.GetComponent<CircleCollider2D>().isTrigger = true;
         Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
+        Tribe_Radius.tag = "radius";
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
             CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);

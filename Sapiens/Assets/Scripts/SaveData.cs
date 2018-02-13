@@ -18,5 +18,6 @@ public class SaveData {
     // public List<CharacterSave> charsave = new List<CharacterSave>();
     public TribeSave tribesave = new TribeSave();
     public MapSave mapsave = new MapSave();
+    public List<EventSave> eventsave = new List<EventSave>();
 
 }

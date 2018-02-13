@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.3.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -305,11 +303,14 @@
     <Compile Include="Assets\Scripts\CameraGO.cs" />
     <Compile Include="Assets\Scripts\CharacterGO.cs" />
     <Compile Include="Assets\Scripts\CharacterSave.cs" />
+    <Compile Include="Assets\Scripts\EventSave.cs" />
+    <Compile Include="Assets\Scripts\EventsManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\LayerSave.cs" />
     <Compile Include="Assets\Scripts\MapSave.cs" />
     <Compile Include="Assets\Scripts\Menu_Load.cs" />
     <Compile Include="Assets\Scripts\NewGameController.cs" />
+    <Compile Include="Assets\Scripts\newTribeGO.cs" />
     <Compile Include="Assets\Scripts\ObjectGO.cs" />
     <Compile Include="Assets\Scripts\ObjectGroupSave.cs" />
     <Compile Include="Assets\Scripts\ObjectSave.cs" />

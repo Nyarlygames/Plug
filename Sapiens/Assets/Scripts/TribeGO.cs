@@ -8,10 +8,11 @@ public class TribeGO : MonoBehaviour {
     public AgeStruct curAge = new AgeStruct();
     public List<GameObject> CharsGO = new List<GameObject>();
     public string profilename = "";
+    GameManager GM;
 
     // Use this for initialization
     void Start () {
-		
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -22,6 +23,7 @@ public class TribeGO : MonoBehaviour {
         if (curAge.days > tribeCurrent.age.days)
         {
             tribeCurrent.SetAge();
+            GM.EM.newDay();
         }
     }
 

@@ -10,6 +10,7 @@ TagManager:
   - trigger
   - tile
   - object
+  - radius
   layers:
   - Default
   - TransparentFX
