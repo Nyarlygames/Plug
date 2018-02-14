@@ -16,7 +16,8 @@ public class TribeSave
     public List<CharacterSave> youngs = new List<CharacterSave>();
     public string tribename = "";
     public float food = 0;
-    public float food_ratio = 0;
+    public float food_gain = 0;
+    public float food_consumption = 0;
     public float gatherer_level = 0;
     public int rank = 0;
 

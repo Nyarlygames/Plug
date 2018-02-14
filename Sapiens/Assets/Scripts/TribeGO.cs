@@ -14,7 +14,8 @@ public class TribeGO : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -33,13 +34,16 @@ public class TribeGO : MonoBehaviour {
     {
         if (tribeCurrent.members.Count > 0)
         {
+            float newfoodconsumption = 0;
             foreach (CharacterSave cs in tribeCurrent.members)
             {
                 if ((cs.age.years >= RF.adult_age) && (!tribeCurrent.adults.Contains(cs)))
                     tribeCurrent.adults.Add(cs);
                 else if ((cs.age.years < RF.adult_age) && (!tribeCurrent.youngs.Contains(cs)))
                     tribeCurrent.youngs.Add(cs);
+                newfoodconsumption += cs.food;
             }
+            tribeCurrent.food_consumption = newfoodconsumption;
         }
     }
 

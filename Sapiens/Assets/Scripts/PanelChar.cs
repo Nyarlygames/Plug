@@ -49,6 +49,8 @@ public class PanelChar : MonoBehaviour {
     Text Tribe_Youngs;
     Text Tribe_Adults;
     Text Tribe_Name;
+    Image Tribe_FoodBar;
+    Text Tribe_FoodBarText;
 
     void Start() {
         
@@ -107,6 +109,8 @@ public class PanelChar : MonoBehaviour {
         Tribe_Adults = GameObject.Find("TribeP_Overview_AdultsCount").GetComponent<Text>();
         Tribe_Name = GameObject.Find("TribeP_Name").GetComponent<Text>();
         Tribe_Name.text = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename;
+        Tribe_FoodBar = GameObject.Find("TribeP_Overview_FoodBar").GetComponent<Image>();
+        Tribe_FoodBarText = GameObject.Find("TribeP_Overview_FoodOverText").GetComponent<Text>();
     }
 
     public void SetExistingChars()
@@ -245,7 +249,11 @@ public class PanelChar : MonoBehaviour {
             Character_Food.text = "Food : " + curChar.food;
             Tribe_Youngs.text = tribe.youngs.Count.ToString();
             Tribe_Adults.text = tribe.adults.Count.ToString();
-            Debug.Log(tribe.youngs.Count + " / " + tribe.adults.Count);
+            if (tribe.food_consumption < tribe.food_gain)
+                Tribe_FoodBar.fillAmount = tribe.food_consumption / tribe.food_gain;
+            else
+                Tribe_FoodBar.fillAmount = 0;
+            Tribe_FoodBarText.text = tribe.food_consumption + " used / " + tribe.food_gain + " available each day.";
         }
     }
 }

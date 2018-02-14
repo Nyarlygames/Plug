@@ -407,7 +407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.13e (14/02/2018)'
+  m_Text: 'Version : 0.0.13f (14/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4282,7 +4282,8 @@ MonoBehaviour:
       youngs: []
       tribename: 
       food: 0
-      food_ratio: 0
+      food_gain: 0
+      food_consumption: 0
       gatherer_level: 0
       rank: 0
     mapsave:

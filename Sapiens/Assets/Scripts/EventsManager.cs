@@ -19,6 +19,7 @@ public class EventsManager : MonoBehaviour {
 
     public void newDay()
     {
+        float newfoodgain = 0;
         foreach (EventSave e in events)
         {
             if (e.obj.modifiers.ContainsKey("extract_daily"))
@@ -26,15 +27,18 @@ public class EventsManager : MonoBehaviour {
                 if (Convert.ToInt32(e.obj.modifiers["capacity"]) > Convert.ToInt32(e.obj.modifiers["extract_daily"]))
                 {
                     GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["extract_daily"]);
+                    newfoodgain += Convert.ToInt32(e.obj.modifiers["extract_daily"]);
                     e.obj.modifiers["capacity"] = (Convert.ToInt32(e.obj.modifiers["capacity"]) - Convert.ToInt32(e.obj.modifiers["extract_daily"])).ToString();
                 }
                 else if (Convert.ToInt32(e.obj.modifiers["capacity"]) > 0)
                 {
                     GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["capacity"]);
+                    newfoodgain += Convert.ToInt32(e.obj.modifiers["capacity"]);
                     e.obj.modifiers["capacity"] = "0";
                 }
             }
         }
+        GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food_gain = newfoodgain;
         events.RemoveAll(e => e.obj.modifiers["capacity"] == "0");
     }
 }
