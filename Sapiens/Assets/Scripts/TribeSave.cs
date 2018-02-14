@@ -14,6 +14,8 @@ public class TribeSave
     public List<CharacterSave> gatherers;
     public string tribename = "";
     public float food = 0;
+    public float food_ratio = 0;
+    public float gatherer_level = 0;
 
     public void SetAge()
     {

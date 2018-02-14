@@ -42,7 +42,7 @@ public class CharacterSave
     public int respect = 0;
     public int life = 0;
     public int move = 0;
-    public int food = 0;
+    public float food = 0;
     public int resdis = 0;
     public int healdis = 0;
     public int reswoun = 0;
@@ -310,6 +310,7 @@ public class CharacterSave
                 Attributes.RemoveAt(pick);
             }
         }
+        food = ((strength * RF.ratio_food_strength) + (body * RF.ratio_food_body) + (endu * RF.ratio_food_endu)) /100;
     }
 
    /* public void SetChar(string naming, int identifier)

@@ -16,9 +16,16 @@
  <tile id="4">
   <properties>
    <property name="activity" value="gather"/>
-   <property name="capacity" type="int" value="50"/>
-   <property name="init_capacity" type="int" value="50"/>
+   <property name="capacity" type="int" value="-1"/>
+   <property name="capacity_max" type="int" value="300"/>
+   <property name="capacity_min" type="int" value="100"/>
+   <property name="extract_daily" value="2"/>
+   <property name="regen_rate" value="regular"/>
    <property name="resource" value="food"/>
+   <property name="resource_type" value="berries"/>
+   <property name="sizex" type="int" value="1"/>
+   <property name="sizey" type="int" value="1"/>
+   <property name="success_rate" type="int" value="100"/>
    <property name="type" value="trigger"/>
   </properties>
   <image width="71" height="58" source="Sprite-Herbs.png"/>

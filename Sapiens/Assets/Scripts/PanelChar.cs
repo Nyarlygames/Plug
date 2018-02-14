@@ -232,6 +232,7 @@ public class PanelChar : MonoBehaviour {
             Character_Social.text = "Social : " + curChar.social;
             Character_Mental.text = "Mental : " + curChar.mental;
             Character_Language.text = "Language : " + curChar.lang;
+            Character_Food.text = "Food : " + curChar.food;
         }
     }
 }

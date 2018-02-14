@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
             if ((sdata != null))
             {
                 SaveManager.LoadMap(sdata.mapfile, map);
-                SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
+                SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
@@ -75,7 +75,7 @@ public class GameManager : MonoBehaviour
             sdata.savefolder = "Save/";
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
             SaveManager.LoadMap(sdata.mapfile, map); // create map from file
-            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO);
+            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
 
             GameObject NewTribeGO = GameObject.Find("newTribeGO");
             if (NewTribeGO != null)
@@ -163,7 +163,11 @@ public class GameManager : MonoBehaviour
         Tribe_Radius.GetComponent<CircleCollider2D>().radius = RF.tribe_sightradius;
         Tribe_Radius.AddComponent<TribeRadiusGO>();
         Tribe_Radius.GetComponent<CircleCollider2D>().isTrigger = true;
+        Tribe_Radius.AddComponent<SpriteRenderer>();
+        Sprite Radius = Resources.Load<Sprite>("Play/radius");
+        Tribe_Radius.GetComponent<SpriteRenderer>().sprite = Radius;
         Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
+        Tribe_Radius.GetComponent<Transform>().position = new Vector3(Tribe_Radius.GetComponent<Transform>().position.x, Tribe_Radius.GetComponent<Transform>().position.y, ZGround);
         Tribe_Radius.tag = "radius";
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
@@ -211,6 +215,7 @@ public class GameManager : MonoBehaviour
         newman.SetAge();
         newman.next = 150.0f;
         newman.next = newman.SkipStats(newman.xp, newman.next);
+        newman.food = ((newman.strength * RF.ratio_food_strength) + (newman.body * RF.ratio_food_body) + (newman.endu * RF.ratio_food_endu)) / 100;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
         CharGO.AddComponent<CharacterGO>();

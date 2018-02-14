@@ -20,5 +20,9 @@ public class RatioFactory {
     public float ratio_training = 1.1f;
     public float ratio_mastering = 1.0f;
 
-    public float tribe_sightradius = 5.0f;
+    public float tribe_sightradius = 2.3f;
+
+    public float ratio_food_strength = 0.8f;
+    public float ratio_food_body = 0.8f;
+    public float ratio_food_endu = 0.4f;
 }

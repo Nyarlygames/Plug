@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System;
 
 public class ObjectGO : MonoBehaviour {
 
     public ObjectSave objectCur;
     GameManager GM;
-
+    GameObject canvasinfo;
     // Use this for initialization
     void Start () {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -36,6 +37,70 @@ public class ObjectGO : MonoBehaviour {
                 else
                     GM.EM.events.RemoveAll(e => e.obj.id == objectCur.id);
             }
+
+            if (canvasinfo != null)
+            {
+                foreach (Transform child in canvasinfo.GetComponent<Transform>())
+                {
+                    switch (child.gameObject.name)
+                    {
+                        case "UI_TriggerName":
+                            child.gameObject.GetComponent<Text>().text = "Activity : " + objectCur.modifiers["activity"];
+                            break;
+                        case "UI_TriggerCapacity":
+                            child.gameObject.GetComponent<Text>().text = "Stock : " + objectCur.modifiers["capacity"];
+                            break;
+                        case "UI_TriggerCurrent":
+                            child.gameObject.GetComponent<Text>().text = "Daily gain : " + objectCur.modifiers["extract_daily"]; // do formula with exp on gather depending on chars
+                            break;
+                        case "UI_TriggerResource":
+                            child.gameObject.GetComponent<Text>().text = "Resource type : " + objectCur.modifiers["resource_type"];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
+    }
+    void OnMouseOver()
+    {
+
+        if (gameObject.tag == "trigger")
+        {
+            if (canvasinfo == null)
+            {
+                canvasinfo = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_TriggerInfo"), Vector3.zero, Quaternion.identity);
+                canvasinfo.name = "Info_" + objectCur.id;
+                foreach (Transform child in canvasinfo.GetComponent<Transform>())
+                {
+                    switch (child.gameObject.name)
+                    {
+                        case "UI_TriggerName":
+                            child.gameObject.GetComponent<Text>().text = "Activity : " + objectCur.modifiers["activity"];
+                            break;
+                        case "UI_TriggerCapacity":
+                            child.gameObject.GetComponent<Text>().text = "Stock : " + objectCur.modifiers["capacity"]; 
+                            break;
+                        case "UI_TriggerCurrent":
+                            child.gameObject.GetComponent<Text>().text = "Current usage : " + objectCur.modifiers["extract_daily"] + " each days."; // do formula with exp on gather depending on chars
+                            break;
+                        case "UI_TriggerResource":
+                            child.gameObject.GetComponent<Text>().text = "Resource type : " + objectCur.modifiers["resource_type"];
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                GameObject cam = GameObject.Find("Camera");
+                GameObject UI = GameObject.Find("UI_Panel");
+                canvasinfo.GetComponent<Transform>().position = cam.GetComponent<Camera>().WorldToScreenPoint(gameObject.GetComponent<Transform>().position);
+                canvasinfo.GetComponent<Transform>().SetParent(UI.GetComponent<Transform>());
+            }
+        }
+    }
+    void OnMouseExit()
+    {
+        Destroy(canvasinfo);
     }
 }

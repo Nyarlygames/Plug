@@ -229,7 +229,7 @@ public class NewGameController : MonoBehaviour {
             {
                 CharacterSave newcs = new CharacterSave();
                 newcs.name = i.ToString();
-                newcs.age.years = 0;
+                newcs.age.years = Random.Range(0,35);
                 newcs.sexe = Random.Range(0,2);
                 if (newcs.sexe == 0)
                 {

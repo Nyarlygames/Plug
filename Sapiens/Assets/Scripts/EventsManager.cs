@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class EventsManager : MonoBehaviour {
 
@@ -18,9 +19,13 @@ public class EventsManager : MonoBehaviour {
 
     public void newDay()
     {
-        foreach(EventSave e in events)
+        foreach (EventSave e in events)
         {
-            GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += 2;
+            if (e.obj.modifiers.ContainsKey("extract_daily"))
+            {
+                GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["extract_daily"]);
+                e.obj.modifiers["capacity"] = (Convert.ToInt32(e.obj.modifiers["capacity"]) - Convert.ToInt32(e.obj.modifiers["extract_daily"])).ToString();
+            }
         }
     }
 }
