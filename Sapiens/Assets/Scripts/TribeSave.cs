@@ -9,11 +9,11 @@ public class TribeSave
     public float time = 0;
     public AgeStruct age = new AgeStruct();
     public List<CharacterSave> members = new List<CharacterSave>();
-    public List<CharacterSave> groups;
+    public List<CharacterSave> groups = new List<CharacterSave>();
     public CharacterSave leader;
-    public List<CharacterSave> gatherers;
-    public List<CharacterSave> adults;
-    public List<CharacterSave> youngs;
+    public List<CharacterSave> gatherers = new List<CharacterSave>();
+    public List<CharacterSave> adults = new List<CharacterSave>();
+    public List<CharacterSave> youngs = new List<CharacterSave>();
     public string tribename = "";
     public float food = 0;
     public float food_ratio = 0;

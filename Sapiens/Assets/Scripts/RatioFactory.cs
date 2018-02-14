@@ -25,4 +25,6 @@ public class RatioFactory {
     public float ratio_food_strength = 0.8f;
     public float ratio_food_body = 0.8f;
     public float ratio_food_endu = 0.4f;
+
+    public int adult_age = 15;
 }

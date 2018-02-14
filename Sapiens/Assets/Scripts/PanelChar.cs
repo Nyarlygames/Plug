@@ -46,6 +46,9 @@ public class PanelChar : MonoBehaviour {
     Text Character_Name;
     Text Character_Status;
     Text Character_Title;
+    Text Tribe_Youngs;
+    Text Tribe_Adults;
+    Text Tribe_Name;
 
     void Start() {
         
@@ -54,6 +57,8 @@ public class PanelChar : MonoBehaviour {
         CharacterFace = GameObject.Find("CharacterFace");
 
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+
+
         Character_Strength = GameObject.Find("Character_Strength").GetComponent<Text>();
         Character_Endurance = GameObject.Find("Character_Endurance").GetComponent<Text>();
         Character_Body = GameObject.Find("Character_Body").GetComponent<Text>();
@@ -98,6 +103,10 @@ public class PanelChar : MonoBehaviour {
         {
             CharacterValueChanged(CharacterList);
         }
+        Tribe_Youngs = GameObject.Find("TribeP_Overview_YoungsCount").GetComponent<Text>();
+        Tribe_Adults = GameObject.Find("TribeP_Overview_AdultsCount").GetComponent<Text>();
+        Tribe_Name = GameObject.Find("TribeP_Name").GetComponent<Text>();
+        Tribe_Name.text = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename;
     }
 
     public void SetExistingChars()
@@ -214,6 +223,7 @@ public class PanelChar : MonoBehaviour {
             {
                 curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[0];
             }
+            TribeSave tribe = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent;
             Character_Age.text = "Age : " + curChar.age.days / 365 + "years, " + curChar.age.days + " days.";
             Character_Experience.text = "XP : " + curChar.xp;
             Character_Level.text = curChar.level.ToString();
@@ -233,6 +243,9 @@ public class PanelChar : MonoBehaviour {
             Character_Mental.text = "Mental : " + curChar.mental;
             Character_Language.text = "Language : " + curChar.lang;
             Character_Food.text = "Food : " + curChar.food;
+            Tribe_Youngs.text = tribe.youngs.Count.ToString();
+            Tribe_Adults.text = tribe.adults.Count.ToString();
+            Debug.Log(tribe.youngs.Count + " / " + tribe.adults.Count);
         }
     }
 }

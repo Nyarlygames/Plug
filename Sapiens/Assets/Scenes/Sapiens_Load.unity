@@ -407,7 +407,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.13d (14/02/2018)'
+  m_Text: 'Version : 0.0.13e (14/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4276,6 +4276,7 @@ MonoBehaviour:
           ratio_food_strength: 0.8
           ratio_food_body: 0.8
           ratio_food_endu: 0.4
+          adult_age: 15
       gatherers: []
       adults: []
       youngs: []
