@@ -235,6 +235,8 @@
   </object>
   <object id="191" gid="23" x="1065.5" y="1970.5" width="284" height="222">
    <properties>
+    <property name="capacity_max" type="int" value="20"/>
+    <property name="capacity_min" type="int" value="1"/>
     <property name="sizey" type="int" value="2"/>
    </properties>
   </object>

@@ -38,7 +38,7 @@ public class ObjectGO : MonoBehaviour {
                     GM.EM.events.RemoveAll(e => e.obj.id == objectCur.id);
             }
 
-            if (canvasinfo != null)
+           if (canvasinfo != null)
             {
                 foreach (Transform child in canvasinfo.GetComponent<Transform>())
                 {
@@ -61,6 +61,13 @@ public class ObjectGO : MonoBehaviour {
                     }
                 }
             }
+            if (objectCur.modifiers.ContainsKey("capacity") && (objectCur.modifiers["capacity"] == "0"))
+            {
+                // TO DESTROY, better replace with lower graph, so as to regen later !
+               /* if (canvasinfo != null)
+                    Destroy(canvasinfo);
+                Destroy(gameObject);*/
+            }
         }
     }
     void OnMouseOver()
@@ -72,26 +79,6 @@ public class ObjectGO : MonoBehaviour {
             {
                 canvasinfo = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_TriggerInfo"), Vector3.zero, Quaternion.identity);
                 canvasinfo.name = "Info_" + objectCur.id;
-                foreach (Transform child in canvasinfo.GetComponent<Transform>())
-                {
-                    switch (child.gameObject.name)
-                    {
-                        case "UI_TriggerName":
-                            child.gameObject.GetComponent<Text>().text = "Activity : " + objectCur.modifiers["activity"];
-                            break;
-                        case "UI_TriggerCapacity":
-                            child.gameObject.GetComponent<Text>().text = "Stock : " + objectCur.modifiers["capacity"]; 
-                            break;
-                        case "UI_TriggerCurrent":
-                            child.gameObject.GetComponent<Text>().text = "Current usage : " + objectCur.modifiers["extract_daily"] + " each days."; // do formula with exp on gather depending on chars
-                            break;
-                        case "UI_TriggerResource":
-                            child.gameObject.GetComponent<Text>().text = "Resource type : " + objectCur.modifiers["resource_type"];
-                            break;
-                        default:
-                            break;
-                    }
-                }
                 GameObject cam = GameObject.Find("Camera");
                 GameObject UI = GameObject.Find("UI_Panel");
                 canvasinfo.GetComponent<Transform>().position = cam.GetComponent<Camera>().WorldToScreenPoint(gameObject.GetComponent<Transform>().position);

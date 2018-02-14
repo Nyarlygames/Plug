@@ -23,9 +23,18 @@ public class EventsManager : MonoBehaviour {
         {
             if (e.obj.modifiers.ContainsKey("extract_daily"))
             {
-                GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["extract_daily"]);
-                e.obj.modifiers["capacity"] = (Convert.ToInt32(e.obj.modifiers["capacity"]) - Convert.ToInt32(e.obj.modifiers["extract_daily"])).ToString();
+                if (Convert.ToInt32(e.obj.modifiers["capacity"]) > Convert.ToInt32(e.obj.modifiers["extract_daily"]))
+                {
+                    GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["extract_daily"]);
+                    e.obj.modifiers["capacity"] = (Convert.ToInt32(e.obj.modifiers["capacity"]) - Convert.ToInt32(e.obj.modifiers["extract_daily"])).ToString();
+                }
+                else if (Convert.ToInt32(e.obj.modifiers["capacity"]) > 0)
+                {
+                    GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food += Convert.ToInt32(e.obj.modifiers["capacity"]);
+                    e.obj.modifiers["capacity"] = "0";
+                }
             }
         }
+        events.RemoveAll(e => e.obj.modifiers["capacity"] == "0");
     }
 }
