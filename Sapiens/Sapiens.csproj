@@ -319,6 +319,7 @@
     <Compile Include="Assets\Scripts\PanelEscape.cs" />
     <Compile Include="Assets\Scripts\PanelLoad.cs" />
     <Compile Include="Assets\Scripts\PanelSave.cs" />
+    <Compile Include="Assets\Scripts\PanelTriggerInfo.cs" />
     <Compile Include="Assets\Scripts\RatioFactory.cs" />
     <Compile Include="Assets\Scripts\SaveData.cs" />
     <Compile Include="Assets\Scripts\SaveManagerScript.cs" />

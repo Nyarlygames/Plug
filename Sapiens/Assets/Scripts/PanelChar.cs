@@ -51,11 +51,28 @@ public class PanelChar : MonoBehaviour {
     Text Tribe_Name;
     Image Tribe_FoodBar;
     Text Tribe_FoodBarText;
+    GameObject CharPanelStats;
+    GameObject CharPanelAttributes;
+    List<GameObject> CharPanels = new List<GameObject>();
 
     void Start() {
-        
+        // Character_Panel_Stats
+        CharPanelStats = GameObject.Find("Character_Panel_Stats");
+        CharPanelAttributes = GameObject.Find("Character_Panel_Attributes");
+        CharPanels.Add(CharPanelAttributes);
+        CharPanels.Add(CharPanelStats);
+        foreach (GameObject panel in CharPanels)
+        {
+            panel.SetActive(false);
+        }
+        if (CharPanels.Count > 0)
+        {
+            CharPanels[0].SetActive(true);
+        }
         GameObject.Find("CharacterSelector+").GetComponent<Button>().onClick.AddListener(CharPlusClick);
         GameObject.Find("CharacterSelector-").GetComponent<Button>().onClick.AddListener(CharMinusClick);
+        GameObject.Find("Character_Panel_Cara_B").GetComponent<Button>().onClick.AddListener(AttributesPanelClick);
+        GameObject.Find("Character_Panel_Stats_B").GetComponent<Button>().onClick.AddListener(StatsPanelClick);
         CharacterFace = GameObject.Find("CharacterFace");
 
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -105,12 +122,32 @@ public class PanelChar : MonoBehaviour {
         {
             CharacterValueChanged(CharacterList);
         }
+
         Tribe_Youngs = GameObject.Find("TribeP_Overview_YoungsCount").GetComponent<Text>();
         Tribe_Adults = GameObject.Find("TribeP_Overview_AdultsCount").GetComponent<Text>();
         Tribe_Name = GameObject.Find("TribeP_Name").GetComponent<Text>();
         Tribe_Name.text = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.tribename;
         Tribe_FoodBar = GameObject.Find("TribeP_Overview_FoodBar").GetComponent<Image>();
         Tribe_FoodBarText = GameObject.Find("TribeP_Overview_FoodOverText").GetComponent<Text>();
+    }
+    
+    void AttributesPanelClick()
+    {
+        foreach(GameObject panel in CharPanels.FindAll(obj => obj.activeSelf == true))
+        {
+            panel.SetActive(false);
+        }
+        CharPanels.Find(obj => obj == CharPanelAttributes).SetActive(true);
+
+    }
+    void StatsPanelClick()
+    {
+        foreach (GameObject panel in CharPanels.FindAll(obj => obj.activeSelf == true))
+        {
+            panel.SetActive(false);
+        }
+        CharPanels.Find(obj => obj == CharPanelStats).SetActive(true);
+
     }
 
     public void SetExistingChars()
