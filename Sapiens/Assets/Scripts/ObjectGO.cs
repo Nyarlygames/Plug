@@ -9,6 +9,7 @@ public class ObjectGO : MonoBehaviour {
     public ObjectSave objectCur;
     GameManager GM;
     GameObject canvasinfo;
+    GameObject assignmentinfo;
     // Use this for initialization
     void Start () {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -69,6 +70,10 @@ public class ObjectGO : MonoBehaviour {
                 Destroy(gameObject);*/
             }
         }
+    }
+    void OnMouseDown()
+    {
+
     }
     void OnMouseOver()
     {

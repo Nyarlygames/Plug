@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Ground" tilewidth="500" tileheight="500" tilecount="16" columns="0">
+<tileset name="Ground" tilewidth="500" tileheight="500" tilecount="18" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0" probability="0">
   <image width="500" height="500" source="Texture_Grass.png"/>
@@ -48,5 +48,11 @@
  </tile>
  <tile id="17" probability="0">
   <image width="252" height="120" source="GRASS/Texture_Grass_12.png"/>
+ </tile>
+ <tile id="18">
+  <image width="252" height="120" source="Texture_Water_00.png"/>
+ </tile>
+ <tile id="19">
+  <image width="252" height="120" source="Texture_Water_Poisson.png"/>
  </tile>
 </tileset>

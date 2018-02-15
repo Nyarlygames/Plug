@@ -7,6 +7,7 @@ using System;
 public class EventSave {
     
     public ObjectSave obj;
+    public List<CharacterSave> cs = new List<CharacterSave>();
     public int id = 0;
 
     // Use this for initialization

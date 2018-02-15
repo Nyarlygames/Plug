@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Objects" tilewidth="180" tileheight="178" tilecount="8" columns="0">
+<tileset name="Objects" tilewidth="180" tileheight="178" tilecount="14" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <image width="100" height="100" source="Camp.png"/>
@@ -44,5 +44,37 @@
    <property name="spawner_mob" value="cat"/>
   </properties>
   <image width="65" height="29" source="Pion_Animal.png"/>
+ </tile>
+ <tile id="14">
+  <image width="100" height="100" source="FOOD/Bidoche.png"/>
+ </tile>
+ <tile id="15">
+  <image width="100" height="100" source="FOOD/Champi.png"/>
+ </tile>
+ <tile id="16">
+  <image width="100" height="100" source="FOOD/InSeCte.png"/>
+ </tile>
+ <tile id="17">
+  <image width="100" height="100" source="FOOD/Palourde.png"/>
+ </tile>
+ <tile id="18">
+  <image width="100" height="100" source="FOOD/Patate.png"/>
+ </tile>
+ <tile id="19">
+  <properties>
+   <property name="activity" value="gather"/>
+   <property name="capacity" type="int" value="-1"/>
+   <property name="capacity_max" type="int" value="500"/>
+   <property name="capacity_min" type="int" value="100"/>
+   <property name="extract_daily" value="4"/>
+   <property name="regen_rate" value="regular"/>
+   <property name="resource" value="food"/>
+   <property name="resource_type" value="smallfish"/>
+   <property name="sizex" type="int" value="1"/>
+   <property name="sizey" type="int" value="1"/>
+   <property name="success_rate" type="int" value="70"/>
+   <property name="type" value="trigger"/>
+  </properties>
+  <image width="100" height="100" source="FOOD/Poisscaille.png"/>
  </tile>
 </tileset>

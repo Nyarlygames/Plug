@@ -20,7 +20,7 @@ public class EventsManager : MonoBehaviour {
     public void newDay()
     {
         float newfoodgain = 0;
-        foreach (EventSave e in events)
+        foreach (EventSave e in events.FindAll(e => e.cs.Count > 0))
         {
             if (e.obj.modifiers.ContainsKey("extract_daily"))
             {
@@ -37,6 +37,7 @@ public class EventsManager : MonoBehaviour {
                     e.obj.modifiers["capacity"] = "0";
                 }
             }
+            Debug.Log("lol");
         }
         GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food_gain = newfoodgain;
         events.RemoveAll(e => e.obj.modifiers["capacity"] == "0");

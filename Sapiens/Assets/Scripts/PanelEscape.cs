@@ -21,7 +21,7 @@ public class PanelEscape : MonoBehaviour
         temp.onClick.AddListener(LoadClick);
         temp = GameObject.Find("Escape_Back").GetComponent<Button>();
         temp.onClick.AddListener(BackClick);
-        GameObject Menus = GameObject.Find("Menus");
+        GameObject Menus = GameObject.Find("UI_Panel");
         UISave = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_SavePanel"), Vector3.zero, Quaternion.identity);
         UISave.name = "UI_SavePanel";
         UISave.transform.SetParent(Menus.transform);

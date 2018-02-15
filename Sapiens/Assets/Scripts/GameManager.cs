@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
             {
                 SaveManager.LoadMap(sdata.mapfile, map);
                 SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
+                EM.events = sdata.eventsave;
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
@@ -95,13 +96,13 @@ public class GameManager : MonoBehaviour
             }
             Debug.Log("Loaded : new game");
         }
-        GameObject Menus = new GameObject("Menus");
-        UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
-        UIEscape.name = "UI_EscapePanel";
-        UIEscape.transform.SetParent(Menus.transform);
+        GameObject Menus = GameObject.Find("UI_Panel");
         UIChar = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_CharPanel"), Vector3.zero, Quaternion.identity);
         UIChar.name = "UI_CharPanel";
         UIChar.transform.SetParent(Menus.transform);
+        UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
+        UIEscape.name = "UI_EscapePanel";
+        UIEscape.transform.SetParent(Menus.transform);
         EM = new EventsManager();
         EM.GM = this;
     }
