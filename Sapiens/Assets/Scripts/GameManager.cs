@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     public GameObject UIChar;
     public List<GameObject> TilesGO = new List<GameObject>();
     public List<GameObject> ObjectsGO = new List<GameObject>();
-    public EventsManager EM = new EventsManager();
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
@@ -23,6 +22,7 @@ public class GameManager : MonoBehaviour
     public float ZObjects = 10.0f;
     public float ZCharacters = 0.0f;
     public float timeSinceReload = 0.0f;
+    public EventsManager EM;//= new EventsManager();
     RatioFactory RF = new RatioFactory();
     public MapSave map = new MapSave();
     public Sprite[] basesF;
@@ -61,7 +61,12 @@ public class GameManager : MonoBehaviour
             {
                 SaveManager.LoadMap(sdata.mapfile, map);
                 SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
-                EM.events = sdata.eventsave;
+                if (EM == null)
+                {
+                    EM = new EventsManager();
+                    EM.GM = this;
+                    EM.events = sdata.eventsave;
+                }
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
@@ -77,7 +82,8 @@ public class GameManager : MonoBehaviour
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
             SaveManager.LoadMap(sdata.mapfile, map); // create map from file
             SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
-
+            EM = new EventsManager();
+            EM.GM = this;
             GameObject NewTribeGO = GameObject.Find("newTribeGO");
             if (NewTribeGO != null)
             {
@@ -103,8 +109,6 @@ public class GameManager : MonoBehaviour
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
         UIEscape.name = "UI_EscapePanel";
         UIEscape.transform.SetParent(Menus.transform);
-        EM = new EventsManager();
-        EM.GM = this;
     }
 
     void Update()
@@ -119,6 +123,9 @@ public class GameManager : MonoBehaviour
                 UIChar.SetActive(!UIChar.activeSelf);
                 if (UIChar.activeSelf)
                 {
+                    GameObject TrigInfo = GameObject.Find("Trigger_Info");
+                    if (TrigInfo != null)
+                        Destroy(TrigInfo);
                     UIChar.GetComponent<PanelChar>().SetExistingChars();
                 }
             }
@@ -129,6 +136,9 @@ public class GameManager : MonoBehaviour
             {
                 scaleBeforeEscape = Time.timeScale;
                 Time.timeScale = 0.0f;
+                GameObject TrigInfo = GameObject.Find("Trigger_Info");
+                if (TrigInfo != null)
+                    Destroy(TrigInfo);
                 UIEscape.SetActive(!UIEscape.activeSelf);
             }
             else // escape already opened, check for sub panels

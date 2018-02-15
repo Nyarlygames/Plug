@@ -27,12 +27,16 @@ public class ObjectGO : MonoBehaviour {
                     (radius.GetComponent<Transform>().position.y + radius.GetComponent<CircleCollider2D>().radius > gameObject.GetComponent<BoxCollider2D>().bounds.center.y - gameObject.GetComponent<BoxCollider2D>().bounds.extents.y) &&
                     (radius.GetComponent<Transform>().position.y - radius.GetComponent<CircleCollider2D>().radius < gameObject.GetComponent<BoxCollider2D>().bounds.center.y + gameObject.GetComponent<BoxCollider2D>().bounds.extents.y))
                 {
-                    es = new EventSave();
-                    es.obj = objectCur;
-                    es.id = GM.EM.events.Count;
-                    if (GM.EM.events.Exists(e => e.obj.id == objectCur.id) == false)
+                    if (GM.EM.events.Exists(e => e.obj == objectCur) == false)
                     {
+                        es = new EventSave();
+                        es.obj = objectCur;
+                        es.id = GM.EM.events.Count;
                         GM.EM.events.Add(es);
+                    }
+                    else
+                    {
+                        es = GM.EM.events.Find(e => e.obj.id == objectCur.id);
                     }
                 }
                 else
@@ -58,10 +62,10 @@ public class ObjectGO : MonoBehaviour {
 
         if (gameObject.tag == "trigger")
         {
-            if (canvasinfo == null)
+            if ((canvasinfo == null) && (GameObject.Find("Trigger_Info") == null) && (GM.UIChar.activeSelf == false) && (GM.UIEscape.activeSelf == false))
             {
                 canvasinfo = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_TriggerInfo"), Vector3.zero, Quaternion.identity);
-                canvasinfo.name = "Info_" + objectCur.id;
+                canvasinfo.name = "Trigger_Info";
                 GameObject cam = GameObject.Find("Camera");
                 GameObject UI = GameObject.Find("UI_Panel");
                 canvasinfo.GetComponent<Transform>().position = cam.GetComponent<Camera>().WorldToScreenPoint(gameObject.GetComponent<Transform>().position);

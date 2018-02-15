@@ -43,7 +43,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
 	// Update is called once per frame
 	void Update ()
     {
-        EventSave curE = GM.EM.events.Find(es => es.obj == obj);
+        EventSave curE = GM.EM.events.Find(es => es.obj.id == obj.id);
         if (curE != null)
         {
             UI_TriggerName.text = "Activity : " + curE.obj.modifiers["activity"];
@@ -74,7 +74,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
 
     void RemoveMemberClick()
     {
-        EventSave curE = GM.EM.events.Find(es => es.obj == obj);
+        EventSave curE = GM.EM.events.Find(es => es.obj.id == obj.id);
         if (curE != null)
         {
             if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == RemoveList.text) != null)
@@ -86,7 +86,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     }
     void AssignMemberClick()
     {
-        EventSave curE = GM.EM.events.Find(es => es.obj == obj);
+        EventSave curE = GM.EM.events.Find(es => es.obj.id == obj.id);
         if (curE != null)
         {
             if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == AssignList.text) != null)
