@@ -4224,6 +4224,7 @@ MonoBehaviour:
           years: 0
         xp: 0
         level: 0
+        exp_rank: 
         next: 0
         last: 0
         strength: 0
@@ -4240,8 +4241,13 @@ MonoBehaviour:
         lang: 0
         moral: 0
         fatigue: 0
+        fatiguemax: 0
+        fatiguerecup: 0
+        moralmax: 0
+        moralrecup: 0
         respect: 0
         life: 0
+        lifemax: 0
         move: 0
         food: 0
         resdis: 0

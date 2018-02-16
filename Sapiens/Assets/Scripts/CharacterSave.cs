@@ -19,6 +19,7 @@ public class CharacterSave
     public AgeStruct age = new AgeStruct();
     public float xp = 0;
     public int level = 0;
+    public string exp_rank = "";
     public float next;
     public float last;
     
@@ -39,8 +40,13 @@ public class CharacterSave
     
     public int moral = 0;
     public int fatigue = 0;
+    public int fatiguemax = 0;
+    public int fatiguerecup = 0;
+    public int moralmax = 0;
+    public int moralrecup = 0;
     public int respect = 0;
-    public int life = 0;
+    public float life = 0;
+    public float lifemax = 0;
     public int move = 0;
     public float food = 0;
     public int resdis = 0;
@@ -70,17 +76,20 @@ public class CharacterSave
         {
             xp += RF.exp_baby_value;
             last += RF.exp_baby_value;
+            exp_rank = "Growth";
         }
         else if (age.years < RF.exp_teen_range)
         {
             xp += RF.exp_teen_value;
             last += RF.exp_teen_value;
+            exp_rank = "Training";
 
         }
         else if (age.years < RF.exp_adult_range)
         {
             xp += RF.exp_adult_value;
             last += RF.exp_adult_value;
+            exp_rank = "Mastering";
         }
         else // elder
         {
@@ -310,7 +319,12 @@ public class CharacterSave
                 Attributes.RemoveAt(pick);
             }
         }
-        food = ((strength * RF.ratio_food_strength) + (body * RF.ratio_food_body) + (endu * RF.ratio_food_endu)) /100;
+        food = ((strength * RF.ratio_food_strength) + (body * RF.ratio_food_body) + (endu * RF.ratio_food_endu)) / 100;
+        lifemax = body * x + strength;
+        moralmax = mental * 2 + social * 2;
+        moralmax = lang + spirit / 60;
+        fatiguemax = endu * 2 + strength;
+        fatiguerecup = body + mental / 40;
     }
 
    /* public void SetChar(string naming, int identifier)
