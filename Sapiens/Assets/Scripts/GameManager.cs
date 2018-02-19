@@ -163,9 +163,13 @@ public class GameManager : MonoBehaviour
         TribeGO tribecomp = TribeGO.GetComponent<TribeGO>();
         tribecomp.tribeCurrent = newtribe;
         tribecomp.profilename = "newgame"; // options ?
+        GameObject Tribe_Fire = new GameObject("Tribe_Fire");
+        Tribe_Fire.AddComponent<SpriteRenderer>();
+        Sprite[] Fire = Resources.LoadAll<Sprite>("Play/Feu_Spritesheet");
+        Tribe_Fire.GetComponent<SpriteRenderer>().sprite = Fire[0];
         GameObject Tribe_Members = new GameObject("Tribe_Members");
         Tribe_Members.AddComponent<SpriteRenderer>();
-        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/PionTribe");
+        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/Sprite_Camp");
         Tribe_Members.AddComponent<BoxCollider2D>();
         Tribe_Members.AddComponent<TribeMembersGO>();
         GameObject Tribe_Radius = new GameObject("Tribe_Radius");
@@ -180,6 +184,12 @@ public class GameManager : MonoBehaviour
         Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
         Tribe_Radius.GetComponent<Transform>().position = new Vector3(Tribe_Radius.GetComponent<Transform>().position.x, Tribe_Radius.GetComponent<Transform>().position.y, ZGround);
         Tribe_Radius.tag = "radius";
+        Tribe_Members.GetComponent<TribeMembersGO>().fire = Tribe_Fire;
+        Tribe_Members.GetComponent<TribeMembersGO>().firesprites = Fire;
+        Tribe_Members.GetComponent<TribeMembersGO>().radius = Tribe_Radius;
+        Vector3 frontfire = new Vector3(Tribe_Members.GetComponent<Transform>().position.x, Tribe_Members.GetComponent<Transform>().position.y, Tribe_Members.GetComponent<Transform>().position.z - 0.5f);
+        Tribe_Fire.GetComponent<Transform>().position = frontfire;
+        Tribe_Fire.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
             CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);

@@ -16,7 +16,7 @@ public class SaveManagerScript {
         GameObject Tribe = new GameObject(sdata.tribesave.tribename);
         GameObject Tribe_Members = new GameObject("Tribe_Members");
         Tribe_Members.AddComponent<SpriteRenderer>();
-        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/PionTribe");
+        Tribe_Members.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Play/Sprite_Camp");
         Tribe_Members.AddComponent<BoxCollider2D>();
         Tribe_Members.AddComponent<TribeMembersGO>();
         GameObject Tribe_Radius = new GameObject("Tribe_Radius");
@@ -33,6 +33,16 @@ public class SaveManagerScript {
         Tribe_Radius.tag = "radius";
         Tribe.AddComponent<TribeGO>();
         TribeGO tribego = Tribe.GetComponent<TribeGO>();
+        GameObject Tribe_Fire = new GameObject("Tribe_Fire");
+        Tribe_Fire.AddComponent<SpriteRenderer>();
+        Sprite[] Fire = Resources.LoadAll<Sprite>("Play/Feu_Spritesheet");
+        Tribe_Fire.GetComponent<SpriteRenderer>().sprite = Fire[0];
+        Tribe_Members.GetComponent<TribeMembersGO>().fire = Tribe_Fire;
+        Tribe_Members.GetComponent<TribeMembersGO>().firesprites = Fire;
+        Tribe_Members.GetComponent<TribeMembersGO>().radius = Tribe_Radius;
+        Vector3 frontfire = new Vector3(Tribe_Members.GetComponent<Transform>().position.x, Tribe_Members.GetComponent<Transform>().position.y, Tribe_Members.GetComponent<Transform>().position.z - 0.5f);
+        Tribe_Fire.GetComponent<Transform>().position = frontfire;
+        Tribe_Fire.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
         tribego.tribeCurrent = sdata.tribesave;
         if (sdata.tribesave != null)
         {
