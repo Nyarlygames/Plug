@@ -87,13 +87,54 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     void AssignMemberClick()
     {
         EventSave curE = GM.EM.events.Find(es => es.obj.id == obj.id);
+        TribeGO tribe = GM.TribeGO.GetComponent<TribeGO>();
         if (curE != null)
         {
-            if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == AssignList.text) != null)
+            CharacterSave addedchar = tribe.tribeCurrent.members.Find(cs => cs.name == AssignList.text);
+            if (addedchar != null)
             {
-                if (!curE.cs.Contains(GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == AssignList.text)))
+                if (!curE.cs.Contains(addedchar))
                 {
-                    curE.cs.Add(GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == AssignList.text));
+                    if (curE.obj.modifiers.ContainsKey("activity"))
+                    {
+                        switch (curE.obj.modifiers["activity"])
+                        {
+                            case "gather":
+                                if (!tribe.tribeCurrent.gatherers.Contains(addedchar) && (addedchar.available == true))
+                                {
+                                    addedchar.available = false;
+                                    tribe.tribeCurrent.gatherers.Add(addedchar);
+                                    curE.cs.Add(tribe.tribeCurrent.gatherers.Find(ga => ga.name == addedchar.name));
+                                }
+                                break;
+                            case "fish":
+                                if (!tribe.tribeCurrent.fishers.Contains(addedchar) && (addedchar.available == true))
+                                {
+                                    addedchar.available = false;
+                                    tribe.tribeCurrent.fishers.Add(addedchar);
+                                    curE.cs.Add(tribe.tribeCurrent.fishers.Find(ga => ga.name == addedchar.name));
+                                }
+                                break;
+                            case "hunt":
+                                if (!tribe.tribeCurrent.hunters.Contains(addedchar) && (addedchar.available == true))
+                                {
+                                    addedchar.available = false;
+                                    tribe.tribeCurrent.hunters.Add(addedchar);
+                                    curE.cs.Add(tribe.tribeCurrent.hunters.Find(ga => ga.name == addedchar.name));
+                                }
+                                break;
+                            case "source":
+                                if (!tribe.tribeCurrent.sourcers.Contains(addedchar) && (addedchar.available == true))
+                                {
+                                    addedchar.available = false;
+                                    tribe.tribeCurrent.sourcers.Add(addedchar);
+                                    curE.cs.Add(tribe.tribeCurrent.sourcers.Find(ga => ga.name == addedchar.name));
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                 }
             }
         }

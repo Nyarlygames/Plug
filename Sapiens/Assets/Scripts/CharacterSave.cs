@@ -22,6 +22,7 @@ public class CharacterSave
     public string exp_rank = "";
     public float next;
     public float last;
+    public bool available = true;
     
     public int strength = 0;
     public int endu = 0;
@@ -61,6 +62,8 @@ public class CharacterSave
     public int Pic_jewels = 0;
     public int Pic_beard = 0;
 
+    bool availablelock = false;
+
     public RatioFactory RF = new RatioFactory();
 
     public void SetAge()
@@ -68,6 +71,24 @@ public class CharacterSave
         age.days = (int) time / 24;
         age.years = (int) time / (24 * 365);
         age.hours = (int) time;
+        if (age.years <= RF.exp_baby_range)
+        {
+            available = false;
+        }
+        else if (availablelock == false)
+        {
+            availablelock = true;
+            available = true;
+        }
+    }
+
+    public void GetActivityGain()
+    {
+
+    }
+
+    public void AddActivityGain()
+    {
     }
 
     public void DailyXpUp()

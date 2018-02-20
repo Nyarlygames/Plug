@@ -37,6 +37,11 @@ public class EventsManager : MonoBehaviour {
                     e.obj.modifiers["capacity"] = "0";
                 }
             }
+           /* foreach(CharacterSave cs in e.cs)
+            {
+                switch (e.obj.modifiers["activity"])
+                cs.AddActivityGain()
+            }*/
         }
         GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food_gain = newfoodgain;
         events.RemoveAll(e => e.obj.modifiers["capacity"] == "0");

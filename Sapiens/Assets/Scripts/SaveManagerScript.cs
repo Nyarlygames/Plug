@@ -360,7 +360,21 @@ public class SaveManagerScript {
 
                 if ((curObj.objectCur.modifiers.ContainsKey("capacity_max")) && (curObj.objectCur.modifiers.ContainsKey("capacity_min")) && (objectssave.Count == 0))
                 {
-                    curObj.objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]), Convert.ToInt32(curObj.objectCur.modifiers["capacity_max"]) + 1).ToString();
+                    if (Convert.ToInt32(curObj.objectCur.modifiers["capacity_max"]) == -1)
+                    {
+                        if (Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]) == -1)
+                        {
+                            curObj.objectCur.modifiers["capacity"] = "99999";
+                        }
+                        else
+                        {
+                            curObj.objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]), 99999).ToString();
+                        }
+                    }
+                    else
+                    {
+                        curObj.objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]), Convert.ToInt32(curObj.objectCur.modifiers["capacity_max"]) + 1).ToString();
+                    }
                 }
                 else if ((objectssave != null) && (objectssave.Find(os => os.id == curObj.objectCur.id).modifiers.ContainsKey("capacity") == true))
                 {

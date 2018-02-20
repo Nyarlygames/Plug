@@ -12,6 +12,9 @@ public class TribeSave
     public List<CharacterSave> groups = new List<CharacterSave>();
     public CharacterSave leader;
     public List<CharacterSave> gatherers = new List<CharacterSave>();
+    public List<CharacterSave> fishers = new List<CharacterSave>();
+    public List<CharacterSave> hunters = new List<CharacterSave>();
+    public List<CharacterSave> sourcers = new List<CharacterSave>();
     public List<CharacterSave> adults = new List<CharacterSave>();
     public List<CharacterSave> youngs = new List<CharacterSave>();
     public string tribename = "";
@@ -19,6 +22,9 @@ public class TribeSave
     public float food_gain = 0;
     public float food_consumption = 0;
     public float gatherer_level = 0;
+    public float gatherer_xp = 0;
+    public float fish_level = 0;
+    public float fish_xp = 0;
     public int rank = 0;
 
     public void SetAge()

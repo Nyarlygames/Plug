@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="staggered" renderorder="right-up" width="50" height="100" tilewidth="250" tileheight="118" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="194">
+<map version="1.0" tiledversion="1.1.2" orientation="staggered" renderorder="right-up" width="50" height="100" tilewidth="250" tileheight="118" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="199">
  <tileset firstgid="1" source="Ground.tsx"/>
  <tileset firstgid="21" source="Objects.tsx"/>
- <tileset firstgid="41" source="Zones.tsx"/>
+ <tileset firstgid="42" source="Zones.tsx"/>
  <layer name="Ground" width="50" height="100">
   <data encoding="csv">
 6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,5,6,6,6,6,5,5,6,6,5,6,5,6,6,5,6,6,6,5,6,5,5,5,5,5,5,5,5,6,6,5,5,5,
@@ -239,8 +239,31 @@
     <property name="sizey" type="int" value="2"/>
    </properties>
   </object>
-  <object id="192" gid="40" x="961" y="1459" width="100" height="100"/>
-  <object id="193" gid="40" x="1070" y="1658" width="100" height="100"/>
+  <object id="192" gid="40" x="961" y="1459" width="100" height="100">
+   <properties>
+    <property name="activity" value="fish"/>
+   </properties>
+  </object>
+  <object id="193" gid="40" x="1070" y="1658" width="100" height="100">
+   <properties>
+    <property name="activity" value="fish"/>
+   </properties>
+  </object>
+  <object id="194" gid="35" x="660" y="1677" width="100" height="100">
+   <properties>
+    <property name="resource_type" value="mammal"/>
+   </properties>
+  </object>
+  <object id="195" gid="26" x="657.333" y="1654.33" width="80" height="100"/>
+  <object id="196" gid="41" x="613" y="1817" width="31" height="27"/>
+  <object id="198" gid="41" x="747.667" y="1894.33" width="31" height="27">
+   <properties>
+    <property name="capacity_max" type="int" value="50"/>
+    <property name="capacity_min" type="int" value="25"/>
+    <property name="extract_daily" value="5"/>
+    <property name="resource_type" value="puddle"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="MovingObjects"/>
 </map>

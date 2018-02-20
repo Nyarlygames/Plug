@@ -26,9 +26,8 @@ public class TribeMembersGO : MonoBehaviour {
 
                 ParticleSystemRenderer psr = FireParticles.GetComponent<ParticleSystemRenderer>();
                 psr.material = Resources.Load<Material>("Play/Materials/smoke_mat");
-                psr.trailMaterial = Resources.Load<Material>("Play/Materials/smoke_mat");
+              //  psr.trailMaterial = Resources.Load<Material>("Play/Materials/smoke_mat");
                 ParticleSystem.MainModule main = ps.main;
-                //main.startColor = new ParticleSystem.MinMaxGradient(Color.red, Color.yellow);
                 main.startSize = 0.05f;
                 main.startSpeed = 0.1f;
                 main.startSizeY = 0.5f;
@@ -46,7 +45,6 @@ public class TribeMembersGO : MonoBehaviour {
             }
             fire.GetComponent<SpriteRenderer>().sprite = firesprites[(int) (Time.time * firespritespeed % firesprites.Length)];
         }
-        //psr.material = Resources.Load<Material>("Play/Materials/smoke_mat");
         ps.Emit(2);
     }
 }
