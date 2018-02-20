@@ -22,10 +22,25 @@ public class RatioFactory {
 
     public float tribe_sightradius = 2.3f;
 
-    public float exp_gather_lvl1 = 35f;
-    public float exp_gather_levelup = 0.1f;
-    public float exp_fish_lvl1 = 2.0f;
-    public float exp_fish_levelup = 0.1f;
+    public float exp_gatherer_lvlgain = 2.0f;
+    public float exp_gatherer_nextlvl = 350.0f;
+    public float exp_gatherer_levelupratio = 0.1f;
+    public float exp_gatherer_nextlvlratio = 1.1f;
+
+    public float exp_hunter_lvlgain = 2.0f;
+    public float exp_hunter_nextlvl = 350.0f;
+    public float exp_hunter_levelupratio = 0.1f;
+    public float exp_hunter_nextlvlratio = 1.1f;
+
+    public float exp_fisher_lvlgain = 2.0f;
+    public float exp_fisher_nextlvl = 350.0f;
+    public float exp_fisher_levelupratio = 0.1f;
+    public float exp_fisher_nextlvlratio = 1.1f;
+
+    public float exp_sourcer_lvlgain = 2.0f;
+    public float exp_sourcer_levelupratio = 0.1f;
+    public float exp_sourcer_nextlvl = 350.0f;
+    public float exp_sourcer_nextlvlratio = 1.1f;
 
     public float ratio_food_strength = 0.8f;
     public float ratio_food_body = 0.8f;

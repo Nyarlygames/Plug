@@ -75,14 +75,55 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     void RemoveMemberClick()
     {
         EventSave curE = GM.EM.events.Find(es => es.obj.id == obj.id);
+        TribeGO tribe = GM.TribeGO.GetComponent<TribeGO>();
         if (curE != null)
         {
-            if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == RemoveList.text) != null)
+            CharacterSave removechar = tribe.tribeCurrent.members.Find(cs => cs.name == RemoveList.text);
+            if (removechar != null)
             {
-                if (curE.cs.Contains(GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == RemoveList.text)))
-                    curE.cs.Remove(GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Find(cs => cs.name == RemoveList.text));
-            }
-        }
+                if (curE.cs.Contains(removechar))
+                {
+                    if (curE.obj.modifiers.ContainsKey("activity"))
+                    {
+                        switch (curE.obj.modifiers["activity"])
+                        {
+                            case "gather":
+                                if (tribe.tribeCurrent.gatherers.Contains(removechar) && (removechar.available == false)) // available check not necessary, in case multiple assignments go back here later
+                                {
+                                    removechar.available = true;
+                                    curE.cs.Remove(removechar);
+                                    tribe.tribeCurrent.gatherers.Remove(removechar);
+                                }
+                                break;
+                            case "fish":
+                                if (tribe.tribeCurrent.fishers.Contains(removechar) && (removechar.available == false)) // available check not necessary, in case multiple assignments go back here later
+                                {
+                                    removechar.available = true;
+                                    curE.cs.Remove(removechar);
+                                    tribe.tribeCurrent.fishers.Remove(removechar);
+                                }
+                                break;
+                            case "hunt":
+                                if (tribe.tribeCurrent.hunters.Contains(removechar) && (removechar.available == false)) // available check not necessary, in case multiple assignments go back here later
+                                {
+                                    removechar.available = true;
+                                    curE.cs.Remove(removechar);
+                                    tribe.tribeCurrent.hunters.Remove(removechar);
+                                }
+                                break;
+                            case "source":
+                                if (tribe.tribeCurrent.sourcers.Contains(removechar) && (removechar.available == false)) // available check not necessary, in case multiple assignments go back here later
+                                {
+                                    removechar.available = true;
+                                    curE.cs.Remove(removechar);
+                                    tribe.tribeCurrent.sourcers.Remove(removechar);
+                                }
+                                break;
+                        }
+                    }
+                } // else no char to remove
+            } // else no char with that name
+        } // no event associated (no char assigned to it)
     }
     void AssignMemberClick()
     {
@@ -104,7 +145,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
                                 {
                                     addedchar.available = false;
                                     tribe.tribeCurrent.gatherers.Add(addedchar);
-                                    curE.cs.Add(tribe.tribeCurrent.gatherers.Find(ga => ga.name == addedchar.name));
+                                    curE.cs.Add(addedchar);
                                 }
                                 break;
                             case "fish":
@@ -112,7 +153,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
                                 {
                                     addedchar.available = false;
                                     tribe.tribeCurrent.fishers.Add(addedchar);
-                                    curE.cs.Add(tribe.tribeCurrent.fishers.Find(ga => ga.name == addedchar.name));
+                                    curE.cs.Add(addedchar);
                                 }
                                 break;
                             case "hunt":
@@ -120,7 +161,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
                                 {
                                     addedchar.available = false;
                                     tribe.tribeCurrent.hunters.Add(addedchar);
-                                    curE.cs.Add(tribe.tribeCurrent.hunters.Find(ga => ga.name == addedchar.name));
+                                    curE.cs.Add(addedchar);
                                 }
                                 break;
                             case "source":
@@ -128,7 +169,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
                                 {
                                     addedchar.available = false;
                                     tribe.tribeCurrent.sourcers.Add(addedchar);
-                                    curE.cs.Add(tribe.tribeCurrent.sourcers.Find(ga => ga.name == addedchar.name));
+                                    curE.cs.Add(addedchar);
                                 }
                                 break;
                             default:

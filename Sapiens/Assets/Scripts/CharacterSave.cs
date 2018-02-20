@@ -81,14 +81,30 @@ public class CharacterSave
             available = true;
         }
     }
-
-    public void GetActivityGain()
+    
+    public void AddActivityGain(float gain)
     {
-
-    }
-
-    public void AddActivityGain()
-    {
+        xp += gain;
+        last += gain;
+        if (last >= next) // level up
+        {
+            // later, switch activity for special treats
+            LevelUp(level);
+            level++;
+            last = 0;
+            if (level > RF.level_training)
+            {
+                next = Mathf.Round(next * RF.ratio_mastering);
+            }
+            if (level > RF.level_growth)
+            {
+                next = Mathf.Round(next * RF.ratio_training);
+            }
+            if (level <= RF.level_growth)
+            {
+                next = Mathf.Round(next * RF.ratio_growth);
+            }
+        }
     }
 
     public void DailyXpUp()

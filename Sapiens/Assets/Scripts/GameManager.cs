@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public float ZCharacters = 0.0f;
     public float timeSinceReload = 0.0f;
     public EventsManager EM;//= new EventsManager();
-    RatioFactory RF = new RatioFactory();
+    public RatioFactory RF;
     public MapSave map = new MapSave();
     public Sprite[] basesF;
     public Sprite[] basesM;
@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
                     EM.events = sdata.eventsave;
                 }
                 TribeGO = SaveManager.LoadGO(sdata); // create tribe go
+                RF = TribeGO.GetComponent<TribeGO>().tribeCurrent.RF;
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
             else

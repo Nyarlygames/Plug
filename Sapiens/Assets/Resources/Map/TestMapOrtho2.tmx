@@ -251,6 +251,9 @@
   </object>
   <object id="194" gid="35" x="660" y="1677" width="100" height="100">
    <properties>
+    <property name="capacity_max" type="int" value="-1"/>
+    <property name="capacity_min" type="int" value="-1"/>
+    <property name="extract_daily" value="50"/>
     <property name="resource_type" value="mammal"/>
    </properties>
   </object>
