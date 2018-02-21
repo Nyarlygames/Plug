@@ -297,6 +297,7 @@
     <Compile Include="Assets\MapObjectScript.cs" />
     <Compile Include="Assets\MapPanelScript.cs" />
     <Compile Include="Assets\OptionsMenu.cs" />
+    <Compile Include="Assets\PanelUI.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
     <Compile Include="Assets\ResourcesPanelScript.cs" />
     <Compile Include="Assets\Scripts\AgeStruct.cs" />

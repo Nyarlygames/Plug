@@ -10,9 +10,17 @@ public class TribeMembersGO : MonoBehaviour {
     int firespritespeed = 5;
     int init = 0;
     ParticleSystem ps;
+    public Vector3 MoveToTarget = Vector3.zero;
+    Rigidbody2D TribeBody;
+    public Transform TribeTransform;
+    public float speed = 1.0f;
     // Use this for initialization
     void Start ()
     {
+        TribeTransform = gameObject.GetComponent<Transform>();
+        gameObject.AddComponent<Rigidbody2D>();
+        TribeBody = gameObject.GetComponent<Rigidbody2D>();
+        TribeBody.gravityScale = 0.0f;
     }
 	
 	// Update is called once per frame
@@ -26,7 +34,6 @@ public class TribeMembersGO : MonoBehaviour {
 
                 ParticleSystemRenderer psr = FireParticles.GetComponent<ParticleSystemRenderer>();
                 psr.material = Resources.Load<Material>("Play/Materials/smoke_mat");
-              //  psr.trailMaterial = Resources.Load<Material>("Play/Materials/smoke_mat");
                 ParticleSystem.MainModule main = ps.main;
                 main.startSize = 0.05f;
                 main.startSpeed = 0.1f;
@@ -46,5 +53,17 @@ public class TribeMembersGO : MonoBehaviour {
             fire.GetComponent<SpriteRenderer>().sprite = firesprites[(int) (Time.time * firespritespeed % firesprites.Length)];
         }
         ps.Emit(2);
+        if (MoveToTarget != Vector3.zero)
+        {
+            if (TribeTransform.position != MoveToTarget)
+                TribeBody.MovePosition(Vector3.MoveTowards(TribeTransform.position, MoveToTarget, speed * Time.deltaTime));
+            else
+                MoveToTarget = Vector3.zero;
+        }
+    }
+
+    public void MoveTo(Vector3 pos)
+    {
+        MoveToTarget = pos;
     }
 }

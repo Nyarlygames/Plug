@@ -11,10 +11,12 @@ public class GameManager : MonoBehaviour
 {
     public SaveManagerScript SaveManager = new SaveManagerScript();
     public GameObject TribeGO;
+    public TribeGO tribe;
     public GameObject UIEscape;
     public GameObject UIChar;
     public List<GameObject> TilesGO = new List<GameObject>();
     public List<GameObject> ObjectsGO = new List<GameObject>();
+    public TribeMembersGO TMGO;
     public SaveData sdata;
     public float scaleBeforeEscape = 0.0f;
     public Text timers;
@@ -36,8 +38,25 @@ public class GameManager : MonoBehaviour
     public Sprite[] clothesF;
     public Sprite[] clothesM;
 
+    public Sprite MouseCursor;
+    public Sprite MouseCursorTarget;
+    public GameObject MouseCursorGO;
+    public GameObject MouseCursorTargetGO;
+    Vector3 MouseCoords = Vector3.zero;
+
     void Start()
     {
+        MouseCursorGO = new GameObject("MouseCursor");
+        MouseCursor = Resources.Load<Sprite>("Play/cursor");
+        MouseCursorGO.AddComponent<SpriteRenderer>();
+        MouseCursorGO.GetComponent<SpriteRenderer>().sprite = MouseCursor;
+
+        MouseCursorTargetGO = new GameObject("MouseCursorTarget");
+        MouseCursorTarget = Resources.Load<Sprite>("Play/cursor_dropped");
+        MouseCursorTargetGO.AddComponent<SpriteRenderer>();
+        MouseCursorTargetGO.GetComponent<SpriteRenderer>().sprite = MouseCursorTarget;
+        MouseCursorTargetGO.SetActive(false);
+        
         ZGround = 20.0f;
         ZObjects = 10.0f;
         ZCharacters = 0.0f;
@@ -110,13 +129,30 @@ public class GameManager : MonoBehaviour
         UIEscape = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_EscapePanel"), Vector3.zero, Quaternion.identity);
         UIEscape.name = "UI_EscapePanel";
         UIEscape.transform.SetParent(Menus.transform);
+        tribe = TribeGO.GetComponent<TribeGO>();
+        TMGO = GameObject.Find("Tribe_Members").GetComponent<TribeMembersGO>();
+
+        if (tribe != null)
+        {
+            if (tribe.tribeCurrent.nomadism == false)
+            {
+                GameObject.Find("UI_Ingame_Nomadism_T").GetComponent<Text>().text = "Nomadism : Off";
+            }
+            else
+            {
+                GameObject.Find("UI_Ingame_Nomadism_T").GetComponent<Text>().text = "Nomadism : On";
+            }
+        }
     }
 
     void Update()
     {
         timeSinceReload += Time.deltaTime;
-        timers.text = "Save time : " + (int) TribeGO.GetComponent<TribeGO>().curAge.hours + " hours " + (int) TribeGO.GetComponent<TribeGO>().curAge.days + " days.";
+        timers.text = "Save time : " + (int)tribe.curAge.hours + " hours " + (int)tribe.curAge.days + " days.";
         timers.text += "\nSession time : " + (int)timeSinceReload + " hours " + (int)timeSinceReload / 24  + " days.";
+        MouseCoords = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        MouseCoords.z = ZCharacters;
+        MouseCursorGO.GetComponent<Transform>().position = MouseCoords;
         if (Input.GetKeyDown(KeyCode.C)) // open char panel
         {
             if (!UIEscape.activeSelf)
@@ -150,6 +186,30 @@ public class GameManager : MonoBehaviour
                     UIEscape.SetActive(!UIEscape.activeSelf);
                 }
             }
+        }
+        if (tribe.tribeCurrent.nomadism == true)
+        {
+            if (Input.GetMouseButtonDown(1)) // right click to move tribe
+            {
+                MouseCursorTargetGO.SetActive(true);
+                MouseCursorTargetGO.GetComponent<Transform>().position = MouseCoords;
+                TMGO.MoveTo(MouseCoords);
+            }
+            if (Input.GetMouseButtonDown(0) || (TMGO.MoveToTarget == Vector3.zero)) // move tribe on click
+            {
+                TMGO.MoveTo(Vector3.zero);
+                MouseCursorTargetGO.SetActive(false);
+            }
+            if ((TMGO.TribeTransform != null) && (TMGO.MoveToTarget != Vector3.zero))
+            {
+                tribe.tribeCurrent.TribePosX = TMGO.TribeTransform.position.x;
+                tribe.tribeCurrent.TribePosY = TMGO.TribeTransform.position.y;
+            }
+        }
+        else
+        {
+            TMGO.MoveTo(Vector3.zero);
+            MouseCursorTargetGO.SetActive(false);
         }
     }
     

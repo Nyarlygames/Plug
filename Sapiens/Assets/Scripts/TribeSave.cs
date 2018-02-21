@@ -33,6 +33,9 @@ public class TribeSave
     public float fisher_level = 0;
     public float fisher_xp = 0;
     public int rank = 0;
+    public bool nomadism = true;
+    public float TribePosX = 0;
+    public float TribePosY = 0;
     public RatioFactory RF = new RatioFactory();
 
     public void SetAge()

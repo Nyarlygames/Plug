@@ -125,7 +125,8 @@ public class SaveManagerScript {
 
                     tribego.CharsGO.Add(newchar);
                 }
-                Tribe_Members.GetComponent<Transform>().position = new Vector3(sdata.tribesave.members[0].x, sdata.tribesave.members[0].y, GM.ZCharacters); // load tribe to char1
+                Vector3 TribePos = new Vector3(sdata.tribesave.TribePosX, sdata.tribesave.TribePosY, GM.ZCharacters);
+                Tribe_Members.GetComponent<Transform>().position = TribePos;
             }
         }
         return Tribe;

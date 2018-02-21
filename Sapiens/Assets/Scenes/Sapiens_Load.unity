@@ -147,7 +147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -171.82928, y: -89.07837}
+  m_AnchoredPosition: {x: -171.82928, y: -69.6}
   m_SizeDelta: {x: 120, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &90650052
@@ -290,7 +290,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -103.591125, y: -131.07837}
+  m_AnchoredPosition: {x: -103.591125, y: -107.7}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &113248691
@@ -333,7 +333,11 @@ MonoBehaviour:
 
     - Debug create character
 
-    - Debug skip years (days/months WIP)'
+    - Debug skip years (days/months WIP)
+
+    - Right-click : move tribe
+
+    - Left click : cancel move'
 --- !u!222 &113248692
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -372,7 +376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -120.98505, y: -215}
+  m_AnchoredPosition: {x: -120.98505, y: -218.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &135576423
@@ -407,7 +411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.17b (20/02/2018)'
+  m_Text: 'Version : 0.0.18 (21/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -880,6 +884,80 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 260749085}
+--- !u!1 &331209636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 331209637}
+  - component: {fileID: 331209639}
+  - component: {fileID: 331209638}
+  m_Layer: 5
+  m_Name: UI_Ingame_Nomadism_T
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &331209637
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 331209636}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1221481882}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &331209638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 331209636}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Nomadism : Off'
+--- !u!222 &331209639
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 331209636}
 --- !u!1 &398460222
 GameObject:
   m_ObjectHideFlags: 0
@@ -1466,7 +1544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -174.94482, y: 1.9216359}
+  m_AnchoredPosition: {x: -174.94482, y: 8.6}
   m_SizeDelta: {x: 120, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &754543514
@@ -1579,7 +1657,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -171.82928, y: -56.078373}
+  m_AnchoredPosition: {x: -171.82928, y: -36.6}
   m_SizeDelta: {x: 120, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &762133278
@@ -1844,7 +1922,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 206, y: 380}
+  m_AnchoredPosition: {x: 206, y: 396}
   m_SizeDelta: {x: 800, y: 454.40958}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879151186
@@ -2286,6 +2364,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 879151185}
+  - {fileID: 1872949249}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2732,6 +2811,117 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1198427496}
+--- !u!1 &1221481881
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1221481882}
+  - component: {fileID: 1221481885}
+  - component: {fileID: 1221481884}
+  - component: {fileID: 1221481883}
+  m_Layer: 5
+  m_Name: UI_Ingame_Nomadism_B
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1221481882
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221481881}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 10, z: 1}
+  m_Children:
+  - {fileID: 331209637}
+  m_Father: {fileID: 1872949249}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 33.720825, y: -39.999878}
+  m_SizeDelta: {x: 120, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1221481883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221481881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1221481884}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &1221481884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221481881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1221481885
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1221481881}
 --- !u!1 &1263128487
 GameObject:
   m_ObjectHideFlags: 0
@@ -3980,6 +4170,87 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1835562112}
+--- !u!1 &1872949248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1872949249}
+  - component: {fileID: 1872949251}
+  - component: {fileID: 1872949250}
+  - component: {fileID: 1872949252}
+  m_Layer: 5
+  m_Name: UI_Ingame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1872949249
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1872949248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_Children:
+  - {fileID: 1221481882}
+  m_Father: {fileID: 978761710}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 254.62793, y: -343}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1872949250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1872949248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+--- !u!222 &1872949251
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1872949248}
+--- !u!114 &1872949252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1872949248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 748ce364792630c4ba885159f5d23dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1920593509
 GameObject:
   m_ObjectHideFlags: 0
@@ -4193,10 +4464,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   TribeGO: {fileID: 0}
+  tribe: {fileID: 0}
   UIEscape: {fileID: 0}
   UIChar: {fileID: 0}
   TilesGO: []
   ObjectsGO: []
+  TMGO: {fileID: 0}
   sdata:
     savefolder: Save/
     savefile: 
@@ -4275,10 +4548,22 @@ MonoBehaviour:
           ratio_training: 1.1
           ratio_mastering: 1
           tribe_sightradius: 5
-          exp_gather_lvl1: 35
-          exp_gather_levelup: 0.1
-          exp_fish_lvl1: 2
-          exp_fish_levelup: 0.1
+          exp_gatherer_lvlgain: 2
+          exp_gatherer_nextlvl: 350
+          exp_gatherer_levelupratio: 0.1
+          exp_gatherer_nextlvlratio: 1.1
+          exp_hunter_lvlgain: 2
+          exp_hunter_nextlvl: 350
+          exp_hunter_levelupratio: 0.1
+          exp_hunter_nextlvlratio: 1.1
+          exp_fisher_lvlgain: 2
+          exp_fisher_nextlvl: 350
+          exp_fisher_levelupratio: 0.1
+          exp_fisher_nextlvlratio: 1.1
+          exp_sourcer_lvlgain: 2
+          exp_sourcer_levelupratio: 0.1
+          exp_sourcer_nextlvl: 350
+          exp_sourcer_nextlvlratio: 1.1
           ratio_food_strength: 0.8
           ratio_food_body: 0.8
           ratio_food_endu: 0.4
@@ -4293,11 +4578,53 @@ MonoBehaviour:
       food: 0
       food_gain: 0
       food_consumption: 0
+      water: 0
+      water_gain: 0
+      water_consumption: 0
       gatherer_level: 0
       gatherer_xp: 0
-      fish_level: 0
-      fish_xp: 0
+      hunter_level: 0
+      hunter_xp: 0
+      sourcer_level: 0
+      sourcer_xp: 0
+      fisher_level: 0
+      fisher_xp: 0
       rank: 0
+      nomadism: 0
+      RF:
+        exp_baby_range: 10
+        exp_baby_value: 1
+        exp_teen_range: 15
+        exp_teen_value: 2
+        exp_adult_range: 35
+        exp_adult_value: 0.5
+        level_baserequirement: 150
+        level_growth: 10
+        level_training: 20
+        ratio_growth: 1.2
+        ratio_training: 1.1
+        ratio_mastering: 1
+        tribe_sightradius: 2.3
+        exp_gatherer_lvlgain: 2
+        exp_gatherer_nextlvl: 350
+        exp_gatherer_levelupratio: 0.1
+        exp_gatherer_nextlvlratio: 1.1
+        exp_hunter_lvlgain: 2
+        exp_hunter_nextlvl: 350
+        exp_hunter_levelupratio: 0.1
+        exp_hunter_nextlvlratio: 1.1
+        exp_fisher_lvlgain: 2
+        exp_fisher_nextlvl: 350
+        exp_fisher_levelupratio: 0.1
+        exp_fisher_nextlvlratio: 1.1
+        exp_sourcer_lvlgain: 2
+        exp_sourcer_levelupratio: 0.1
+        exp_sourcer_nextlvl: 350
+        exp_sourcer_nextlvlratio: 1.1
+        ratio_food_strength: 0.8
+        ratio_food_body: 0.8
+        ratio_food_endu: 0.4
+        adult_age: 15
     mapsave:
       sizex: 0
       sizey: 0
@@ -4322,6 +4649,40 @@ MonoBehaviour:
   ZCharacters: 0
   timeSinceReload: 0
   EM: {fileID: 0}
+  RF:
+    exp_baby_range: 10
+    exp_baby_value: 1
+    exp_teen_range: 15
+    exp_teen_value: 2
+    exp_adult_range: 35
+    exp_adult_value: 0.5
+    level_baserequirement: 150
+    level_growth: 10
+    level_training: 20
+    ratio_growth: 1.2
+    ratio_training: 1.1
+    ratio_mastering: 1
+    tribe_sightradius: 2.3
+    exp_gatherer_lvlgain: 2
+    exp_gatherer_nextlvl: 350
+    exp_gatherer_levelupratio: 0.1
+    exp_gatherer_nextlvlratio: 1.1
+    exp_hunter_lvlgain: 2
+    exp_hunter_nextlvl: 350
+    exp_hunter_levelupratio: 0.1
+    exp_hunter_nextlvlratio: 1.1
+    exp_fisher_lvlgain: 2
+    exp_fisher_nextlvl: 350
+    exp_fisher_levelupratio: 0.1
+    exp_fisher_nextlvlratio: 1.1
+    exp_sourcer_lvlgain: 2
+    exp_sourcer_levelupratio: 0.1
+    exp_sourcer_nextlvl: 350
+    exp_sourcer_nextlvlratio: 1.1
+    ratio_food_strength: 0.8
+    ratio_food_body: 0.8
+    ratio_food_endu: 0.4
+    adult_age: 15
   map:
     sizex: 0
     sizey: 0
@@ -4348,6 +4709,10 @@ MonoBehaviour:
   paintsM: []
   clothesF: []
   clothesM: []
+  MouseCursor: {fileID: 0}
+  MouseCursorTarget: {fileID: 0}
+  MouseCursorGO: {fileID: 0}
+  MouseCursorTargetGO: {fileID: 0}
 --- !u!4 &2074311092
 Transform:
   m_ObjectHideFlags: 0

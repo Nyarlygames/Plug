@@ -214,6 +214,10 @@ public class PanelChar : MonoBehaviour {
 
     void CharacterValueChanged(Dropdown CharList)
     {
+        foreach (Transform child in CharacterFace.GetComponent<Transform>())
+        {
+            Destroy(child.gameObject);
+        }
         if (GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members.Count > 0)
         {
             curChar = GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members[CharacterList.value];
