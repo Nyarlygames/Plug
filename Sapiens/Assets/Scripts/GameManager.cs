@@ -256,6 +256,7 @@ public class GameManager : MonoBehaviour
             CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);
         }
         sdata.tribesave = tribecomp.tribeCurrent;
+        
     }
 
     public void CreatePlayer(int id, string name, CharacterSave cs, TribeGO tribecomp, GameObject Tribe_Members)
@@ -281,6 +282,7 @@ public class GameManager : MonoBehaviour
         {
             xpacc += RF.exp_baby_value * countdown *365;
         }
+        
 
         CharacterSave newman = new CharacterSave();
         newman.id = id;
@@ -297,6 +299,7 @@ public class GameManager : MonoBehaviour
         newman.SetAge();
         newman.next = 150.0f;
         newman.next = newman.SkipStats(newman.xp, newman.next);
+        newman = simulateActivity(newman);
         newman.food = ((newman.strength * RF.ratio_food_strength) + (newman.body * RF.ratio_food_body) + (newman.endu * RF.ratio_food_endu)) / 100;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
@@ -391,6 +394,8 @@ public class GameManager : MonoBehaviour
             PlayerPrefs.SetInt("spawnzone", 0);
 
         }
+        tribecomp.tribeCurrent.TribePosX = Tribe_Members.GetComponent<Transform>().position.x;
+        tribecomp.tribeCurrent.TribePosY = Tribe_Members.GetComponent<Transform>().position.y;
         newman.x = Tribe_Members.GetComponent<Transform>().position.x /*+ id * 4*/;
         newman.y = Tribe_Members.GetComponent<Transform>().position.y;
         newman.z = ZCharacters;
@@ -399,5 +404,29 @@ public class GameManager : MonoBehaviour
         
         //CharGO.GetComponent<SpriteRenderer>().enabled = false;
         tribecomp.CharsGO.Add(CharGO);
+    }
+
+    CharacterSave simulateActivity(CharacterSave cs)
+    {
+        List<string> Activities = new List<string>();
+        Activities.Add("hunt");
+        Activities.Add("source");
+        Activities.Add("fish");
+        Activities.Add("gather");
+        if (cs.age.years > RF.adult_age)
+        {
+            int simulateddays = (cs.age.years - RF.adult_age) * 365;
+            for (int i=0; i < simulateddays; i++)
+            {
+                int activity = UnityEngine.Random.Range(0, Activities.Count);
+                int success = UnityEngine.Random.Range(0, 10);
+                if (success <= 7)
+                {
+                    cs.AddActivityGain(Activities[activity]);
+                }
+                cs.SetActivities();
+            }
+        }
+        return cs;
     }
 }

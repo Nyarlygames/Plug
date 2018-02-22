@@ -66,11 +66,12 @@ public class ObjectGO : MonoBehaviour {
             {
                 canvasinfo = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_TriggerInfo"), Vector3.zero, Quaternion.identity);
                 canvasinfo.name = "Trigger_Info";
-                GameObject cam = GameObject.Find("Camera");
+              //  GameObject cam = GameObject.Find("Camera");
                 GameObject UI = GameObject.Find("UI_Panel");
-                canvasinfo.GetComponent<Transform>().position = cam.GetComponent<Camera>().WorldToScreenPoint(gameObject.GetComponent<Transform>().position);
+                canvasinfo.GetComponent<Transform>().position = Camera.main.GetComponent<Camera>().WorldToScreenPoint(gameObject.GetComponent<Transform>().position);
                 canvasinfo.GetComponent<Transform>().SetParent(UI.GetComponent<Transform>());
                 canvasinfo.GetComponent<PanelTriggerInfo>().obj = objectCur;
+                canvasinfo.GetComponent<PanelTriggerInfo>().objGO = gameObject;
             }
         }
     }

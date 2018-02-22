@@ -411,7 +411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.18 (21/02/2018)'
+  m_Text: 'Version : 0.0.19 (22/02/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1920,10 +1920,10 @@ RectTransform:
   m_Father: {fileID: 978761710}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 206, y: 396}
-  m_SizeDelta: {x: 800, y: 454.40958}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 206, y: -382}
+  m_SizeDelta: {x: 800, y: 454.40955}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &879151186
 MonoBehaviour:
@@ -4202,10 +4202,10 @@ RectTransform:
   m_Father: {fileID: 978761710}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 254.62793, y: -343}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -65.5, y: 46}
+  m_SizeDelta: {x: 1325, y: 778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1872949250
 MonoBehaviour:
@@ -4534,6 +4534,31 @@ MonoBehaviour:
         Pic_paints: 0
         Pic_jewels: 0
         Pic_beard: 0
+        gatherer: 1
+        hunter: 1
+        fisher: 1
+        sourcer: 0
+        cook: 1
+        manager: 1
+        parent: 1
+        mentor: 0
+        shaman: 0
+        skinner: 0
+        carver: 0
+        stoner: 0
+        protector: 0
+        leader: 0
+        scout: 0
+        rest: 0
+        pregnant: 0
+        gatherer_level: 0
+        gatherer_xp: 0
+        hunter_level: 0
+        hunter_xp: 0
+        sourcer_level: 0
+        sourcer_xp: 0
+        fisher_level: 0
+        fisher_xp: 0
         RF:
           exp_baby_range: 10
           exp_baby_value: 1
@@ -4567,6 +4592,10 @@ MonoBehaviour:
           ratio_food_strength: 0.8
           ratio_food_body: 0.8
           ratio_food_endu: 0.4
+          prereq_source_endu: 60
+          prereq_source_percept: 60
+          prereq_mentor_intel: 80
+          prereq_mentor_lang: 75
           adult_age: 15
       gatherers: []
       fishers: []
@@ -4581,16 +4610,10 @@ MonoBehaviour:
       water: 0
       water_gain: 0
       water_consumption: 0
-      gatherer_level: 0
-      gatherer_xp: 0
-      hunter_level: 0
-      hunter_xp: 0
-      sourcer_level: 0
-      sourcer_xp: 0
-      fisher_level: 0
-      fisher_xp: 0
       rank: 0
       nomadism: 0
+      TribePosX: 0
+      TribePosY: 0
       RF:
         exp_baby_range: 10
         exp_baby_value: 1
@@ -4624,6 +4647,10 @@ MonoBehaviour:
         ratio_food_strength: 0.8
         ratio_food_body: 0.8
         ratio_food_endu: 0.4
+        prereq_source_endu: 60
+        prereq_source_percept: 60
+        prereq_mentor_intel: 80
+        prereq_mentor_lang: 75
         adult_age: 15
     mapsave:
       sizex: 0
@@ -4682,6 +4709,10 @@ MonoBehaviour:
     ratio_food_strength: 0.8
     ratio_food_body: 0.8
     ratio_food_endu: 0.4
+    prereq_source_endu: 60
+    prereq_source_percept: 60
+    prereq_mentor_intel: 80
+    prereq_mentor_lang: 75
     adult_age: 15
   map:
     sizex: 0

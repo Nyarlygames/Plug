@@ -63,13 +63,13 @@ public class EventsManager : MonoBehaviour {
                             // unrecognizable resource
                             break;
                     }
-                    GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.AddActivityGain(e.obj.modifiers["activity"], cs);
+                    cs.AddActivityGain(e.obj.modifiers["activity"]);
                  }
             }
             // else not a gain or not a resource
         }
         GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food_gain = newfoodgain;
-        GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.food_gain = newwatergain;
+        GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.water_gain = newwatergain;
         events.RemoveAll(e => e.obj.modifiers["capacity"] == "0");
     }
 }

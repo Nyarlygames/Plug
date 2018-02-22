@@ -46,5 +46,11 @@ public class RatioFactory {
     public float ratio_food_body = 0.8f;
     public float ratio_food_endu = 0.4f;
 
+    public int prereq_source_endu = 60;
+    public int prereq_source_percept = 60;
+
+    public int prereq_mentor_intel = 80;
+    public int prereq_mentor_lang = 75;
+
     public int adult_age = 15;
 }

@@ -11,6 +11,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     InputField RemoveList;
     GameManager GM;
     GameObject RemovePanel;
+    public GameObject objGO;
     GameObject AssignPanel;
     Text Status;
     Text Status_List;
@@ -19,6 +20,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     Text UI_TriggerCapacity;
     Text UI_TriggerCurrent;
     Text UI_TriggerResource;
+    Transform TriggerPos;
     // Use this for initialization
     void Start ()
     {
@@ -35,7 +37,6 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
         UI_TriggerCapacity = GameObject.Find("UI_TriggerCapacity").GetComponent<Text>();
         UI_TriggerCurrent = GameObject.Find("UI_TriggerCurrent").GetComponent<Text>();
         UI_TriggerResource = GameObject.Find("UI_TriggerResource").GetComponent<Text>();
-
         AssignPanel.SetActive(false);
         RemovePanel.SetActive(false);
     }
@@ -69,6 +70,8 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
                 Status.text = "Available.";
                 Status_List.text = "";
             }
+            if (objGO != null)
+                gameObject.GetComponent<Transform>().position = Camera.main.GetComponent<Camera>().WorldToScreenPoint(objGO.GetComponent<Transform>().position);
         }
     }
 

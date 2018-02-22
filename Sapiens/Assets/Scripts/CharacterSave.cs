@@ -62,6 +62,33 @@ public class CharacterSave
     public int Pic_jewels = 0;
     public int Pic_beard = 0;
 
+    public bool gatherer = true;
+    public bool hunter = true;
+    public bool fisher = true;
+    public bool sourcer = false;
+    public bool cook = true;
+    public bool manager = true;
+    public bool parent = true;
+    public bool mentor = false;
+    public bool shaman = false;
+    public bool skinner = false;
+    public bool carver = false;
+    public bool stoner = false;
+    public bool protector = false;
+    public bool leader = false;
+    public bool scout = false;
+    public bool rest = false;
+    public bool pregnant = false;
+
+    public float gatherer_level = 0;
+    public float gatherer_xp = 0;
+    public float hunter_level = 0;
+    public float hunter_xp = 0;
+    public float sourcer_level = 0;
+    public float sourcer_xp = 0;
+    public float fisher_level = 0;
+    public float fisher_xp = 0;
+
     bool availablelock = false;
 
     public RatioFactory RF = new RatioFactory();
@@ -81,8 +108,62 @@ public class CharacterSave
             available = true;
         }
     }
-    
-    public void AddActivityGain(float gain)
+
+
+    public void AddActivityGain(string activity)
+    {
+        switch (activity)
+        {
+            case "hunt":
+                hunter_xp += RF.exp_hunter_lvlgain;
+                AddActivityXP(RF.exp_hunter_lvlgain);
+                if (hunter_xp >= RF.exp_hunter_nextlvl)
+                {
+                    hunter_xp -= RF.exp_hunter_nextlvl;
+                    hunter_level++;
+                    RF.exp_hunter_nextlvl *= RF.exp_hunter_nextlvlratio;
+                    RF.exp_hunter_lvlgain -= RF.exp_hunter_levelupratio;
+                }
+                break;
+            case "fish":
+                fisher_xp += RF.exp_fisher_lvlgain;
+                AddActivityXP(RF.exp_fisher_lvlgain);
+                if (fisher_xp >= RF.exp_fisher_nextlvl)
+                {
+                    fisher_xp -= RF.exp_fisher_nextlvl;
+                    fisher_level++;
+                    RF.exp_fisher_nextlvl *= RF.exp_fisher_nextlvlratio;
+                    RF.exp_fisher_lvlgain -= RF.exp_fisher_levelupratio;
+                }
+                break;
+            case "gather":
+                gatherer_xp += RF.exp_gatherer_lvlgain;
+                AddActivityXP(RF.exp_gatherer_lvlgain);
+                if (gatherer_xp >= RF.exp_gatherer_nextlvl)
+                {
+                    gatherer_xp -= RF.exp_gatherer_nextlvl;
+                    gatherer_level++;
+                    RF.exp_gatherer_nextlvl *= RF.exp_gatherer_nextlvlratio;
+                    RF.exp_gatherer_lvlgain -= RF.exp_gatherer_levelupratio;
+                }
+                break;
+            case "source":
+                sourcer_xp += RF.exp_sourcer_lvlgain;
+                AddActivityXP(RF.exp_sourcer_lvlgain);
+                if (sourcer_xp >= RF.exp_sourcer_nextlvl)
+                {
+                    sourcer_xp -= RF.exp_sourcer_nextlvl;
+                    sourcer_level++;
+                    RF.exp_sourcer_nextlvl *= RF.exp_sourcer_nextlvlratio;
+                    RF.exp_sourcer_lvlgain -= RF.exp_sourcer_levelupratio;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void AddActivityXP(float gain)
     {
         xp += gain;
         last += gain;
@@ -363,17 +444,13 @@ public class CharacterSave
         fatiguemax = endu * 2 + strength;
         fatiguerecup = body + mental / 40;
     }
-
-   /* public void SetChar(string naming, int identifier)
-    {
-        name = naming;
-        id = identifier;
-    }
-    public void SetParents(CharacterSave fat, CharacterSave moth)
-    {
-        father = fat;
-        mother = moth;
-    }
-    */
     
+
+    public void SetActivities()
+    {
+        if ((sourcer == false) && (percept >= RF.prereq_source_percept) && (endu >= RF.prereq_source_endu))
+            sourcer = true;
+        if ((mentor == false) && (spirit >= RF.prereq_mentor_intel) && (lang >= RF.prereq_mentor_lang))
+            mentor = true;
+    }
 }
