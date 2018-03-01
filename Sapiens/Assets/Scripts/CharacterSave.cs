@@ -66,6 +66,7 @@ public class CharacterSave
     
     bool availablelock = false;
     public List<ActivityStruct> activities = new List<ActivityStruct>();
+    public AbilitiesStruct abilities = new AbilitiesStruct();
     public ActivityStruct mainActivity = new ActivityStruct();
     public ActivityStruct secondaryActivity = new ActivityStruct();
     public RatioFactory RF = new RatioFactory();
@@ -73,7 +74,40 @@ public class CharacterSave
     public float xpactivity = 0.0f;
     public float xpauto = 0.0f;
 
-    public void SetActivitiesList()
+    public void SetAbilities()
+    {
+        IDictionary<string, int> activitylist = new Dictionary<string, int>();
+        foreach (ActivityStruct act in activities)
+        {
+            abilities.affinities.Add(act.name, 0);
+            activitylist.Add(act.name, 0);
+        }
+        
+        abilities.abilities.Add("strength", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("endu", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("body", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("speed", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        
+        abilities.abilities.Add("dexte", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("percept", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("accu", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("autonomy", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        
+        abilities.abilities.Add("spirit", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("social", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("mental", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+        abilities.abilities.Add("lang", UnityEngine.Random.Range(RF.birth_point_min, RF.birth_point_max+1));
+
+        foreach (KeyValuePair<string, int> abi in abilities.abilities)
+        {
+            IDictionary<string, IDictionary<string, int>> history = new Dictionary<string, IDictionary<string, int>>();
+            history.Add(abi.Key, activitylist);
+            abilities.abilities_history.Add(history);
+        }
+        
+    }
+
+        public void SetActivitiesList()
     {
         ActivityStruct temp = new ActivityStruct();
         temp.name = "gather";
@@ -434,7 +468,8 @@ public class CharacterSave
     public void levelUpXP(string rank)
     {
 
-        List<string> Attributes = new List<string>();
+        // IDictionary<string, int> Attributes = abilities.abilities;
+        List<string> Attributes = new List<String>();
         Attributes.Add("strength");
         Attributes.Add("endu");
         Attributes.Add("body");
@@ -452,105 +487,23 @@ public class CharacterSave
         switch (rank)
         {
             case "growing":
-                addedPoints = UnityEngine.Random.Range(RF.growing_point_min, RF.growing_point_max + 1);
                 addedChars = UnityEngine.Random.Range(RF.growing_stats_min, RF.growing_stats_max + 1);
                 for (int i=0; i < addedChars; i++)
                 {
-                    int pick = UnityEngine.Random.Range(0, Attributes.Count);
-                    switch (Attributes[pick])
-                    {
-                        case "strength":
-                            strength += addedPoints;
-                            break;
-                        case "endu":
-                            endu += addedPoints;
-                            break;
-                        case "body":
-                            body += addedPoints;
-                            break;
-                        case "speed":
-                            speed += addedPoints;
-                            break;
-                        case "dexte":
-                            dexte += addedPoints;
-                            break;
-                        case "percept":
-                            percept += addedPoints;
-                            break;
-                        case "accu":
-                            accu += addedPoints;
-                            break;
-                        case "autonomy":
-                            autonomy += addedPoints;
-                            break;
-                        case "spirit":
-                            spirit += addedPoints;
-                            break;
-                        case "social":
-                            social += addedPoints;
-                            break;
-                        case "mental":
-                            mental += addedPoints;
-                            break;
-                        case "lang":
-                            lang += addedPoints;
-                            break;
-                        default:
-                            Debug.Log("LevelUp stats failed");
-                            break;
-                    }
-                    Attributes.RemoveAt(pick);
+                    addedPoints = UnityEngine.Random.Range(RF.growing_point_min, RF.growing_point_max + 1);
+                    int pickStat = UnityEngine.Random.Range(0, Attributes.Count);
+                    abilities.abilities[Attributes[pickStat]] += addedPoints;
+                    Attributes.RemoveAt(pickStat);
                 }
                 break;
             case "training":
-                addedPoints = UnityEngine.Random.Range(RF.training_point_min, RF.training_point_max + 1);
                 addedChars = UnityEngine.Random.Range(RF.training_stats_min, RF.training_stats_max + 1);
                 for (int i = 0; i < addedChars; i++)
                 {
-                    int pick = UnityEngine.Random.Range(0, Attributes.Count);
-                    switch (Attributes[pick])
-                    {
-                        case "strength":
-                            strength += addedPoints;
-                            break;
-                        case "endu":
-                            endu += addedPoints;
-                            break;
-                        case "body":
-                            body += addedPoints;
-                            break;
-                        case "speed":
-                            speed += addedPoints;
-                            break;
-                        case "dexte":
-                            dexte += addedPoints;
-                            break;
-                        case "percept":
-                            percept += addedPoints;
-                            break;
-                        case "accu":
-                            accu += addedPoints;
-                            break;
-                        case "autonomy":
-                            autonomy += addedPoints;
-                            break;
-                        case "spirit":
-                            spirit += addedPoints;
-                            break;
-                        case "social":
-                            social += addedPoints;
-                            break;
-                        case "mental":
-                            mental += addedPoints;
-                            break;
-                        case "lang":
-                            lang += addedPoints;
-                            break;
-                        default:
-                            Debug.Log("LevelUp stats failed");
-                            break;
-                    }
-                    Attributes.RemoveAt(pick);
+                    addedPoints = UnityEngine.Random.Range(RF.training_point_min, RF.training_point_max + 1);
+                    int pickStat = UnityEngine.Random.Range(0, Attributes.Count);
+                    abilities.abilities[Attributes[pickStat]] += addedPoints;
+                    Attributes.RemoveAt(pickStat);
                 }
                 break;
             case "mastering":
@@ -559,59 +512,20 @@ public class CharacterSave
                 {
                     if ((act.primaryActivity == true) && (act.xp >= mainActivity.xp))
                     {
-                        mainActivity = act;
+                        mainActivity = act; // select biggest xp activity
                     }
                     if ((act.primaryActivity == false) && (act.xp >= secondaryActivity.xp))
                     {
-                        secondaryActivity = act;
+                        secondaryActivity = act; // select biggest xp secondary
                     }
                 }
                 if (mainActivity.name != "")
                 {
                     foreach (KeyValuePair<string, int> entry in mainActivity.affinities)
                     {
-                        switch (entry.Key)
-                        {
-                            case "strength":
-                                strength += entry.Value;
-                                break;
-                            case "endu":
-                                endu += entry.Value;
-                                break;
-                            case "body":
-                                body += entry.Value;
-                                break;
-                            case "speed":
-                                speed += entry.Value;
-                                break;
-                            case "dexte":
-                                dexte += entry.Value;
-                                break;
-                            case "percept":
-                                percept += entry.Value;
-                                break;
-                            case "accu":
-                                accu += entry.Value;
-                                break;
-                            case "autonomy":
-                                autonomy += entry.Value;
-                                break;
-                            case "spirit":
-                                spirit += entry.Value;
-                                break;
-                            case "social":
-                                social += entry.Value;
-                                break;
-                            case "mental":
-                                mental += entry.Value;
-                                break;
-                            case "lang":
-                                lang += entry.Value;
-                                break;
-                            default:
-                                Debug.Log("secondary affinity gain failed : " + entry.Key);
-                                break;
-                        }
+                        abilities.affinities[secondaryActivity.name] += 1;
+                        abilities.abilities[entry.Key] += entry.Value;
+                        abilities.abilities_history[Attributes.IndexOf(entry.Key)][entry.Key][secondaryActivity.name] += 1;
                     }
                 }
 
@@ -619,54 +533,9 @@ public class CharacterSave
                 {
                     int increaseSecondary = addedChars - mainActivity.affinities.Count;
                     foreach(KeyValuePair<string, int> entry in secondaryActivity.affinities) {
-                        if (increaseSecondary > 0)
-                        {
-                            switch (entry.Key)
-                            {
-                                case "strength":
-                                    strength += entry.Value;
-                                    break;
-                                case "endu":
-                                    endu += entry.Value;
-                                    break;
-                                case "body":
-                                    body += entry.Value;
-                                    break;
-                                case "speed":
-                                    speed += entry.Value;
-                                    break;
-                                case "dexte":
-                                    dexte += entry.Value;
-                                    break;
-                                case "percept":
-                                    percept += entry.Value;
-                                    break;
-                                case "accu":
-                                    accu += entry.Value;
-                                    break;
-                                case "autonomy":
-                                    autonomy += entry.Value;
-                                    break;
-                                case "spirit":
-                                    spirit += entry.Value;
-                                    break;
-                                case "social":
-                                    social += entry.Value;
-                                    break;
-                                case "mental":
-                                    mental += entry.Value;
-                                    break;
-                                case "lang":
-                                    lang += entry.Value;
-                                    break;
-                                default:
-                                    Debug.Log("secondary affinity gain failed");
-                                    break;
-                            }
-                            increaseSecondary--;
-                        }
-                        else
-                            break;
+                            abilities.affinities[secondaryActivity.name] += 1;
+                            abilities.abilities[entry.Key] += entry.Value;
+                            abilities.abilities_history[Attributes.IndexOf(entry.Key)][entry.Key][secondaryActivity.name] += 1;
                     }
                 }
 
@@ -712,68 +581,7 @@ public class CharacterSave
         }
 
     }
-
-    public void SetBaseStats()
-    {
-        List<string> Attributes = new List<string>();
-        Attributes.Add("strength");
-        Attributes.Add("endu");
-        Attributes.Add("body");
-        Attributes.Add("speed");
-        Attributes.Add("dexte");
-        Attributes.Add("percept");
-        Attributes.Add("accu");
-        Attributes.Add("autonomy");
-        Attributes.Add("spirit");
-        Attributes.Add("social");
-        Attributes.Add("mental");
-        Attributes.Add("lang");
-        foreach (string attr in Attributes)
-        {
-            switch (attr)
-            {
-                case "strength":
-                    strength += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "endu":
-                    endu += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "body":
-                    body += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "speed":
-                    speed += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "dexte":
-                    dexte += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "percept":
-                    percept += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "accu":
-                    accu += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "autonomy":
-                    autonomy += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "spirit":
-                    spirit += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "social":
-                    social += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "mental":
-                    mental += UnityEngine.Random.Range(20, 31);
-                    break;
-                case "lang":
-                    lang += UnityEngine.Random.Range(20, 31);
-                    break;
-                default:
-                    Debug.Log("Failed base stats gen");
-                    break;
-            }
-        }
-    }
+    
 
     public void SetAge()
     {

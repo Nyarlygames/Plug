@@ -143,6 +143,10 @@ public class RatioFactory {
     public int simulate_activity_secondary_successmax = 10;
     public int simulate_activity_secondary_successmin = 6;
 
+    public int birth_point_min = 20;
+    public int birth_point_max = 30;
+
+
     public int growing_point_min = 1;
     public int growing_point_max = 2;
     public int growing_stats_min = 8;

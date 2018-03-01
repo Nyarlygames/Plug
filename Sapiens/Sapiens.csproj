@@ -300,6 +300,7 @@
     <Compile Include="Assets\PanelUI.cs" />
     <Compile Include="Assets\PlayMenuController.cs" />
     <Compile Include="Assets\ResourcesPanelScript.cs" />
+    <Compile Include="Assets\Scripts\AbilitiesStruct.cs" />
     <Compile Include="Assets\Scripts\ActivityStruct.cs" />
     <Compile Include="Assets\Scripts\AgeStruct.cs" />
     <Compile Include="Assets\Scripts\CameraGO.cs" />

@@ -295,9 +295,31 @@ public class GameManager : MonoBehaviour
         newman.Pic_jewels = cs.Pic_jewels;
         newman.Pic_paints = cs.Pic_paints;
         newman.SetActivitiesList();
-        newman.SetBaseStats();
+        newman.SetAbilities();
         newman.next = RF.level_basegrowing;
         newman.GainTime(cs.age, true);
+        string debugline = "";
+        foreach (KeyValuePair<string, int> stat in newman.abilities.abilities)
+        {
+            debugline += "\nchar " + name + " => stats: " + stat.Key + " / " + stat.Value;
+        }
+        debugline += "\n";
+        foreach (KeyValuePair<string, int> stat in newman.abilities.affinities)
+        {
+            debugline += "\nchar " + name + " => manualpoints: " + stat.Key + " / " + stat.Value;
+        }
+        debugline += "\n";
+        for (int i = 0; i < newman.abilities.abilities_history.Count; i++)
+        {
+            foreach (KeyValuePair<string, IDictionary<string, int>> stat in newman.abilities.abilities_history[i])
+            {
+                foreach (KeyValuePair<string, int> statact in stat.Value)
+                {
+                    debugline += "\nchar " + name + " => stat: " + stat.Key + " / activity :  " + statact.Key + " / value : " + statact.Value;
+                }
+            }
+        }
+        Debug.Log(debugline);
         newman.food = ((newman.strength * RF.ratio_food_strength) + (newman.body * RF.ratio_food_body) + (newman.endu * RF.ratio_food_endu)) / 100;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
