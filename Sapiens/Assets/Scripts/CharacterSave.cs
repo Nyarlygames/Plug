@@ -289,6 +289,7 @@ public class CharacterSave
 
         if ((int)Time.timeSinceLevelLoad / 24 + addedTime.hours >= 24) // TODO : if age tribe + hours > day
             newdays++;
+        // TODO-bis : do if sup year ? hmm.. nope ?
         time += addedTime.hours;
         while (newdays > 0)
         {

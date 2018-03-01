@@ -29,7 +29,7 @@ public class PanelDebug : MonoBehaviour
         CharName = GameObject.Find("Debug_CharCreateNameText").GetComponent<Text>();
         CharAge = GameObject.Find("Debug_CharCreateAgeText").GetComponent<Text>();
         SkipYears = GameObject.Find("Debug_SkipYearsT").GetComponent<Text>();
-        //SkipDays = GameObject.Find("Debug_SkipDaysT").GetComponent<Text>();
+        SkipDays = GameObject.Find("Debug_SkipDaysT").GetComponent<Text>();
         //SkipHours = GameObject.Find("Debug_SkipHoursT").GetComponent<Text>();
         TimeSlider.onValueChanged.AddListener(delegate {
             ScaleChange(TimeSlider);
@@ -76,19 +76,39 @@ public class PanelDebug : MonoBehaviour
     {
         try
         {
-         /*   int year = Convert.ToInt32(SkipYears.text);
-            foreach(CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
+            int days = Convert.ToInt32(SkipDays.text);
+            foreach (CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
             {
-                float xpacc = chara.SkipYear(year);
-                chara.next = chara.SkipStats(xpacc, chara.next);
+                AgeStruct addedTime = new AgeStruct();
+                addedTime.days = days;
+                chara.GainTime(addedTime, true); // TODO : switch when non automated activities
             }
-            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += year * 365 * 24;
+            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += days * 24;
             GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.SetAge();
-            GameObject.Find("GameManager").GetComponent<GameManager>().timeSinceReload += year * 365 * 24;
-            Debug.Log("skipped : " + year + " years");*/
+            GameObject.Find("GameManager").GetComponent<GameManager>().timeSinceReload += days * 24;
+            Debug.Log("skipped : " + days + " days");
         }
         catch (FormatException)
         {
+            Debug.Log("skip error : wrong days number");
+        }
+        try
+        {
+            int years = Convert.ToInt32(SkipYears.text);
+            foreach (CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
+            {
+                AgeStruct addedTime = new AgeStruct();
+                addedTime.years = years;
+                chara.GainTime(addedTime, true); // TODO : switch when non automated activities
+            }
+            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += years * 365 * 24;
+            GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.SetAge();
+            GameObject.Find("GameManager").GetComponent<GameManager>().timeSinceReload += years * 365 * 24;
+            Debug.Log("skipped : " + years + " years");
+        }
+        catch (FormatException)
+        {
+            Debug.Log("skip error : wrong years number");
 
         }
     }
