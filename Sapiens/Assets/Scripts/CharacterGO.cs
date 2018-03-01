@@ -18,10 +18,11 @@ public class CharacterGO : MonoBehaviour {
         SetAge(charCurrent.time);
         if (curAge.days > charCurrent.age.days) // new day
         {
-            charCurrent.DailyXpUp();
+            //charCurrent.DailyXpUp();
             charCurrent.SetAge();
         }
     }
+
 
     public void SetAge(float chartime)
     {

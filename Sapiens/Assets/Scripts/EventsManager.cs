@@ -63,7 +63,7 @@ public class EventsManager : MonoBehaviour {
                             // unrecognizable resource
                             break;
                     }
-                    cs.AddActivityGain(e.obj.modifiers["activity"]);
+                    //cs.AddActivityGain(e.obj.modifiers["activity"]);
                  }
             }
             // else not a gain or not a resource

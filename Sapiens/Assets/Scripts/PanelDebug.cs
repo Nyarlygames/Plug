@@ -76,7 +76,7 @@ public class PanelDebug : MonoBehaviour
     {
         try
         {
-            int year = Convert.ToInt32(SkipYears.text);
+         /*   int year = Convert.ToInt32(SkipYears.text);
             foreach(CharacterSave chara in GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
             {
                 float xpacc = chara.SkipYear(year);
@@ -85,7 +85,7 @@ public class PanelDebug : MonoBehaviour
             GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.time += year * 365 * 24;
             GameObject.Find("GameManager").GetComponent<GameManager>().TribeGO.GetComponent<TribeGO>().tribeCurrent.SetAge();
             GameObject.Find("GameManager").GetComponent<GameManager>().timeSinceReload += year * 365 * 24;
-            Debug.Log("skipped : " + year + " years");
+            Debug.Log("skipped : " + year + " years");*/
         }
         catch (FormatException)
         {

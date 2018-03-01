@@ -261,7 +261,7 @@ public class GameManager : MonoBehaviour
 
     public void CreatePlayer(int id, string name, CharacterSave cs, TribeGO tribecomp, GameObject Tribe_Members)
     {
-        int countdown = cs.age.years;
+      /*  int countdown = cs.age.years;
         float xpacc = 0;
         if (countdown > RF.exp_adult_range)
         {
@@ -282,24 +282,22 @@ public class GameManager : MonoBehaviour
         {
             xpacc += RF.exp_baby_value * countdown *365;
         }
-        
+        */
 
         CharacterSave newman = new CharacterSave();
         newman.id = id;
         newman.name = name;
-        newman.time = cs.age.years * 24 * 365;
         newman.sexe = cs.sexe;
-        newman.xp = xpacc;
         newman.Pic_base = cs.Pic_base;
         newman.Pic_beard = cs.Pic_beard;
         newman.Pic_clothes = cs.Pic_clothes;
         newman.Pic_hairs = cs.Pic_hairs;
         newman.Pic_jewels = cs.Pic_jewels;
         newman.Pic_paints = cs.Pic_paints;
-        newman.SetAge();
-        newman.next = 150.0f;
-        newman.next = newman.SkipStats(newman.xp, newman.next);
-        newman = simulateActivity(newman);
+        newman.SetActivitiesList();
+        newman.SetBaseStats();
+        newman.next = RF.level_basegrowing;
+        newman.GainTime(cs.age, true);
         newman.food = ((newman.strength * RF.ratio_food_strength) + (newman.body * RF.ratio_food_body) + (newman.endu * RF.ratio_food_endu)) / 100;
         tribecomp.tribeCurrent.members.Add(newman);
         GameObject CharGO = new GameObject(newman.name);
@@ -405,7 +403,7 @@ public class GameManager : MonoBehaviour
         //CharGO.GetComponent<SpriteRenderer>().enabled = false;
         tribecomp.CharsGO.Add(CharGO);
     }
-
+    /*
     CharacterSave simulateActivity(CharacterSave cs)
     {
         List<string> Activities = new List<string>();
@@ -428,5 +426,5 @@ public class GameManager : MonoBehaviour
             }
         }
         return cs;
-    }
+    }*/
 }

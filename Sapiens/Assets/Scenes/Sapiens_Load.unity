@@ -411,7 +411,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.19 (22/02/2018)'
+  m_Text: 'Version : 0.0.20 (01/03/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4501,6 +4501,8 @@ MonoBehaviour:
         next: 0
         last: 0
         available: 0
+        attributesToSpend: 0
+        skillsToSpend: 0
         strength: 0
         endu: 0
         body: 0
@@ -4534,31 +4536,31 @@ MonoBehaviour:
         Pic_paints: 0
         Pic_jewels: 0
         Pic_beard: 0
-        gatherer: 1
-        hunter: 1
-        fisher: 1
-        sourcer: 0
-        cook: 1
-        manager: 1
-        parent: 1
-        mentor: 0
-        shaman: 0
-        skinner: 0
-        carver: 0
-        stoner: 0
-        protector: 0
-        leader: 0
-        scout: 0
-        rest: 0
-        pregnant: 0
-        gatherer_level: 0
-        gatherer_xp: 0
-        hunter_level: 0
-        hunter_xp: 0
-        sourcer_level: 0
-        sourcer_xp: 0
-        fisher_level: 0
-        fisher_xp: 0
+        activities: []
+        mainActivity:
+          name: 
+          level: 0
+          xp: 0
+          status: 0
+          statusPexHigh: 0
+          xpUp: 0
+          xpCurrent: 0
+          nextLevel: 0
+          ratiolvl: 0
+          ratiogain: 0
+          primaryActivity: 0
+        secondaryActivity:
+          name: 
+          level: 0
+          xp: 0
+          status: 0
+          statusPexHigh: 0
+          xpUp: 0
+          xpCurrent: 0
+          nextLevel: 0
+          ratiolvl: 0
+          ratiogain: 0
+          primaryActivity: 0
         RF:
           exp_baby_range: 10
           exp_baby_value: 1
@@ -4566,37 +4568,118 @@ MonoBehaviour:
           exp_teen_value: 2
           exp_adult_range: 35
           exp_adult_value: 0.5
-          level_baserequirement: 150
-          level_growth: 10
-          level_training: 20
+          exp_senior_range: 35
+          exp_senior_value: 0.5
+          level_basegrowing: 150
+          level_basetraining: 150
+          level_basemastering: 150
           ratio_growth: 1.2
           ratio_training: 1.1
           ratio_mastering: 1
           tribe_sightradius: 5
-          exp_gatherer_lvlgain: 2
-          exp_gatherer_nextlvl: 350
-          exp_gatherer_levelupratio: 0.1
-          exp_gatherer_nextlvlratio: 1.1
-          exp_hunter_lvlgain: 2
-          exp_hunter_nextlvl: 350
-          exp_hunter_levelupratio: 0.1
-          exp_hunter_nextlvlratio: 1.1
-          exp_fisher_lvlgain: 2
-          exp_fisher_nextlvl: 350
-          exp_fisher_levelupratio: 0.1
-          exp_fisher_nextlvlratio: 1.1
-          exp_sourcer_lvlgain: 2
-          exp_sourcer_levelupratio: 0.1
-          exp_sourcer_nextlvl: 350
-          exp_sourcer_nextlvlratio: 1.1
+          exp_gatherer_basegain: 2
+          exp_gatherer_baselvl: 400
+          exp_gatherer_ratiogain: -0.1
+          exp_gatherer_ratiolvl: 1.1
+          exp_hunter_basegain: 2
+          exp_hunter_baselvl: 400
+          exp_hunter_ratiogain: -0.1
+          exp_hunter_ratiolvl: 1.1
+          exp_fisher_basegain: 2
+          exp_fisher_baselvl: 400
+          exp_fisher_ratiogain: -0.1
+          exp_fisher_ratiolvl: 1.1
+          exp_sourcer_basegain: 2
+          exp_sourcer_baselvl: 400
+          exp_sourcer_ratiogain: -0.1
+          exp_sourcer_ratiolvl: 1.1
+          exp_cook_basegain: 1.5
+          exp_cook_baselvl: 250
+          exp_cook_ratiogain: -0.1
+          exp_cook_ratiolvl: 1.1
+          exp_manager_basegain: 1.5
+          exp_manager_baselvl: 250
+          exp_manager_ratiogain: -0.1
+          exp_manager_ratiolvl: 1.1
+          exp_mentor_basegain: 1.5
+          exp_mentor_baselvl: 250
+          exp_mentor_ratiogain: -0.1
+          exp_mentor_ratiolvl: 1.1
+          exp_sage_basegain: 1.5
+          exp_sage_baselvl: 300
+          exp_sage_ratiogain: -0.1
+          exp_sage_ratiolvl: 1.1
+          exp_shaman_basegain: 1.5
+          exp_shaman_baselvl: 450
+          exp_shaman_ratiogain: -0.1
+          exp_shaman_ratiolvl: 1.2
+          exp_skincraft_basegain: 1.5
+          exp_skincraft_baselvl: 400
+          exp_skincraft_ratiogain: -0.1
+          exp_skincraft_ratiolvl: 1.2
+          exp_woodcraft_basegain: 1.5
+          exp_woodcraft_baselvl: 400
+          exp_woodcraft_ratiogain: -0.1
+          exp_woodcraft_ratiolvl: 1.2
+          exp_stonecraft_basegain: 1.5
+          exp_stonecraft_baselvl: 400
+          exp_stonecraft_ratiogain: -0.1
+          exp_stonecraft_ratiolvl: 1.2
+          exp_protector_basegain: 2
+          exp_protector_baselvl: 400
+          exp_protector_ratiogain: -0.1
+          exp_protector_ratiolvl: 1.1
+          exp_leader_basegain: 2
+          exp_leader_baselvl: 450
+          exp_leader_ratiogain: -0.1
+          exp_leader_ratiolvl: 1.1
+          exp_scout_basegain: 2
+          exp_scout_baselvl: 400
+          exp_scout_ratiogain: -0.1
+          exp_scout_ratiolvl: 1.1
+          exp_pregnant_basegain: 2
           ratio_food_strength: 0.8
           ratio_food_body: 0.8
           ratio_food_endu: 0.4
           prereq_source_endu: 60
           prereq_source_percept: 60
-          prereq_mentor_intel: 80
+          prereq_mentor_spirit: 80
           prereq_mentor_lang: 75
+          prereq_gatherHigh_endu: 70
+          prereq_gatherHigh_percept: 65
+          prereq_gatherHigh_auto: 65
+          prereq_fishHigh_dexte: 70
+          prereq_fishHigh_strength: 65
+          prereq_fishHigh_auto: 65
+          prereq_huntHigh_endu: 75
+          prereq_huntHigh_percept: 65
+          prereq_huntHigh_accu: 65
+          prereq_huntHigh_auto: 65
+          prereq_sourceHigh_percept: 75
+          prereq_sourceHigh_endu: 65
+          prereq_sourceHigh_auto: 65
+          prereq_cookHigh_social: 65
+          prereq_cookHigh_spirit: 65
+          prereq_cookHigh_dexte: 65
+          simulate_activity_successmax: 10
+          simulate_activity_successmin: 8
+          simulate_activity_secondary_successmax: 10
+          simulate_activity_secondary_successmin: 6
+          growing_point_min: 1
+          growing_point_max: 2
+          growing_stats_min: 8
+          growing_stats_max: 10
+          training_point_min: 2
+          training_point_max: 3
+          training_stats_min: 6
+          training_stats_max: 10
+          mastering_point_min: 2
+          mastering_point_max: 5
+          mastering_stats_min: 4
+          mastering_stats_max: 6
           adult_age: 15
+        xpactivity: 0
+        xpauto: 0
       gatherers: []
       fishers: []
       hunters: []
@@ -4621,36 +4704,115 @@ MonoBehaviour:
         exp_teen_value: 2
         exp_adult_range: 35
         exp_adult_value: 0.5
-        level_baserequirement: 150
-        level_growth: 10
-        level_training: 20
+        exp_senior_range: 35
+        exp_senior_value: 0.5
+        level_basegrowing: 150
+        level_basetraining: 150
+        level_basemastering: 150
         ratio_growth: 1.2
         ratio_training: 1.1
         ratio_mastering: 1
         tribe_sightradius: 2.3
-        exp_gatherer_lvlgain: 2
-        exp_gatherer_nextlvl: 350
-        exp_gatherer_levelupratio: 0.1
-        exp_gatherer_nextlvlratio: 1.1
-        exp_hunter_lvlgain: 2
-        exp_hunter_nextlvl: 350
-        exp_hunter_levelupratio: 0.1
-        exp_hunter_nextlvlratio: 1.1
-        exp_fisher_lvlgain: 2
-        exp_fisher_nextlvl: 350
-        exp_fisher_levelupratio: 0.1
-        exp_fisher_nextlvlratio: 1.1
-        exp_sourcer_lvlgain: 2
-        exp_sourcer_levelupratio: 0.1
-        exp_sourcer_nextlvl: 350
-        exp_sourcer_nextlvlratio: 1.1
+        exp_gatherer_basegain: 2
+        exp_gatherer_baselvl: 400
+        exp_gatherer_ratiogain: -0.1
+        exp_gatherer_ratiolvl: 1.1
+        exp_hunter_basegain: 2
+        exp_hunter_baselvl: 400
+        exp_hunter_ratiogain: -0.1
+        exp_hunter_ratiolvl: 1.1
+        exp_fisher_basegain: 2
+        exp_fisher_baselvl: 400
+        exp_fisher_ratiogain: -0.1
+        exp_fisher_ratiolvl: 1.1
+        exp_sourcer_basegain: 2
+        exp_sourcer_baselvl: 400
+        exp_sourcer_ratiogain: -0.1
+        exp_sourcer_ratiolvl: 1.1
+        exp_cook_basegain: 1.5
+        exp_cook_baselvl: 250
+        exp_cook_ratiogain: -0.1
+        exp_cook_ratiolvl: 1.1
+        exp_manager_basegain: 1.5
+        exp_manager_baselvl: 250
+        exp_manager_ratiogain: -0.1
+        exp_manager_ratiolvl: 1.1
+        exp_mentor_basegain: 1.5
+        exp_mentor_baselvl: 250
+        exp_mentor_ratiogain: -0.1
+        exp_mentor_ratiolvl: 1.1
+        exp_sage_basegain: 1.5
+        exp_sage_baselvl: 300
+        exp_sage_ratiogain: -0.1
+        exp_sage_ratiolvl: 1.1
+        exp_shaman_basegain: 1.5
+        exp_shaman_baselvl: 450
+        exp_shaman_ratiogain: -0.1
+        exp_shaman_ratiolvl: 1.2
+        exp_skincraft_basegain: 1.5
+        exp_skincraft_baselvl: 400
+        exp_skincraft_ratiogain: -0.1
+        exp_skincraft_ratiolvl: 1.2
+        exp_woodcraft_basegain: 1.5
+        exp_woodcraft_baselvl: 400
+        exp_woodcraft_ratiogain: -0.1
+        exp_woodcraft_ratiolvl: 1.2
+        exp_stonecraft_basegain: 1.5
+        exp_stonecraft_baselvl: 400
+        exp_stonecraft_ratiogain: -0.1
+        exp_stonecraft_ratiolvl: 1.2
+        exp_protector_basegain: 2
+        exp_protector_baselvl: 400
+        exp_protector_ratiogain: -0.1
+        exp_protector_ratiolvl: 1.1
+        exp_leader_basegain: 2
+        exp_leader_baselvl: 450
+        exp_leader_ratiogain: -0.1
+        exp_leader_ratiolvl: 1.1
+        exp_scout_basegain: 2
+        exp_scout_baselvl: 400
+        exp_scout_ratiogain: -0.1
+        exp_scout_ratiolvl: 1.1
+        exp_pregnant_basegain: 2
         ratio_food_strength: 0.8
         ratio_food_body: 0.8
         ratio_food_endu: 0.4
         prereq_source_endu: 60
         prereq_source_percept: 60
-        prereq_mentor_intel: 80
+        prereq_mentor_spirit: 80
         prereq_mentor_lang: 75
+        prereq_gatherHigh_endu: 70
+        prereq_gatherHigh_percept: 65
+        prereq_gatherHigh_auto: 65
+        prereq_fishHigh_dexte: 70
+        prereq_fishHigh_strength: 65
+        prereq_fishHigh_auto: 65
+        prereq_huntHigh_endu: 75
+        prereq_huntHigh_percept: 65
+        prereq_huntHigh_accu: 65
+        prereq_huntHigh_auto: 65
+        prereq_sourceHigh_percept: 75
+        prereq_sourceHigh_endu: 65
+        prereq_sourceHigh_auto: 65
+        prereq_cookHigh_social: 65
+        prereq_cookHigh_spirit: 65
+        prereq_cookHigh_dexte: 65
+        simulate_activity_successmax: 10
+        simulate_activity_successmin: 8
+        simulate_activity_secondary_successmax: 10
+        simulate_activity_secondary_successmin: 6
+        growing_point_min: 1
+        growing_point_max: 2
+        growing_stats_min: 8
+        growing_stats_max: 10
+        training_point_min: 2
+        training_point_max: 3
+        training_stats_min: 6
+        training_stats_max: 10
+        mastering_point_min: 2
+        mastering_point_max: 5
+        mastering_stats_min: 4
+        mastering_stats_max: 6
         adult_age: 15
     mapsave:
       sizex: 0
@@ -4683,36 +4845,115 @@ MonoBehaviour:
     exp_teen_value: 2
     exp_adult_range: 35
     exp_adult_value: 0.5
-    level_baserequirement: 150
-    level_growth: 10
-    level_training: 20
+    exp_senior_range: 35
+    exp_senior_value: 0.5
+    level_basegrowing: 150
+    level_basetraining: 150
+    level_basemastering: 150
     ratio_growth: 1.2
     ratio_training: 1.1
     ratio_mastering: 1
     tribe_sightradius: 2.3
-    exp_gatherer_lvlgain: 2
-    exp_gatherer_nextlvl: 350
-    exp_gatherer_levelupratio: 0.1
-    exp_gatherer_nextlvlratio: 1.1
-    exp_hunter_lvlgain: 2
-    exp_hunter_nextlvl: 350
-    exp_hunter_levelupratio: 0.1
-    exp_hunter_nextlvlratio: 1.1
-    exp_fisher_lvlgain: 2
-    exp_fisher_nextlvl: 350
-    exp_fisher_levelupratio: 0.1
-    exp_fisher_nextlvlratio: 1.1
-    exp_sourcer_lvlgain: 2
-    exp_sourcer_levelupratio: 0.1
-    exp_sourcer_nextlvl: 350
-    exp_sourcer_nextlvlratio: 1.1
+    exp_gatherer_basegain: 2
+    exp_gatherer_baselvl: 400
+    exp_gatherer_ratiogain: -0.1
+    exp_gatherer_ratiolvl: 1.1
+    exp_hunter_basegain: 2
+    exp_hunter_baselvl: 400
+    exp_hunter_ratiogain: -0.1
+    exp_hunter_ratiolvl: 1.1
+    exp_fisher_basegain: 2
+    exp_fisher_baselvl: 400
+    exp_fisher_ratiogain: -0.1
+    exp_fisher_ratiolvl: 1.1
+    exp_sourcer_basegain: 2
+    exp_sourcer_baselvl: 400
+    exp_sourcer_ratiogain: -0.1
+    exp_sourcer_ratiolvl: 1.1
+    exp_cook_basegain: 1.5
+    exp_cook_baselvl: 250
+    exp_cook_ratiogain: -0.1
+    exp_cook_ratiolvl: 1.1
+    exp_manager_basegain: 1.5
+    exp_manager_baselvl: 250
+    exp_manager_ratiogain: -0.1
+    exp_manager_ratiolvl: 1.1
+    exp_mentor_basegain: 1.5
+    exp_mentor_baselvl: 250
+    exp_mentor_ratiogain: -0.1
+    exp_mentor_ratiolvl: 1.1
+    exp_sage_basegain: 1.5
+    exp_sage_baselvl: 300
+    exp_sage_ratiogain: -0.1
+    exp_sage_ratiolvl: 1.1
+    exp_shaman_basegain: 1.5
+    exp_shaman_baselvl: 450
+    exp_shaman_ratiogain: -0.1
+    exp_shaman_ratiolvl: 1.2
+    exp_skincraft_basegain: 1.5
+    exp_skincraft_baselvl: 400
+    exp_skincraft_ratiogain: -0.1
+    exp_skincraft_ratiolvl: 1.2
+    exp_woodcraft_basegain: 1.5
+    exp_woodcraft_baselvl: 400
+    exp_woodcraft_ratiogain: -0.1
+    exp_woodcraft_ratiolvl: 1.2
+    exp_stonecraft_basegain: 1.5
+    exp_stonecraft_baselvl: 400
+    exp_stonecraft_ratiogain: -0.1
+    exp_stonecraft_ratiolvl: 1.2
+    exp_protector_basegain: 2
+    exp_protector_baselvl: 400
+    exp_protector_ratiogain: -0.1
+    exp_protector_ratiolvl: 1.1
+    exp_leader_basegain: 2
+    exp_leader_baselvl: 450
+    exp_leader_ratiogain: -0.1
+    exp_leader_ratiolvl: 1.1
+    exp_scout_basegain: 2
+    exp_scout_baselvl: 400
+    exp_scout_ratiogain: -0.1
+    exp_scout_ratiolvl: 1.1
+    exp_pregnant_basegain: 2
     ratio_food_strength: 0.8
     ratio_food_body: 0.8
     ratio_food_endu: 0.4
     prereq_source_endu: 60
     prereq_source_percept: 60
-    prereq_mentor_intel: 80
+    prereq_mentor_spirit: 80
     prereq_mentor_lang: 75
+    prereq_gatherHigh_endu: 70
+    prereq_gatherHigh_percept: 65
+    prereq_gatherHigh_auto: 65
+    prereq_fishHigh_dexte: 70
+    prereq_fishHigh_strength: 65
+    prereq_fishHigh_auto: 65
+    prereq_huntHigh_endu: 75
+    prereq_huntHigh_percept: 65
+    prereq_huntHigh_accu: 65
+    prereq_huntHigh_auto: 65
+    prereq_sourceHigh_percept: 75
+    prereq_sourceHigh_endu: 65
+    prereq_sourceHigh_auto: 65
+    prereq_cookHigh_social: 65
+    prereq_cookHigh_spirit: 65
+    prereq_cookHigh_dexte: 65
+    simulate_activity_successmax: 10
+    simulate_activity_successmin: 8
+    simulate_activity_secondary_successmax: 10
+    simulate_activity_secondary_successmin: 6
+    growing_point_min: 1
+    growing_point_max: 2
+    growing_stats_min: 8
+    growing_stats_max: 10
+    training_point_min: 2
+    training_point_max: 3
+    training_stats_min: 6
+    training_stats_max: 10
+    mastering_point_min: 2
+    mastering_point_max: 5
+    mastering_stats_min: 4
+    mastering_stats_max: 6
     adult_age: 15
   map:
     sizex: 0
