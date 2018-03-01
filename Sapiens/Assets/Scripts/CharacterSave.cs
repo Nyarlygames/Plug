@@ -67,6 +67,7 @@ public class CharacterSave
     bool availablelock = false;
     public List<ActivityStruct> activities = new List<ActivityStruct>();
     public AbilitiesStruct abilities = new AbilitiesStruct();
+    public IDictionary<string, int> activity_history = new Dictionary<string, int>();
     public ActivityStruct mainActivity = new ActivityStruct();
     public ActivityStruct secondaryActivity = new ActivityStruct();
     public RatioFactory RF = new RatioFactory();
@@ -398,6 +399,10 @@ public class CharacterSave
             if (successRate <= RF.simulate_activity_successmin)
             {
                 ActivityStruct primaryPick = activities.FindAll(act => ((act.status == true) && (act.primaryActivity == true)))[pickedAct];
+                if (activity_history.ContainsKey(primaryPick.name))
+                    activity_history[primaryPick.name] += 1;
+                else
+                    activity_history.Add(primaryPick.name, 1);
                 GainActivityXP(primaryPick);
                 GainXPActivity(primaryPick);
             }
@@ -409,6 +414,10 @@ public class CharacterSave
             if (successRate <= RF.simulate_activity_secondary_successmin)
             {
                 ActivityStruct secondaryPick = activities.FindAll(act => ((act.status == true) && (act.primaryActivity == false)))[pickedAct];
+                if (activity_history.ContainsKey(secondaryPick.name))
+                    activity_history[secondaryPick.name] += 1;
+                else
+                    activity_history.Add(secondaryPick.name, 1);
                 GainActivityXP(secondaryPick);
                 GainXPActivity(secondaryPick);
             }
@@ -508,7 +517,7 @@ public class CharacterSave
                 break;
             case "mastering":
                 addedChars = UnityEngine.Random.Range(RF.mastering_point_min, RF.mastering_stats_max+1);
-                foreach(ActivityStruct act in activities)
+                /*foreach(ActivityStruct act in activities)
                 {
                     if ((act.primaryActivity == true) && (act.xp >= mainActivity.xp))
                     {
@@ -518,14 +527,30 @@ public class CharacterSave
                     {
                         secondaryActivity = act; // select biggest xp secondary
                     }
+                }*/
+                int minmainact = -1;
+                int minsecact = -1;
+                foreach (KeyValuePair<string, int> act in activity_history)
+                {
+                    if ((activities.Find(actrank => actrank.name == act.Key).primaryActivity == true) && (activity_history[act.Key] >= minmainact))
+                    {
+                        minmainact = activity_history[act.Key];
+                        mainActivity = activities.Find(actrank => actrank.name == act.Key);
+                    }
+                    if ((activities.Find(actrank => actrank.name == act.Key).primaryActivity == false) && (activity_history[act.Key] >= minsecact))
+                    {
+                        minsecact = activity_history[act.Key];
+                        mainActivity = activities.Find(actrank => actrank.name == act.Key);
+                    }
                 }
+                activity_history = new Dictionary<string, int>();
                 if (mainActivity.name != "")
                 {
                     foreach (KeyValuePair<string, int> entry in mainActivity.affinities)
                     {
-                        abilities.affinities[secondaryActivity.name] += 1;
+                        abilities.affinities[mainActivity.name] += 1;
                         abilities.abilities[entry.Key] += entry.Value;
-                        abilities.abilities_history[Attributes.IndexOf(entry.Key)][entry.Key][secondaryActivity.name] += 1;
+                        abilities.abilities_history[Attributes.IndexOf(entry.Key)][entry.Key][mainActivity.name] += 1;
                     }
                 }
 

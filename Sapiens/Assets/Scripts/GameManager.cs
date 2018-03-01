@@ -309,6 +309,11 @@ public class GameManager : MonoBehaviour
             debugline += "\nchar " + name + " => manualpoints: " + stat.Key + " / " + stat.Value;
         }
         debugline += "\n";
+        foreach (KeyValuePair<string, int> statact in newman.activity_history)
+        {
+            debugline += "\nchar " + name + " => activity: " + statact.Key + " / history number " + statact.Value;
+        }
+        debugline += "\n";
         for (int i = 0; i < newman.abilities.abilities_history.Count; i++)
         {
             foreach (KeyValuePair<string, IDictionary<string, int>> stat in newman.abilities.abilities_history[i])

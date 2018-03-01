@@ -485,7 +485,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.20.c (01/03/2018)'
+  m_Text: 'Version : 0.0.20.d (01/03/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4665,6 +4665,8 @@ MonoBehaviour:
           simulate_activity_successmin: 8
           simulate_activity_secondary_successmax: 10
           simulate_activity_secondary_successmin: 6
+          birth_point_min: 20
+          birth_point_max: 30
           growing_point_min: 1
           growing_point_max: 2
           growing_stats_min: 8
@@ -4801,6 +4803,8 @@ MonoBehaviour:
         simulate_activity_successmin: 8
         simulate_activity_secondary_successmax: 10
         simulate_activity_secondary_successmin: 6
+        birth_point_min: 20
+        birth_point_max: 30
         growing_point_min: 1
         growing_point_max: 2
         growing_stats_min: 8
@@ -4942,6 +4946,8 @@ MonoBehaviour:
     simulate_activity_successmin: 8
     simulate_activity_secondary_successmax: 10
     simulate_activity_secondary_successmin: 6
+    birth_point_min: 20
+    birth_point_max: 30
     growing_point_min: 1
     growing_point_max: 2
     growing_stats_min: 8
