@@ -204,6 +204,7 @@ public class SaveManagerScript {
                             break;
                     }
                 }
+
                 Vector3 placement = Vector3.zero;
                 switch (mapfile.orientation)
                 {
@@ -227,7 +228,35 @@ public class SaveManagerScript {
                         break;
                 }
                 tilego.GetComponent<Transform>().position = placement;
+                // Added ground
+                if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
+                {
+                    GameObject tilegoAdded = new GameObject("[" + y + "/" + x + "]");
+                    tilegoAdded.AddComponent<SpriteRenderer>();
+                    TileSetSave tilesetAdded = new TileSetSave();
+                    if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
+                    {
+                        foreach (TileSetsSave tss in mapfile.tilesets)
+                        {
+                            foreach (TileSetSave ts in tss.tilesets)
+                            {
+                                if ((mapfile.layer.tiles[y][x].addedid == tss.first + ts.id))
+                                {
+                                    tilesetAdded = ts;
+                                    tilegoAdded.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tilesetAdded.spritefile.Substring(0, tilesetAdded.spritefile.Length - 4));
+                                    break;
+                                }
+                            }
+                            if (tilesetAdded.id > 0)
+                                break;
+                        }
+                    }
+                    placement.z -= 1;
+                    tilegoAdded.GetComponent<Transform>().position = placement;
+                    //tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
+                }
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
+
                 
                 /* TRIGGERS */ // deleted because no need, triggers in objects is better for LD.
                 /*if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
@@ -437,6 +466,9 @@ public class SaveManagerScript {
                                 {
                                     tilesave.mapid = Convert.ToInt32(newid);
                                 }
+                                tilesave.posx = i;
+                                tilesave.posy = j;
+                                ground.tiles[j].Add(tilesave);
                             }
                             /*else if (ground.name == "Triggers")
                             {
@@ -450,9 +482,10 @@ public class SaveManagerScript {
                                 {
                                     tilesave.triggerid = Convert.ToInt32(newid);
                                 }
-                            }
+                            }*/
                             else if (ground.name == "AddedGround")
                             {
+                                // tile already created in ground.
                                 tilesave = ground.tiles[j][i];
                                 if (newid.IndexOf(",") > 0)
                                 {
@@ -463,15 +496,10 @@ public class SaveManagerScript {
                                 {
                                     tilesave.addedid = Convert.ToInt32(newid);
                                 }
-                            }*/
-                            ground.tiles[j].Add(tilesave);
-                            tilesave.posx = i;
-                            tilesave.posy = j;
+                            }
                         }
                         newid = reader.ReadLine();
                     }
-                    if (ground.name == "Ground")
-                        ground.tiles.Reverse();
                 }
             }
             if (line.Contains("<objectgroup"))
@@ -563,6 +591,7 @@ public class SaveManagerScript {
             }
             line = reader.ReadLine();
         }
+        map.layer.tiles.Reverse();
         reader.Close();
     }
 }
