@@ -149,7 +149,7 @@ public class NewGameController : MonoBehaviour {
         GameObject.Find("PreviousBase_B").GetComponent<Button>().onClick.AddListener(pbases_Click);
         GameObject.Find("NextPaint_B").GetComponent<Button>().onClick.AddListener(npaints_Click);
         GameObject.Find("PreviousPaint_B").GetComponent<Button>().onClick.AddListener(ppaints_Click);
-        GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(nclothes_Click);
+        GameObject.Find("NextClothes_B").GetComponent<Button>().onClick.AddListener(nclothes_Click);
         GameObject.Find("PreviousClothes_B").GetComponent<Button>().onClick.AddListener(pclothes_Click);
 
         newtribename = GameObject.Find("TribeName").GetComponent<Text>();
@@ -480,7 +480,7 @@ public class NewGameController : MonoBehaviour {
         if (paintsM.Length > 0)
             newpaints.GetComponent<Image>().sprite = paintsM[selected_paints];
         if (beardsM.Length > 0)
-            newjewels.GetComponent<Image>().sprite = beardsM[selected_jewels];
+            newbeards.GetComponent<Image>().sprite = beardsM[selected_jewels];
         newp.SetActive(true);
     }
     void LaunchButton_Click()
