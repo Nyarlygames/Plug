@@ -516,18 +516,7 @@ public class CharacterSave
                 }
                 break;
             case "mastering":
-                addedChars = UnityEngine.Random.Range(RF.mastering_point_min, RF.mastering_stats_max+1);
-                /*foreach(ActivityStruct act in activities)
-                {
-                    if ((act.primaryActivity == true) && (act.xp >= mainActivity.xp))
-                    {
-                        mainActivity = act; // select biggest xp activity
-                    }
-                    if ((act.primaryActivity == false) && (act.xp >= secondaryActivity.xp))
-                    {
-                        secondaryActivity = act; // select biggest xp secondary
-                    }
-                }*/
+                addedChars = UnityEngine.Random.Range(RF.mastering_stats_min, RF.mastering_stats_max+1);
                 int minmainact = -1;
                 int minsecact = -1;
                 foreach (KeyValuePair<string, int> act in activity_history)
