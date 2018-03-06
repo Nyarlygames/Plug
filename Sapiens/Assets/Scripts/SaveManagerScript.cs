@@ -379,7 +379,9 @@ public class SaveManagerScript {
                     placement = new Vector3((curObj.objectCur.x + curObj.objectCur.offsetx + curObj.objectCur.width / 2) / 100.0f, ((mapfile.sizey * mapfile.tilesizey) - ((curObj.objectCur.y + curObj.objectCur.offsety - curObj.objectCur.height / 2.0f))) / 100.0f, GM.ZObjects);
                     break;
             }
-            if (curObj.objectCur.modifiers.ContainsValue("trigger"))
+            if (curObj.objectCur.modifiers.ContainsKey("collider") && (curObj.objectCur.modifiers["collider"] == "true"))
+                tilego.AddComponent<BoxCollider2D>();
+            else if (curObj.objectCur.modifiers.ContainsValue("trigger"))
             {
                 Vector2 S = tilego.GetComponent<SpriteRenderer>().sprite.bounds.size;
                 tilego.AddComponent<BoxCollider2D>();
