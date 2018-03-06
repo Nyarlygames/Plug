@@ -5,6 +5,9 @@
   <image width="100" height="100" source="Camp.png"/>
  </tile>
  <tile id="1">
+  <properties>
+   <property name="collider" type="bool" value="true"/>
+  </properties>
   <image width="180" height="178" source="Sprite-Trees.png"/>
  </tile>
  <tile id="2">

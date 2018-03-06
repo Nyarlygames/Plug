@@ -50,9 +50,15 @@
   <image width="252" height="120" source="GRASS/Texture_Grass_12.png"/>
  </tile>
  <tile id="18">
+  <properties>
+   <property name="collider" type="bool" value="true"/>
+  </properties>
   <image width="252" height="120" source="Texture_Water_00.png"/>
  </tile>
  <tile id="19">
+  <properties>
+   <property name="collider" type="bool" value="true"/>
+  </properties>
   <image width="252" height="120" source="Texture_Water_Poisson.png"/>
  </tile>
 </tileset>

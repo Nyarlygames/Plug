@@ -204,6 +204,8 @@ public class SaveManagerScript {
                             break;
                     }
                 }
+                if (tileset.modifiers.ContainsKey("collider") && (tileset.modifiers["collider"] == "true"))
+                    tilego.AddComponent<BoxCollider2D>();
 
                 Vector3 placement = Vector3.zero;
                 switch (mapfile.orientation)
@@ -251,9 +253,11 @@ public class SaveManagerScript {
                                 break;
                         }
                     }
+                    if (tilesetAdded.modifiers.ContainsKey("collider") && (tilesetAdded.modifiers["collider"] == "true"))
+                        tilegoAdded.AddComponent<BoxCollider2D>();
                     placement.z -= 1;
                     tilegoAdded.GetComponent<Transform>().position = placement;
-                    //tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
+                    tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
                 }
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
 

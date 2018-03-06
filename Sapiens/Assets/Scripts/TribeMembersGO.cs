@@ -20,6 +20,7 @@ public class TribeMembersGO : MonoBehaviour {
         TribeTransform = gameObject.GetComponent<Transform>();
         gameObject.AddComponent<Rigidbody2D>();
         TribeBody = gameObject.GetComponent<Rigidbody2D>();
+        TribeBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         TribeBody.gravityScale = 0.0f;
     }
 	
