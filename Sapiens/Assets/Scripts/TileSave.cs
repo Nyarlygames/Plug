@@ -10,5 +10,5 @@ public class TileSave
     public int mapid = 0;
     public int addedid = 0;
     public int triggerid = 0;
-
+    public int visitState = 0;
 }

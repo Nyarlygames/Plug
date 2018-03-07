@@ -204,8 +204,10 @@ public class SaveManagerScript {
                             break;
                     }
                 }
+                tilego.AddComponent<BoxCollider2D>();
+                tilego.GetComponent<BoxCollider2D>().isTrigger = true;
                 if (tileset.modifiers.ContainsKey("collider") && (tileset.modifiers["collider"] == "true"))
-                    tilego.AddComponent<BoxCollider2D>();
+                    tilego.AddComponent<BoxCollider2D>().isTrigger = false;
 
                 Vector3 placement = Vector3.zero;
                 switch (mapfile.orientation)
@@ -253,15 +255,15 @@ public class SaveManagerScript {
                                 break;
                         }
                     }
+                    tilegoAdded.AddComponent<BoxCollider2D>();
+                    tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = true;
                     if (tilesetAdded.modifiers.ContainsKey("collider") && (tilesetAdded.modifiers["collider"] == "true"))
-                        tilegoAdded.AddComponent<BoxCollider2D>();
+                        tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = false;
                     placement.z -= 1;
                     tilegoAdded.GetComponent<Transform>().position = placement;
                     tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
                 }
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
-
-                
                 /* TRIGGERS */ // deleted because no need, triggers in objects is better for LD.
                 /*if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
                 {
