@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset name="Ground" tilewidth="500" tileheight="500" tilecount="18" columns="0">
+<tileset name="Ground" tilewidth="252" tileheight="120" tilecount="16" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
- <tile id="0" probability="0">
-  <image width="500" height="500" source="Texture_Grass.png"/>
- </tile>
- <tile id="1" probability="0">
-  <image width="500" height="500" source="Texture_Dirt.png"/>
- </tile>
  <tile id="4" probability="10">
   <image width="252" height="120" source="DESERT/Texture_Desert_00.png"/>
  </tile>
