@@ -10,15 +10,44 @@ public class ObjectGO : MonoBehaviour {
     GameManager GM;
     GameObject canvasinfo;
     public EventSave es;
+    SpriteRenderer objectrend;
+    Shader defaultShad;
+    Color defaultColor;
+    Color defaultColorVisited;
+
     // Use this for initialization
     void Start () {
+        enabled = false;
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+        objectrend = gameObject.GetComponent<SpriteRenderer>();
 
-        if (gameObject.tag == "trigger")
+
+        
+        defaultShad = objectrend.material.shader;
+        defaultColor = objectrend.material.color;
+        defaultColorVisited = new Color(defaultColor.r - 0.2f, defaultColor.g - 0.2f, defaultColor.b - 0.2f, defaultColor.a);
+        if (objectCur.visitState == 0)
+        {
+            Shader shaderGUItext = Shader.Find("GUI/Text Shader");
+            objectrend.material.shader = shaderGUItext;
+            objectrend.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+        }
+    }
+
+
+    void OnBecameVisible()
+    {
+        enabled = true;
+    }
+    private void OnBecameInvisible()
+    {
+        enabled = false;
+    }
+
+    // Update is called once per frame
+    void FixedUpdate () {
+
+        if ((gameObject.tag == "trigger") && (objectrend.isVisible == true))
         {
             foreach (GameObject radius in GameObject.FindGameObjectsWithTag("radius"))
             {
@@ -73,6 +102,42 @@ public class ObjectGO : MonoBehaviour {
                 canvasinfo.GetComponent<PanelTriggerInfo>().obj = objectCur;
                 canvasinfo.GetComponent<PanelTriggerInfo>().objGO = gameObject;
             }
+        }
+    }
+
+    public void SetVisited(int visit)
+    {
+        if (visit == 1)
+        {
+            objectrend.material.shader = defaultShad;
+            objectrend.color = defaultColor;
+        }
+        else if (visit == 2)
+        {
+            objectrend.material.shader = defaultShad;
+            objectrend.color = defaultColorVisited;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 1))
+        {
+            SetVisited(1);
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 1))
+        {
+            SetVisited(1);
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 2))
+        {
+            SetVisited(2);
         }
     }
 }

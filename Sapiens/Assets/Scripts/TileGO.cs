@@ -15,6 +15,7 @@ public class TileGO : MonoBehaviour
 
     void Start()
     {
+        enabled = false;
         tilerend = gameObject.GetComponent<SpriteRenderer>();
         defaultShad = tilerend.material.shader;
         defaultColor = tilerend.material.color;
@@ -26,6 +27,12 @@ public class TileGO : MonoBehaviour
             Shader shaderGUItext = Shader.Find("GUI/Text Shader");
             tilerend.material.shader = shaderGUItext;
             tilerend.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+            foreach (Transform child in transform)
+            {
+                SpriteRenderer childrend = child.GetComponent<SpriteRenderer>();
+                childrend.material.shader = shaderGUItext;
+                childrend.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+            }
         }
     }
 
@@ -35,11 +42,23 @@ public class TileGO : MonoBehaviour
         {
             tilerend.material.shader = defaultShad;
             tilerend.color = defaultColor;
+            foreach (Transform child in transform)
+            {
+                SpriteRenderer childrend = child.GetComponent<SpriteRenderer>();
+                childrend.material.shader = defaultShad;
+                childrend.color = defaultColor;
+            }
         }
         else if (visit == 2)
         {
             tilerend.material.shader = defaultShad;
             tilerend.color = defaultColorVisited;
+            foreach (Transform child in transform)
+            {
+                SpriteRenderer childrend = child.GetComponent<SpriteRenderer>();
+                childrend.material.shader = defaultShad;
+                childrend.color = defaultColorVisited;
+            }
         }
     }
     
@@ -48,27 +67,33 @@ public class TileGO : MonoBehaviour
         
     }
 
+    void OnBecameVisible()
+    {
+        enabled = true;
+    }
+    private void OnBecameInvisible()
+    {
+        enabled = false;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (tilerend.isVisible)
+        if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 1))
         {
-            if (collision.name == "Tribe_Radius")
-                SetVisited(1);
+            SetVisited(1);
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (tilerend.isVisible)
+        if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 1))
         {
-            if (collision.name == "Tribe_Radius")
                 SetVisited(1);
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (tilerend.isVisible)
+        if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 2))
         {
-            if (collision.name == "Tribe_Radius")
                 SetVisited(2);
         }
     }

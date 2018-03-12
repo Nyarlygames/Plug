@@ -236,7 +236,7 @@ public class SaveManagerScript {
                 if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
                 {
                     GameObject tilegoAdded = new GameObject("[" + y + "/" + x + "]");
-                    tilegoAdded.AddComponent<SpriteRenderer>();
+                    SpriteRenderer tileadrend = tilegoAdded.AddComponent<SpriteRenderer>();
                     TileSetSave tilesetAdded = new TileSetSave();
                     if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
                     {
@@ -247,8 +247,8 @@ public class SaveManagerScript {
                                 if ((mapfile.layer.tiles[y][x].addedid == tss.first + ts.id))
                                 {
                                     tilesetAdded = ts;
-                                    tilegoAdded.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tilesetAdded.spritefile.Substring(0, tilesetAdded.spritefile.Length - 4));
-                                    break;
+                                    tileadrend.sprite = Resources.Load<Sprite>("Map/" + tilesetAdded.spritefile.Substring(0, tilesetAdded.spritefile.Length - 4));
+                                    
                                 }
                             }
                             if (tilesetAdded.id > 0)
