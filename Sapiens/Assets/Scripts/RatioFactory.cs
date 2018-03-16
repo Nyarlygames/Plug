@@ -29,6 +29,8 @@ public class RatioFactory {
     public float ratio_mastering = 1.0f;
 
     public float tribe_sightradius = 2.3f;
+    public float trigger_radiusx = 3.0f;
+    public float trigger_radiusy = 4.8f;
 
     public float exp_gatherer_basegain = 2.0f;
     public float exp_gatherer_baselvl = 400.0f;

@@ -16,21 +16,23 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     Text Status;
     Text Status_List;
     Text UI_TriggerName;
-    Text UI_TriggerStatus;
     Text UI_TriggerCapacity;
     Text UI_TriggerCurrent;
     Text UI_TriggerResource;
-    Transform TriggerPos;
-    // Use this for initialization
+    Dropdown UI_Dropdown_Assign;
+    Dropdown UI_Dropdown_Remove;
+
     void Start ()
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         GameObject.Find("UI_TriggerAssign_B").GetComponent<Button>().onClick.AddListener(AssignMemberClick);
         GameObject.Find("UI_TriggerRemove_B").GetComponent<Button>().onClick.AddListener(RemoveMemberClick);
-        AssignList = GameObject.Find("UI_TriggerAssignName").GetComponent<InputField>();
-        RemoveList = GameObject.Find("UI_TriggerRemoveName").GetComponent<InputField>();
+        //AssignList = GameObject.Find("UI_TriggerAssignName").GetComponent<InputField>();
+       // RemoveList = GameObject.Find("UI_TriggerRemoveName").GetComponent<InputField>();
         RemovePanel = GameObject.Find("UI_TriggerInfoRemovePanel");
         AssignPanel = GameObject.Find("UI_TriggerInfoAssignPanel");
+        UI_Dropdown_Remove = GameObject.Find("UI_TriggerRemoveDropdown").GetComponent<Dropdown>();
+        UI_Dropdown_Assign = GameObject.Find("UI_TriggerAssignDropdown").GetComponent<Dropdown>();
         Status = GameObject.Find("UI_TriggerStatus").GetComponent<Text>();
         Status_List = GameObject.Find("UI_TriggerList").GetComponent<Text>();
         UI_TriggerName = GameObject.Find("UI_TriggerName").GetComponent<Text>();
@@ -39,6 +41,18 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
         UI_TriggerResource = GameObject.Find("UI_TriggerResource").GetComponent<Text>();
         AssignPanel.SetActive(false);
         RemovePanel.SetActive(false);
+
+        
+        List<Dropdown.OptionData> DDopt = new List<Dropdown.OptionData>();
+        foreach (CharacterSave chara in GM.TribeGO.GetComponent<TribeGO>().tribeCurrent.members)
+        {
+            Dropdown.OptionData opt = new Dropdown.OptionData();
+            opt.text = chara.name;
+            DDopt.Add(opt);
+        }
+        UI_Dropdown_Assign.options = DDopt;
+        UI_Dropdown_Remove.options = DDopt;
+
     }
 	
 	// Update is called once per frame
@@ -81,7 +95,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
         TribeGO tribe = GM.TribeGO.GetComponent<TribeGO>();
         if (curE != null)
         {
-            CharacterSave removechar = tribe.tribeCurrent.members.Find(cs => cs.name == RemoveList.text);
+            CharacterSave removechar = tribe.tribeCurrent.members.Find(cs => cs.name == UI_Dropdown_Remove.captionText.text);
             if (removechar != null)
             {
                 if (curE.cs.Contains(removechar))
@@ -134,7 +148,7 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
         TribeGO tribe = GM.TribeGO.GetComponent<TribeGO>();
         if (curE != null)
         {
-            CharacterSave addedchar = tribe.tribeCurrent.members.Find(cs => cs.name == AssignList.text);
+            CharacterSave addedchar = tribe.tribeCurrent.members.Find(cs => cs.name == UI_Dropdown_Assign.captionText.text);
             if (addedchar != null)
             {
                 if (!curE.cs.Contains(addedchar))
@@ -185,6 +199,6 @@ public class PanelTriggerInfo : MonoBehaviour, IPointerExitHandler
     }
     public void OnPointerExit(PointerEventData eventData)
     {
-            Destroy(gameObject);
+            //Destroy(gameObject);
     }
 }

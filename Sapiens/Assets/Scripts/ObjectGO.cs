@@ -34,6 +34,44 @@ public class ObjectGO : MonoBehaviour {
         }
     }
 
+    public void addTrigger(GameObject tilego, Sprite Radius, List<ObjectSave> objectssave)
+    {
+        //   Vector2 S = tilego.GetComponent<SpriteRenderer>().sprite.bounds.size;
+        RatioFactory RF = new RatioFactory();
+        Vector2 Triggersize = new Vector2(RF.trigger_radiusx, RF.trigger_radiusy);
+        tilego.AddComponent<BoxCollider2D>();
+        tilego.GetComponent<BoxCollider2D>().size = Triggersize;
+        tilego.GetComponent<BoxCollider2D>().isTrigger = true;
+        GameObject trigger_radius = new GameObject(tilego.name + "_radius");
+        trigger_radius.AddComponent<SpriteRenderer>();
+        trigger_radius.GetComponent<SpriteRenderer>().sprite = Radius;
+        trigger_radius.GetComponent<Transform>().localScale = Triggersize/5;
+        trigger_radius.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
+        tilego.tag = "trigger";
+
+        if ((objectCur.modifiers.ContainsKey("capacity_max")) && (objectCur.modifiers.ContainsKey("capacity_min")) && (objectssave.Count == 0))
+        {
+            if (Convert.ToInt32(objectCur.modifiers["capacity_max"]) == -1)
+            {
+                if (Convert.ToInt32(objectCur.modifiers["capacity_min"]) == -1)
+                {
+                    objectCur.modifiers["capacity"] = "99999";
+                }
+                else
+                {
+                    objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(objectCur.modifiers["capacity_min"]), 99999).ToString();
+                }
+            }
+            else
+            {
+                objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(objectCur.modifiers["capacity_min"]), Convert.ToInt32(objectCur.modifiers["capacity_max"]) + 1).ToString();
+            }
+        }
+        else if ((objectssave != null) && (objectssave.Find(os => os.id == objectCur.id).modifiers.ContainsKey("capacity") == true))
+        {
+            objectCur.modifiers["capacity"] = objectssave.Find(os => os.id == objectCur.id).modifiers["capacity"];
+        }
+    }
 
     void OnBecameVisible()
     {
@@ -103,6 +141,11 @@ public class ObjectGO : MonoBehaviour {
                 canvasinfo.GetComponent<PanelTriggerInfo>().objGO = gameObject;
             }
         }
+    }
+
+    private void OnMouseExit()
+    {
+        Destroy(canvasinfo);
     }
 
     public void SetVisited(int visit)

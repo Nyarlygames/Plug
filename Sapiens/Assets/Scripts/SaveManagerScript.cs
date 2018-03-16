@@ -326,7 +326,7 @@ public class SaveManagerScript {
             }
         }
         GameObject emptyGO = new GameObject("Objects");
-        Sprite Radius = Resources.Load<Sprite>("Play/radius");
+        Sprite Radius = Resources.Load<Sprite>("Play/radius_rect");
         foreach (ObjectSave obj in mapfile.objects)
         {
             GameObject tilego = new GameObject("[" + obj.x + "/" + obj.y + "]" + obj.id);
@@ -385,39 +385,7 @@ public class SaveManagerScript {
                 tilego.AddComponent<BoxCollider2D>();
             else if (curObj.objectCur.modifiers.ContainsValue("trigger"))
             {
-                Vector2 S = tilego.GetComponent<SpriteRenderer>().sprite.bounds.size;
-                tilego.AddComponent<BoxCollider2D>();
-                tilego.GetComponent<BoxCollider2D>().size = S;
-                tilego.GetComponent<BoxCollider2D>().isTrigger = true;
-                GameObject trigger_radius = new GameObject(tilego.name + "_radius");
-                trigger_radius.AddComponent<SpriteRenderer>();
-                trigger_radius.GetComponent<SpriteRenderer>().sprite = Radius;
-                trigger_radius.GetComponent<Transform>().localScale = tilego.GetComponent<SpriteRenderer>().bounds.extents / 2;
-                trigger_radius.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
-                tilego.tag = "trigger";
-
-                if ((curObj.objectCur.modifiers.ContainsKey("capacity_max")) && (curObj.objectCur.modifiers.ContainsKey("capacity_min")) && (objectssave.Count == 0))
-                {
-                    if (Convert.ToInt32(curObj.objectCur.modifiers["capacity_max"]) == -1)
-                    {
-                        if (Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]) == -1)
-                        {
-                            curObj.objectCur.modifiers["capacity"] = "99999";
-                        }
-                        else
-                        {
-                            curObj.objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]), 99999).ToString();
-                        }
-                    }
-                    else
-                    {
-                        curObj.objectCur.modifiers["capacity"] = UnityEngine.Random.Range(Convert.ToInt32(curObj.objectCur.modifiers["capacity_min"]), Convert.ToInt32(curObj.objectCur.modifiers["capacity_max"]) + 1).ToString();
-                    }
-                }
-                else if ((objectssave != null) && (objectssave.Find(os => os.id == curObj.objectCur.id).modifiers.ContainsKey("capacity") == true))
-                {
-                    curObj.objectCur.modifiers["capacity"] = objectssave.Find(os => os.id == curObj.objectCur.id).modifiers["capacity"];
-                }
+                curObj.addTrigger(tilego, Radius, objectssave);
             }
             tilego.GetComponent<Transform>().position = placement;
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());

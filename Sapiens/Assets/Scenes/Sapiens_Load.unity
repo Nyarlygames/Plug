@@ -485,7 +485,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.23 (07/03/2018)'
+  m_Text: 'Version : 0.0.24 (16/03/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4577,6 +4577,8 @@ MonoBehaviour:
           ratio_training: 1.1
           ratio_mastering: 1
           tribe_sightradius: 5
+          trigger_radiusx: 3
+          trigger_radiusy: 4.8
           exp_gatherer_basegain: 2
           exp_gatherer_baselvl: 400
           exp_gatherer_ratiogain: -0.1
@@ -4715,6 +4717,8 @@ MonoBehaviour:
         ratio_training: 1.1
         ratio_mastering: 1
         tribe_sightradius: 2.3
+        trigger_radiusx: 3
+        trigger_radiusy: 4.8
         exp_gatherer_basegain: 2
         exp_gatherer_baselvl: 400
         exp_gatherer_ratiogain: -0.1
@@ -4858,6 +4862,8 @@ MonoBehaviour:
     ratio_training: 1.1
     ratio_mastering: 1
     tribe_sightradius: 2.3
+    trigger_radiusx: 3
+    trigger_radiusy: 4.8
     exp_gatherer_basegain: 2
     exp_gatherer_baselvl: 400
     exp_gatherer_ratiogain: -0.1

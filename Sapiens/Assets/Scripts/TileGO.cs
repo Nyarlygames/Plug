@@ -7,7 +7,6 @@ public class TileGO : MonoBehaviour
 
     public TileSave tileCur;
     SpriteRenderer tilerend;
-    CircleCollider2D triberadius;
     BoxCollider2D tilecol;
     Shader defaultShad;
     Color defaultColor;
