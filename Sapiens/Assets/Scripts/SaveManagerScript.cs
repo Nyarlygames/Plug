@@ -204,10 +204,16 @@ public class SaveManagerScript {
                             break;
                     }
                 }
-                tilego.AddComponent<BoxCollider2D>();
-                tilego.GetComponent<BoxCollider2D>().isTrigger = true;
                 if (tileset.modifiers.ContainsKey("collider") && (tileset.modifiers["collider"] == "true"))
-                    tilego.AddComponent<BoxCollider2D>().isTrigger = false;
+                {
+                    tilego.AddComponent<PolygonCollider2D>();
+                    tilego.AddComponent<PolygonCollider2D>().isTrigger = false;
+                }
+                else
+                {
+                    tilego.AddComponent<BoxCollider2D>();
+                    tilego.GetComponent<BoxCollider2D>().isTrigger = true;
+                }
 
                 Vector3 placement = Vector3.zero;
                 switch (mapfile.orientation)
@@ -255,10 +261,16 @@ public class SaveManagerScript {
                                 break;
                         }
                     }
-                    tilegoAdded.AddComponent<BoxCollider2D>();
-                    tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = true;
                     if (tilesetAdded.modifiers.ContainsKey("collider") && (tilesetAdded.modifiers["collider"] == "true"))
-                        tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = false;
+                    {
+                        tilegoAdded.AddComponent<PolygonCollider2D>();
+                        tilegoAdded.GetComponent<PolygonCollider2D>().isTrigger = false;
+                    }
+                    else
+                    {
+                        tilegoAdded.AddComponent<BoxCollider2D>();
+                        tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = true;
+                    }
                     placement.z -= 1;
                     tilegoAdded.GetComponent<Transform>().position = placement;
                     tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
@@ -382,7 +394,7 @@ public class SaveManagerScript {
                     break;
             }
             if (curObj.objectCur.modifiers.ContainsKey("collider") && (curObj.objectCur.modifiers["collider"] == "true"))
-                tilego.AddComponent<BoxCollider2D>();
+                tilego.AddComponent<PolygonCollider2D>();
             else if (curObj.objectCur.modifiers.ContainsValue("trigger"))
             {
                 curObj.addTrigger(tilego, Radius, objectssave);

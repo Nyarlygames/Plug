@@ -67,7 +67,6 @@ public class NewGameController : MonoBehaviour {
     int spawnzone = 1;
 
     int activesex = 0;
-    
     void Start ()
     {
 

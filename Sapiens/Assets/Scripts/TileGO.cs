@@ -82,13 +82,13 @@ public class TileGO : MonoBehaviour
             SetVisited(1);
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+    /*private void OnTriggerStay2D(Collider2D collision)
     {
         if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 1))
         {
                 SetVisited(1);
         }
-    }
+    }*/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 2))

@@ -13,7 +13,10 @@ public class ObjectGO : MonoBehaviour {
     SpriteRenderer objectrend;
     Shader defaultShad;
     Color defaultColor;
+    Color defaultColorRadius;
     Color defaultColorVisited;
+    Shader defaultShadRadius;
+    GameObject trigger_radius;
 
     // Use this for initialization
     void Start () {
@@ -42,9 +45,20 @@ public class ObjectGO : MonoBehaviour {
         tilego.AddComponent<BoxCollider2D>();
         tilego.GetComponent<BoxCollider2D>().size = Triggersize;
         tilego.GetComponent<BoxCollider2D>().isTrigger = true;
-        GameObject trigger_radius = new GameObject(tilego.name + "_radius");
+        trigger_radius = new GameObject(tilego.name + "_radius");
         trigger_radius.AddComponent<SpriteRenderer>();
         trigger_radius.GetComponent<SpriteRenderer>().sprite = Radius;
+
+
+        /*defaultColorRadius = trigger_radius.GetComponent<SpriteRenderer>().material.color;
+        defaultShadRadius = trigger_radius.GetComponent<SpriteRenderer>().material.shader;
+        Shader shaderGUItext = Shader.Find("GUI/Text Shader");
+        trigger_radius.GetComponent<SpriteRenderer>().material.shader = shaderGUItext;
+        trigger_radius.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 1.0f);*/
+
+
+
+
         trigger_radius.GetComponent<Transform>().localScale = Triggersize/5;
         trigger_radius.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
         tilego.tag = "trigger";
@@ -154,11 +168,16 @@ public class ObjectGO : MonoBehaviour {
         {
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColor;
+            //trigger_radius.GetComponent<SpriteRenderer>().material.shader = defaultShadRadius;
+            //trigger_radius.GetComponent<SpriteRenderer>().material.color = defaultColorRadius;
+
         }
         else if (visit == 2)
         {
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColorVisited;
+            //trigger_radius.GetComponent<SpriteRenderer>().material.shader = defaultShadRadius;
+            //trigger_radius.GetComponent<SpriteRenderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         }
     }
 
@@ -169,13 +188,13 @@ public class ObjectGO : MonoBehaviour {
             SetVisited(1);
         }
     }
-    private void OnTriggerStay2D(Collider2D collision)
+   /* private void OnTriggerStay2D(Collider2D collision)
     {
         if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 1))
         {
             SetVisited(1);
         }
-    }
+    }*/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 2))
