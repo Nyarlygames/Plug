@@ -145,7 +145,7 @@ public class SaveManagerScript {
         }
         else
         { 
-            return null; // can't load, don't exist
+            return null; // can't load, doesn't exist
         }
     }
 
@@ -398,6 +398,11 @@ public class SaveManagerScript {
             else if (curObj.objectCur.modifiers.ContainsValue("trigger"))
             {
                 curObj.addTrigger(tilego, Radius, objectssave);
+            }
+            else
+            {
+                tilego.AddComponent<BoxCollider2D>();
+                tilego.GetComponent<BoxCollider2D>().isTrigger = true;
             }
             tilego.GetComponent<Transform>().position = placement;
             tilego.transform.SetParent(emptyGO.GetComponent<Transform>());
