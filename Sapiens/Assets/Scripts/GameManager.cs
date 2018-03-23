@@ -244,6 +244,7 @@ public class GameManager : MonoBehaviour
         Tribe_Radius.GetComponent<SpriteRenderer>().sprite = Radius;
         Tribe_Radius.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
         Tribe_Radius.GetComponent<Transform>().position = new Vector3(Tribe_Radius.GetComponent<Transform>().position.x, Tribe_Radius.GetComponent<Transform>().position.y, ZGround);
+        Tribe_Radius.GetComponent<Transform>().localScale = new Vector3(RF.tribe_sightradius, RF.tribe_sightradius, 1.0f);
         Tribe_Radius.tag = "radius";
         Tribe_Members.GetComponent<TribeMembersGO>().fire = Tribe_Fire;
         Tribe_Members.GetComponent<TribeMembersGO>().firesprites = Fire;

@@ -10,7 +10,7 @@ public class ObjectGO : MonoBehaviour {
     GameManager GM;
     GameObject canvasinfo;
     public EventSave es;
-    SpriteRenderer objectrend;
+    public SpriteRenderer objectrend;
     Shader defaultShad;
     Color defaultColor;
     Color defaultColorRadius;
@@ -23,8 +23,6 @@ public class ObjectGO : MonoBehaviour {
         enabled = false;
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         objectrend = gameObject.GetComponent<SpriteRenderer>();
-
-
         
         defaultShad = objectrend.material.shader;
         defaultColor = objectrend.material.color;
@@ -55,9 +53,7 @@ public class ObjectGO : MonoBehaviour {
         Shader shaderGUItext = Shader.Find("GUI/Text Shader");
         trigger_radius.GetComponent<SpriteRenderer>().material.shader = shaderGUItext;
         trigger_radius.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 1.0f);*/
-
-
-
+        
 
         trigger_radius.GetComponent<Transform>().localScale = Triggersize/5;
         trigger_radius.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
@@ -168,19 +164,15 @@ public class ObjectGO : MonoBehaviour {
         {
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColor;
-            //trigger_radius.GetComponent<SpriteRenderer>().material.shader = defaultShadRadius;
-            //trigger_radius.GetComponent<SpriteRenderer>().material.color = defaultColorRadius;
 
         }
         else if (visit == 2)
         {
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColorVisited;
-            //trigger_radius.GetComponent<SpriteRenderer>().material.shader = defaultShadRadius;
-            //trigger_radius.GetComponent<SpriteRenderer>().material.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         }
     }
-
+    /*
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 1))
@@ -188,18 +180,11 @@ public class ObjectGO : MonoBehaviour {
             SetVisited(1);
         }
     }
-   /* private void OnTriggerStay2D(Collider2D collision)
-    {
-        if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 1))
-        {
-            SetVisited(1);
-        }
-    }*/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if ((objectrend.isVisible) && (collision.name == "Tribe_Radius") && (objectCur.visitState != 2))
         {
             SetVisited(2);
         }
-    }
+    }*/
 }

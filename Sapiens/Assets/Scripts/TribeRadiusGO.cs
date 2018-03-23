@@ -13,18 +13,40 @@ public class TribeRadiusGO : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        /*foreach (GameObject trigger in triggers)
-        {
-            if ((gameObject.GetComponent<Transform>().position.x + gameObject.GetComponent<CircleCollider2D>().radius > trigger.GetComponent<BoxCollider2D>().bounds.center.x - trigger.GetComponent<BoxCollider2D>().bounds.extents.x) &&
-                (gameObject.GetComponent<Transform>().position.x - gameObject.GetComponent<CircleCollider2D>().radius < trigger.GetComponent<BoxCollider2D>().bounds.center.x + trigger.GetComponent<BoxCollider2D>().bounds.extents.x) &&
-                (gameObject.GetComponent<Transform>().position.y + gameObject.GetComponent<CircleCollider2D>().radius > trigger.GetComponent<BoxCollider2D>().bounds.center.y - trigger.GetComponent<BoxCollider2D>().bounds.extents.y) &&
-                (gameObject.GetComponent<Transform>().position.y - gameObject.GetComponent<CircleCollider2D>().radius < trigger.GetComponent<BoxCollider2D>().bounds.center.y + trigger.GetComponent<BoxCollider2D>().bounds.extents.y))
-            {
-                Debug.Log("touching " + trigger.name);
-            }
-        }*/
 
 
     }
     
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ObjectGO objgo = collision.gameObject.GetComponent<ObjectGO>();
+        if ((objgo != null) && (objgo.objectCur.visitState != 1))
+        {
+            objgo.SetVisited(1);
+        }
+        else
+        {
+            TileGO tilego = collision.gameObject.GetComponent<TileGO>();
+            if ((tilego != null) && (tilego.tileCur.visitState != 1))
+            {
+                tilego.SetVisited(1);
+            }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        ObjectGO objgo = collision.gameObject.GetComponent<ObjectGO>();
+        if ((objgo != null) && (objgo.objectCur.visitState != 2))
+        {
+            objgo.SetVisited(2);
+        }
+        else
+        {
+            TileGO tilego = collision.gameObject.GetComponent<TileGO>();
+            if ((tilego != null) && (tilego.tileCur.visitState != 2))
+            {
+                tilego.SetVisited(2);
+            }
+        }
+    }
 }

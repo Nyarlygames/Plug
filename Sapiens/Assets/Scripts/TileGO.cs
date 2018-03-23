@@ -6,7 +6,7 @@ public class TileGO : MonoBehaviour
 {
 
     public TileSave tileCur;
-    SpriteRenderer tilerend;
+    public SpriteRenderer tilerend;
     BoxCollider2D tilecol;
     Shader defaultShad;
     Color defaultColor;
@@ -75,25 +75,18 @@ public class TileGO : MonoBehaviour
         enabled = false;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 1))
         {
             SetVisited(1);
         }
     }
-    /*private void OnTriggerStay2D(Collider2D collision)
-    {
-        if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 1))
-        {
-                SetVisited(1);
-        }
-    }*/
     private void OnTriggerExit2D(Collider2D collision)
     {
         if ((tilerend.isVisible) && (collision.name == "Tribe_Radius") && (tileCur.visitState != 2))
         {
                 SetVisited(2);
         }
-    }
+    }*/
 }

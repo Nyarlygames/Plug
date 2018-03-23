@@ -30,6 +30,7 @@ public class SaveManagerScript {
         Sprite Radius = Resources.Load<Sprite>("Play/radius");
         Tribe_Radius.GetComponent<SpriteRenderer>().sprite = Radius;
         Tribe_Radius.GetComponent<Transform>().position = new Vector3(Tribe_Radius.GetComponent<Transform>().position.x, Tribe_Radius.GetComponent<Transform>().position.y, GM.ZGround);
+        Tribe_Radius.GetComponent<Transform>().localScale = new Vector3(RF.tribe_sightradius, RF.tribe_sightradius, 1.0f);
         Tribe_Radius.tag = "radius";
         Tribe.AddComponent<TribeGO>();
         TribeGO tribego = Tribe.GetComponent<TribeGO>();
