@@ -34,6 +34,20 @@
   <image width="71" height="58" source="Sprite-Herbs.png"/>
  </tile>
  <tile id="5">
+  <properties>
+   <property name="activity" value="hunt"/>
+   <property name="capacity" type="int" value="-1"/>
+   <property name="capacity_max" type="int" value="200"/>
+   <property name="capacity_min" type="int" value="50"/>
+   <property name="extract_daily" value="4"/>
+   <property name="regen_rate" value="regular"/>
+   <property name="resource" value="food"/>
+   <property name="resource_type" value="meat"/>
+   <property name="sizex" type="int" value="1"/>
+   <property name="sizey" type="int" value="1"/>
+   <property name="success_rate" type="int" value="75"/>
+   <property name="type" value="trigger"/>
+  </properties>
   <image width="80" height="100" source="Puma.png"/>
  </tile>
  <tile id="12">

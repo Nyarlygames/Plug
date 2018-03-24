@@ -38,10 +38,15 @@ public class GameManager : MonoBehaviour
     public Sprite[] clothesF;
     public Sprite[] clothesM;
 
+    Sprite[] resource_type;
+    public Dictionary<string, Sprite> resource_types = new Dictionary<string, Sprite>();
+
     public Sprite MouseCursor;
     public Sprite MouseCursorTarget;
     public GameObject MouseCursorGO;
     public GameObject MouseCursorTargetGO;
+
+    public List<ObjectGO> visitedTrig = new List<ObjectGO>();
     Vector3 MouseCoords = Vector3.zero;
 
     void Start()
@@ -70,6 +75,13 @@ public class GameManager : MonoBehaviour
         paintsM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Paints/");
         clothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
         clothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
+
+        resource_type = Resources.LoadAll<Sprite>("Play/resources_type/");
+        for (int i = 0; i < resource_type.Length; i++)
+        {
+            resource_types[resource_type[i].name] = resource_type[i];
+        }
+
         /* Tribe */
         timeSinceReload = Time.timeSinceLevelLoad;
         timers = GameObject.Find("Timers").GetComponent<Text>();
@@ -165,6 +177,20 @@ public class GameManager : MonoBehaviour
                         Destroy(TrigInfo);
                     UIChar.GetComponent<PanelChar>().SetExistingChars();
                 }
+            }
+        }
+        if (Input.GetKey(KeyCode.H)) // open escape
+        {
+            foreach(ObjectGO go in visitedTrig.FindAll(go => (go.trigger_type != null) && (go.trigger_type.activeSelf == false)))
+            {
+                go.trigger_type.SetActive(true);
+            }
+        }
+        else if (Input.GetKeyUp(KeyCode.H))
+        {
+            foreach (ObjectGO go in visitedTrig.FindAll(go => (go.trigger_type != null)))
+            {
+                go.trigger_type.SetActive(false);
             }
         }
         if (Input.GetKeyDown(KeyCode.Escape)) // open escape

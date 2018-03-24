@@ -39,6 +39,7 @@ public class TileGO : MonoBehaviour
     {
         if (visit == 1)
         {
+            tileCur.visitState = 1;
             tilerend.material.shader = defaultShad;
             tilerend.color = defaultColor;
             foreach (Transform child in transform)
@@ -50,6 +51,7 @@ public class TileGO : MonoBehaviour
         }
         else if (visit == 2)
         {
+            tileCur.visitState = 2;
             tilerend.material.shader = defaultShad;
             tilerend.color = defaultColorVisited;
             foreach (Transform child in transform)

@@ -403,6 +403,8 @@ MonoBehaviour:
 
     - "C" to open character panel
 
+    - "H" to view resource types
+
     - "Escape" to open ingame menu panel
 
     - Debug create character
@@ -485,7 +487,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Version : 0.0.28 (23/03/2018)'
+  m_Text: 'Version : 0.0.29 (24/03/2018)'
 --- !u!222 &135576424
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4997,6 +4999,7 @@ MonoBehaviour:
   MouseCursorTarget: {fileID: 0}
   MouseCursorGO: {fileID: 0}
   MouseCursorTargetGO: {fileID: 0}
+  visitedTrig: []
 --- !u!4 &2074311092
 Transform:
   m_ObjectHideFlags: 0

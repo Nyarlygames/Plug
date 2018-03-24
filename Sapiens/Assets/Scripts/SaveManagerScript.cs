@@ -344,8 +344,7 @@ public class SaveManagerScript {
         {
             GameObject tilego = new GameObject("[" + obj.x + "/" + obj.y + "]" + obj.id);
             tilego.tag = "object";
-            tilego.AddComponent<ObjectGO>();
-            ObjectGO curObj = tilego.GetComponent<ObjectGO>();
+            ObjectGO curObj = tilego.AddComponent<ObjectGO>();
             curObj.objectCur = obj;
             tilego.AddComponent<SpriteRenderer>();
             TileSetSave tileset = new TileSetSave();
@@ -375,6 +374,7 @@ public class SaveManagerScript {
                         break;
                 }
             }
+            curObj.InitObj();
             Vector3 placement = Vector3.zero;
             switch (mapfile.orientation)
             {

@@ -317,6 +317,7 @@
     <Compile Include="Assets\Scripts\ObjectGO.cs" />
     <Compile Include="Assets\Scripts\ObjectGroupSave.cs" />
     <Compile Include="Assets\Scripts\ObjectSave.cs" />
+    <Compile Include="Assets\Scripts\ObjectTriggerGO.cs" />
     <Compile Include="Assets\Scripts\PanelChar.cs" />
     <Compile Include="Assets\Scripts\PanelDebug.cs" />
     <Compile Include="Assets\Scripts\PanelEscape.cs" />

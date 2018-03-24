@@ -13,13 +13,14 @@ public class ObjectGO : MonoBehaviour {
     public SpriteRenderer objectrend;
     Shader defaultShad;
     Color defaultColor;
-    Color defaultColorRadius;
     Color defaultColorVisited;
     Shader defaultShadRadius;
+    Color defaultColorRadius;
     GameObject trigger_radius;
-
-    // Use this for initialization
-    void Start () {
+    public GameObject trigger_type;
+    
+    public void InitObj ()
+    {
         enabled = false;
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         objectrend = gameObject.GetComponent<SpriteRenderer>();
@@ -33,31 +34,45 @@ public class ObjectGO : MonoBehaviour {
             objectrend.material.shader = shaderGUItext;
             objectrend.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         }
+        /*else if (objectCur.visitState == 1)
+        {
+            if (GM.visitedTrig.Contains(this) == false)
+                GM.visitedTrig.Add(this);
+            objectrend.material.shader = defaultShad;
+            objectrend.color = defaultColor;
+
+        }
+        else if (objectCur.visitState == 2)
+        {
+            objectrend.material.shader = defaultShad;
+            objectrend.color = defaultColorVisited;
+        }*/
     }
 
     public void addTrigger(GameObject tilego, Sprite Radius, List<ObjectSave> objectssave)
     {
-        //   Vector2 S = tilego.GetComponent<SpriteRenderer>().sprite.bounds.size;
         RatioFactory RF = new RatioFactory();
         Vector2 Triggersize = new Vector2(RF.trigger_radiusx, RF.trigger_radiusy);
         tilego.AddComponent<BoxCollider2D>();
         tilego.GetComponent<BoxCollider2D>().size = Triggersize;
         tilego.GetComponent<BoxCollider2D>().isTrigger = true;
+        tilego.tag = "trigger";
+
+        trigger_type = new GameObject(tilego.name + "_type");
+        SpriteRenderer type = trigger_type.AddComponent<SpriteRenderer>();
+        if (objectCur.modifiers.ContainsKey("resource_type"))
+        {
+            type.sprite = GM.resource_types[objectCur.modifiers["resource_type"]];
+        }
+        trigger_type.GetComponent<Transform>().position = tilego.GetComponent<Transform>().position + new Vector3(0,0,-1.0f);
+        trigger_type.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
+
         trigger_radius = new GameObject(tilego.name + "_radius");
         trigger_radius.AddComponent<SpriteRenderer>();
         trigger_radius.GetComponent<SpriteRenderer>().sprite = Radius;
-
-
-        /*defaultColorRadius = trigger_radius.GetComponent<SpriteRenderer>().material.color;
-        defaultShadRadius = trigger_radius.GetComponent<SpriteRenderer>().material.shader;
-        Shader shaderGUItext = Shader.Find("GUI/Text Shader");
-        trigger_radius.GetComponent<SpriteRenderer>().material.shader = shaderGUItext;
-        trigger_radius.GetComponent<SpriteRenderer>().color = new Color(0.0f, 0.0f, 0.0f, 1.0f);*/
-        
-
         trigger_radius.GetComponent<Transform>().localScale = Triggersize/5;
-        trigger_radius.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
-        tilego.tag = "trigger";
+        trigger_radius.GetComponent<Transform>().SetParent(trigger_type.GetComponent<Transform>());
+        trigger_type.SetActive(false);
 
         if ((objectCur.modifiers.ContainsKey("capacity_max")) && (objectCur.modifiers.ContainsKey("capacity_min")) && (objectssave.Count == 0))
         {
@@ -95,6 +110,8 @@ public class ObjectGO : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate () {
 
+
+        // TO REMOVE WITH OnEnter and OnExit ?
         if ((gameObject.tag == "trigger") && (objectrend.isVisible == true))
         {
             foreach (GameObject radius in GameObject.FindGameObjectsWithTag("radius"))
@@ -130,10 +147,12 @@ public class ObjectGO : MonoBehaviour {
             }
         }
     }
+
     void OnMouseDown()
     {
 
     }
+
     void OnMouseOver()
     {
 
@@ -162,12 +181,16 @@ public class ObjectGO : MonoBehaviour {
     {
         if (visit == 1)
         {
+            if (GM.visitedTrig.Contains(this) == false)
+                GM.visitedTrig.Add(this);
+            objectCur.visitState = 1;
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColor;
 
         }
         else if (visit == 2)
         {
+            objectCur.visitState = 2;
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColorVisited;
         }

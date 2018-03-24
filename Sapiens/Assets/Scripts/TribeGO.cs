@@ -14,7 +14,6 @@ public class TribeGO : MonoBehaviour {
     // Use this for initialization
     void Start () {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-
     }
 	
 	// Update is called once per frame

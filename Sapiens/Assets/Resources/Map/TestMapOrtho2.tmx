@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.1.2" orientation="staggered" renderorder="right-up" width="50" height="100" tilewidth="250" tileheight="118" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="345">
+<map version="1.0" tiledversion="1.1.2" orientation="staggered" renderorder="right-up" width="50" height="100" tilewidth="250" tileheight="118" infinite="0" staggeraxis="y" staggerindex="odd" nextobjectid="348">
  <tileset firstgid="1" source="Ground.tsx"/>
  <tileset firstgid="21" source="Objects.tsx"/>
  <layer name="Ground" width="50" height="100">
@@ -333,9 +333,24 @@
   <object id="333" gid="38" x="489.394" y="5495.45" width="100" height="100"/>
   <object id="334" gid="39" x="6860.67" y="3295.33" width="100" height="100"/>
   <object id="335" gid="39" x="5422" y="558" width="100" height="100"/>
-  <object id="337" gid="39" x="4158" y="5690" width="100" height="100"/>
+  <object id="337" gid="39" x="4094" y="5450.67" width="100" height="100"/>
   <object id="338" gid="39" x="11074" y="386" width="100" height="100"/>
   <object id="339" gid="39" x="8810" y="2322" width="100" height="100"/>
+  <object id="345" gid="26" x="3084" y="1616" width="80" height="100">
+   <properties>
+    <property name="resource_type" value="meat"/>
+   </properties>
+  </object>
+  <object id="346" gid="25" x="2615" y="1477" width="71" height="58">
+   <properties>
+    <property name="resource_type" value="mushroom"/>
+   </properties>
+  </object>
+  <object id="347" gid="25" x="2825" y="1465" width="71" height="58">
+   <properties>
+    <property name="resource_type" value="potato"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="MovingObjects">
   <object id="210" gid="26" x="4410" y="889" width="80" height="100"/>
@@ -344,10 +359,5 @@
   <object id="213" gid="26" x="9036" y="2112" width="80" height="100"/>
   <object id="214" gid="26" x="10338" y="360" width="80" height="100"/>
   <object id="215" gid="26" x="4808" y="3986" width="80" height="100"/>
-  <object id="231" gid="35" x="4407.33" y="907.333" width="100" height="100"/>
-  <object id="232" gid="35" x="4798" y="4006" width="100" height="100"/>
-  <object id="233" gid="35" x="3244" y="5788" width="100" height="100"/>
-  <object id="234" gid="35" x="10060" y="5648" width="100" height="100"/>
-  <object id="235" gid="35" x="10328" y="392" width="100" height="100"/>
  </objectgroup>
 </map>
