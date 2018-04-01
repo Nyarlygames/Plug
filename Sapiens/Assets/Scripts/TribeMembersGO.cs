@@ -57,7 +57,9 @@ public class TribeMembersGO : MonoBehaviour {
         if (MoveToTarget != Vector3.zero)
         {
             if (TribeTransform.position != MoveToTarget)
+            {
                 TribeBody.MovePosition(Vector3.MoveTowards(TribeTransform.position, MoveToTarget, speed * Time.deltaTime));
+            }
             else
                 MoveToTarget = Vector3.zero;
         }

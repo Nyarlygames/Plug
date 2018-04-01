@@ -91,6 +91,8 @@ public class GameManager : MonoBehaviour
             if ((sdata != null))
             {
                 SaveManager.LoadMap(sdata.mapfile, map);
+                TribeGO = SaveManager.LoadGO(sdata); // create tribe go
+                RF = TribeGO.GetComponent<TribeGO>().tribeCurrent.RF;
                 SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
                 if (EM == null)
                 {
@@ -98,8 +100,6 @@ public class GameManager : MonoBehaviour
                     EM.GM = this;
                     EM.events = sdata.eventsave;
                 }
-                TribeGO = SaveManager.LoadGO(sdata); // create tribe go
-                RF = TribeGO.GetComponent<TribeGO>().tribeCurrent.RF;
                 GameObject.Find("UI_SaveName").GetComponent<Text>().text = sdata.tribesave.tribename;
             }
             else
@@ -113,7 +113,6 @@ public class GameManager : MonoBehaviour
             sdata.savefolder = "Save/";
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
             SaveManager.LoadMap(sdata.mapfile, map); // create map from file
-            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
             EM = new EventsManager();
             EM.GM = this;
             GameObject NewTribeGO = GameObject.Find("newTribeGO");
@@ -133,6 +132,7 @@ public class GameManager : MonoBehaviour
                 TribeGO.GetComponent<TribeGO>().tribeCurrent = new TribeSave();
             }
             Debug.Log("Loaded : new game");
+            SaveManager.LoadFirstTiles(map, TilesGO, ObjectsGO, sdata.mapsave.objects, TribeGO.GetComponent<TribeGO>());
         }
         GameObject Menus = GameObject.Find("UI_Panel");
         UIChar = Instantiate(Resources.Load<GameObject>("Play/Prefabs/UI_CharPanel"), Vector3.zero, Quaternion.identity);
@@ -230,6 +230,35 @@ public class GameManager : MonoBehaviour
             {
                 tribe.tribeCurrent.TribePosX = TMGO.TribeTransform.position.x;
                 tribe.tribeCurrent.TribePosY = TMGO.TribeTransform.position.y;
+
+                Vector3 dir = TMGO.TribeTransform.position - TMGO.MoveToTarget;
+                int towards = 0; // 0 = nowhere, 1 = top, 2 top left, 3 left, 4 down left, 5 down, 6 down right, 7 right, 8 top right
+                if (dir.x > 0)
+                {
+                    if (dir.y > 0)
+                        towards = 4;
+                    else if (dir.y < 0)
+                        towards = 2;
+                    else
+                        towards = 3;
+                }
+                else if (dir.x < 0)
+                {
+                    if (dir.y > 0)
+                        towards = 6;
+                    else if (dir.y < 0)
+                        towards = 8;
+                    else
+                        towards = 7;
+                }
+                else if (dir.x == 0)
+                {
+                    if (dir.y > 0)
+                        towards = 5;
+                    else if (dir.y < 0)
+                        towards = 1;
+                }
+                SaveManager.LoadMapFromDir(map, TilesGO, ObjectsGO, sdata.mapsave.objects, TribeGO.GetComponent<TribeGO>(), towards);
             }
         }
         else
@@ -278,6 +307,29 @@ public class GameManager : MonoBehaviour
         Vector3 frontfire = new Vector3(Tribe_Members.GetComponent<Transform>().position.x, Tribe_Members.GetComponent<Transform>().position.y, Tribe_Members.GetComponent<Transform>().position.z - 0.5f);
         Tribe_Fire.GetComponent<Transform>().position = frontfire;
         Tribe_Fire.GetComponent<Transform>().SetParent(Tribe_Members.GetComponent<Transform>());
+
+
+        if (PlayerPrefs.GetInt("spawnzone") > 0)
+        {
+            foreach (ObjectSave obj in map.objects)
+            {
+                if (obj.modifiers.ContainsKey("spawner"))
+                {
+                    if (Convert.ToInt32(obj.modifiers["spawner"]) == PlayerPrefs.GetInt("spawnzone"))
+                    {
+                        if (obj.y % 2 == 1)
+                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f, ZCharacters);
+                        else
+                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f + (map.tilesizey / 2.0f / 100.0f), ZCharacters);
+                    }
+                }
+            }
+            PlayerPrefs.SetInt("spawnzone", 0);
+
+        }
+        tribecomp.tribeCurrent.TribePosX = Tribe_Members.GetComponent<Transform>().position.x;
+        tribecomp.tribeCurrent.TribePosY = Tribe_Members.GetComponent<Transform>().position.y;
+
         for (int i = 0; i < NGTribe.tribeCurrent.members.Count; i++)
         {
             CreatePlayer(i, NGTribe.tribeCurrent.members[i].name, NGTribe.tribeCurrent.members[i], tribecomp, Tribe_Members);
@@ -427,27 +479,7 @@ public class GameManager : MonoBehaviour
 
 
         // CharGO.GetComponent<Transform>().position = new Vector3(map.tilesizex * map.sizex / 100, map.tilesizey * map.sizey / 100, 0.0f);
-
-        if (PlayerPrefs.GetInt("spawnzone") > 0)
-        {
-            foreach (ObjectSave obj in map.objects)
-            {
-                if (obj.modifiers.ContainsKey("spawner"))
-                {
-                    if (Convert.ToInt32(obj.modifiers["spawner"]) == PlayerPrefs.GetInt("spawnzone"))
-                    {
-                        if (obj.y % 2 == 1)
-                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f, ZCharacters);
-                        else
-                            Tribe_Members.GetComponent<Transform>().position = new Vector3((obj.x + obj.offsetx + obj.width / 2) / 100.0f, ((map.sizey * map.tilesizey / 2) - ((obj.y + obj.offsety - obj.height / 2.0f))) / 100.0f + (map.tilesizey / 2.0f / 100.0f), ZCharacters);
-                    }
-                }
-            }
-            PlayerPrefs.SetInt("spawnzone", 0);
-
-        }
-        tribecomp.tribeCurrent.TribePosX = Tribe_Members.GetComponent<Transform>().position.x;
-        tribecomp.tribeCurrent.TribePosY = Tribe_Members.GetComponent<Transform>().position.y;
+        
         newman.x = Tribe_Members.GetComponent<Transform>().position.x /*+ id * 4*/;
         newman.y = Tribe_Members.GetComponent<Transform>().position.y;
         newman.z = ZCharacters;
