@@ -170,326 +170,17 @@ public class SaveManagerScript {
         file.Close();
 
     }
-    public void LoadFirstTiles(MapSave mapfile, List<GameObject> TilesGO, List<GameObject> ObjectsGO, List<ObjectSave> objectssave, TribeGO trbGO)
-    {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        GameObject emptyMap = new GameObject("Map");
-
-        int xinit = Mathf.RoundToInt((trbGO.tribeCurrent.TribePosX / GM.map.tilesizex) * 100);
-        int yinit = Mathf.RoundToInt((trbGO.tribeCurrent.TribePosY / GM.map.tilesizey) * 200);
-        int xmin = xinit - 30;
-        int ymin = yinit - 30;
-        if (xmin < 0)
-            xmin = 0;
-        if (ymin < 0)
-            ymin = 0;
-        int xmax = xinit + 30;
-        int ymax = yinit + 30;
-        if (xmax > GM.map.sizex)
-            xmax = GM.map.sizex;
-        if (ymax > GM.map.sizey)
-            ymax = GM.map.sizey;
-        int drawback = 10;
-        for (int y = ymin; y < ymax; y++)
-        {
-            for (int x = xmin; x < xmax; x++)
-            {
-                // TILES GROUND 
-                GameObject tilego = new GameObject("[" + y + "/" + x + "]");
-                tilego.AddComponent<TileGO>();
-                tilego.tag = "tile";
-                TileGO curtile = tilego.GetComponent<TileGO>();
-                curtile.tileCur = mapfile.layer.tiles[y][x];
-                tilego.AddComponent<SpriteRenderer>();
-                TileSetSave tileset = new TileSetSave();
-                if (curtile.tileCur.mapid > mapfile.basevalue)
-                {
-                    foreach (TileSetsSave tss in mapfile.tilesets)
-                    {
-                        foreach (TileSetSave ts in tss.tilesets)
-                        {
-                            if ((curtile.tileCur.mapid == tss.first + ts.id))
-                            {
-                                tileset = ts;
-                                tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
-                                break;
-                            }
-                        }
-                        if (tileset.id > 0)
-                            break;
-                    }
-                }
-                if (tileset.modifiers.ContainsKey("collider") && (tileset.modifiers["collider"] == "true"))
-                {
-                    tilego.AddComponent<PolygonCollider2D>();
-                    tilego.AddComponent<PolygonCollider2D>().isTrigger = false;
-                }
-                else
-                {
-                    tilego.AddComponent<BoxCollider2D>();
-                    tilego.GetComponent<BoxCollider2D>().isTrigger = true;
-                }
-
-                Vector3 placement = Vector3.zero;
-                switch (mapfile.orientation)
-                {
-                    case "orthogonal":
-                        placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        break;
-                    case "staggered":
-                        if (y % 2 == 1)
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        else
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        break;
-                    case "isometric":
-                        if (y % 2 == 1)
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        else
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        break;
-                    default:
-                        placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                        break;
-                }
-                tilego.GetComponent<Transform>().position = placement;
-                // Added ground
-                if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
-                {
-                    GameObject tilegoAdded = new GameObject("[" + y + "/" + x + "]");
-                    SpriteRenderer tileadrend = tilegoAdded.AddComponent<SpriteRenderer>();
-                    TileSetSave tilesetAdded = new TileSetSave();
-                    if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
-                    {
-                        foreach (TileSetsSave tss in mapfile.tilesets)
-                        {
-                            foreach (TileSetSave ts in tss.tilesets)
-                            {
-                                if ((mapfile.layer.tiles[y][x].addedid == tss.first + ts.id))
-                                {
-                                    tilesetAdded = ts;
-                                    tileadrend.sprite = Resources.Load<Sprite>("Map/" + tilesetAdded.spritefile.Substring(0, tilesetAdded.spritefile.Length - 4));
-
-                                }
-                            }
-                            if (tilesetAdded.id > 0)
-                                break;
-                        }
-                    }
-                    if (tilesetAdded.modifiers.ContainsKey("collider") && (tilesetAdded.modifiers["collider"] == "true"))
-                    {
-                        tilegoAdded.AddComponent<PolygonCollider2D>();
-                        tilegoAdded.GetComponent<PolygonCollider2D>().isTrigger = false;
-                    }
-                    else
-                    {
-                        tilegoAdded.AddComponent<BoxCollider2D>();
-                        tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = true;
-                    }
-                    placement.z -= 1;
-                    tilegoAdded.GetComponent<Transform>().position = placement;
-                    tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
-                }
-                tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
-            }
-        }
-    }
-
-
-    public void LoadMapFromDir(MapSave mapfile, List<GameObject> TilesGO, List<GameObject> ObjectsGO, List<ObjectSave> objectssave, TribeGO trbGO, int towards)
-    {
-        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        GameObject emptyMap = GameObject.Find("Map");
-
-        int xinit = Mathf.RoundToInt((trbGO.tribeCurrent.TribePosX / GM.map.tilesizex) * 100);
-        int yinit = Mathf.RoundToInt((trbGO.tribeCurrent.TribePosY / GM.map.tilesizey) * 200);
-        int xmin = 0;
-        int ymin = 0;
-        int xmax = 0;
-        int ymax = 0;
-        switch (towards)
-        {
-            case 0:
-                break;
-            case 1:
-                xmin = xinit - 10;
-                ymin = yinit;
-                xmax = xinit + 10;
-                ymax = yinit + 10;
-                break;
-            case 2:
-                xmin = xinit - 10;
-                ymin = yinit;
-                xmax = xinit + 7;
-                ymax = yinit + 10;
-                break;
-            case 3:
-                xmin = xinit - 10;
-                ymin = yinit - 10;
-                xmax = xinit;
-                ymax = yinit + 10;
-                break;
-            case 4:
-                xmin = xinit - 10;
-                ymin = yinit - 10;
-                xmax = xinit + 7;
-                ymax = yinit;
-                break;
-            case 5:
-                xmin = xinit - 10;
-                ymin = yinit - 10;
-                xmax = xinit + 10;
-                ymax = yinit;
-                break;
-            case 6:
-                xmin = xinit - 7;
-                ymin = yinit - 10;
-                xmax = xinit + 10;
-                ymax = yinit;
-                break;
-            case 7:
-                xmin = xinit;
-                ymin = yinit - 10;
-                xmax = xinit + 10;
-                ymax = yinit + 10;
-                break;
-            case 8:
-                xmin = xinit - 7;
-                ymin = yinit;
-                xmax = xinit + 10;
-                ymax = yinit + 10;
-                break;
-        }
-        if (xmin < 0)
-            xmin = 0;
-        if (ymin < 0)
-            ymin = 0;
-        if (xmax > GM.map.sizex)
-            xmax = GM.map.sizex;
-        if (ymax > GM.map.sizey)
-            ymax = GM.map.sizey;
-        int drawback = 10;
-        for (int y = ymin; y < ymax; y++)
-        {
-            for (int x = xmin; x < xmax; x++)
-            {
-                if (GameObject.Find("[" + y + "/" + x + "]") == null)
-                {
-                    // TILES GROUND 
-                    GameObject tilego = new GameObject("[" + y + "/" + x + "]");
-                    tilego.AddComponent<TileGO>();
-                    tilego.tag = "tile";
-                    TileGO curtile = tilego.GetComponent<TileGO>();
-                    curtile.tileCur = mapfile.layer.tiles[y][x];
-                    tilego.AddComponent<SpriteRenderer>();
-                    TileSetSave tileset = new TileSetSave();
-                    if (curtile.tileCur.mapid > mapfile.basevalue)
-                    {
-                        foreach (TileSetsSave tss in mapfile.tilesets)
-                        {
-                            foreach (TileSetSave ts in tss.tilesets)
-                            {
-                                if ((curtile.tileCur.mapid == tss.first + ts.id))
-                                {
-                                    tileset = ts;
-                                    tilego.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tileset.spritefile.Substring(0, tileset.spritefile.Length - 4));
-                                    break;
-                                }
-                            }
-                            if (tileset.id > 0)
-                                break;
-                        }
-                    }
-                    if (tileset.modifiers.ContainsKey("collider") && (tileset.modifiers["collider"] == "true"))
-                    {
-                        tilego.AddComponent<PolygonCollider2D>();
-                        tilego.AddComponent<PolygonCollider2D>().isTrigger = false;
-                    }
-                    else
-                    {
-                        tilego.AddComponent<BoxCollider2D>();
-                        tilego.GetComponent<BoxCollider2D>().isTrigger = true;
-                    }
-
-                    Vector3 placement = Vector3.zero;
-                    switch (mapfile.orientation)
-                    {
-                        case "orthogonal":
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        case "staggered":
-                            if (y % 2 == 1)
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            else
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        case "isometric":
-                            if (y % 2 == 1)
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            else
-                                placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                        default:
-                            placement = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
-                            break;
-                    }
-                    tilego.GetComponent<Transform>().position = placement;
-                    // Added ground
-                    if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
-                    {
-                        GameObject tilegoAdded = new GameObject("[" + y + "/" + x + "]");
-                        SpriteRenderer tileadrend = tilegoAdded.AddComponent<SpriteRenderer>();
-                        TileSetSave tilesetAdded = new TileSetSave();
-                        if (mapfile.layer.tiles[y][x].addedid > mapfile.basevalue)
-                        {
-                            foreach (TileSetsSave tss in mapfile.tilesets)
-                            {
-                                foreach (TileSetSave ts in tss.tilesets)
-                                {
-                                    if ((mapfile.layer.tiles[y][x].addedid == tss.first + ts.id))
-                                    {
-                                        tilesetAdded = ts;
-                                        tileadrend.sprite = Resources.Load<Sprite>("Map/" + tilesetAdded.spritefile.Substring(0, tilesetAdded.spritefile.Length - 4));
-
-                                    }
-                                }
-                                if (tilesetAdded.id > 0)
-                                    break;
-                            }
-                        }
-                        if (tilesetAdded.modifiers.ContainsKey("collider") && (tilesetAdded.modifiers["collider"] == "true"))
-                        {
-                            tilegoAdded.AddComponent<PolygonCollider2D>();
-                            tilegoAdded.GetComponent<PolygonCollider2D>().isTrigger = false;
-                        }
-                        else
-                        {
-                            tilegoAdded.AddComponent<BoxCollider2D>();
-                            tilegoAdded.GetComponent<BoxCollider2D>().isTrigger = true;
-                        }
-                        placement.z -= 1;
-                        tilegoAdded.GetComponent<Transform>().position = placement;
-                        tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
-                    }
-                    tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
-                }
-            }
-        }
-    }
-
-
-
 
     public void LoadMapGO(MapSave mapfile, List<GameObject> TilesGO, List<GameObject> ObjectsGO, List<ObjectSave> objectssave)
     {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        /*GameObject emptyMap = new GameObject("Map");
+        GameObject emptyMap = new GameObject("Map");
         int drawback = 10;
         for (int y = 0; y < mapfile.sizey; y++)
         {
             for (int x = 0; x < mapfile.sizex; x++)
             {
-                // tiles ground
+                /* TILES GROUND */
                 GameObject tilego = new GameObject("[" + y + "/" + x + "]");
                 tilego.AddComponent<TileGO>();
                 tilego.tag = "tile";
@@ -586,8 +277,67 @@ public class SaveManagerScript {
                     tilegoAdded.GetComponent<Transform>().SetParent(tilego.GetComponent<Transform>());
                 }
                 tilego.transform.SetParent(emptyMap.GetComponent<Transform>());
+                /* TRIGGERS */ // deleted because no need, triggers in objects is better for LD.
+                /*if (mapfile.layer.tiles[y][x].triggerid > mapfile.basevalue)
+                {
+                    drawback = 9;
+                    GameObject tilegotrigger = new GameObject("[" + y + "/" + x + "]_Trigger");
+                    tilegotrigger.AddComponent<TileGO>();
+                    tilegotrigger.tag = "trigger";
+                    TileGO curtiletrigger = tilegotrigger.GetComponent<TileGO>();
+                    curtiletrigger.tileCur = mapfile.layer.tiles[y][x];
+                    tilegotrigger.AddComponent<SpriteRenderer>();
+                    tilegotrigger.AddComponent<BoxCollider2D>();
+                    //tilegotrigger.GetComponent<BoxCollider2D>().center = new Vector2((S.x / 2), 0);
+                    TileSetSave tilesettrigger = new TileSetSave();
+                    foreach (TileSetsSave tss in mapfile.tilesets)
+                    {
+                        foreach (TileSetSave ts in tss.tilesets)
+                        {
+                            if ((curtiletrigger.tileCur.triggerid == tss.first + ts.id))
+                            {
+                                tilesettrigger = ts;
+                                tilegotrigger.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Map/" + tilesettrigger.spritefile.Substring(0, tilesettrigger.spritefile.Length - 4));
+                                break;
+                            }
+                        }
+                        if (tilesettrigger.id > 0)
+                            break;
+                    }
+                    if (tilesettrigger.id > 0)
+                    {
+                        Vector3 placementtrigger = Vector3.zero;
+                        switch (mapfile.orientation)
+                        {
+                            case "orthogonal":
+                                placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            case "staggered":
+                                if (y % 2 == 1)
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                else
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            case "isometric":
+                                if (y % 2 == 1)
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                else
+                                    placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f + (mapfile.tilesizex / 2.0f / 100.0f), (y * mapfile.tilesizey / 2.0f + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                            default:
+                                placementtrigger = new Vector3((x * mapfile.tilesizex + mapfile.tilesizex / 2.0f) / 100.0f, (y * mapfile.tilesizey + mapfile.tilesizey / 2.0f) / 100.0f, GM.ZGround + drawback);
+                                break;
+                        }
+                        tilegotrigger.GetComponent<Transform>().position = placementtrigger;
+                        tilegotrigger.transform.SetParent(tilego.GetComponent<Transform>());
+                        Vector2 S = tilegotrigger.GetComponent<SpriteRenderer>().sprite.bounds.size;
+                        tilegotrigger.GetComponent<BoxCollider2D>().size = S;
+                        tilegotrigger.GetComponent<BoxCollider2D>().isTrigger = true;
+                    }
+                    drawback = 10;
+                }*/
             }
-        }*/
+        }
         GameObject emptyGO = new GameObject("Objects");
         Sprite Radius = Resources.Load<Sprite>("Play/radius_rect");
         foreach (ObjectSave obj in mapfile.objects)
