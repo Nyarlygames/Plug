@@ -53,7 +53,7 @@ public class CameraGO : MonoBehaviour {
             else if (tribePos.position.x <= thiscam.orthographicSize * 2)
                 temp = new Vector3(thiscam.orthographicSize * 2, GM.map.tilesizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
             else
-                temp = new Vector3(tribePos.position.x, GM.map.tilesizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);           
+                temp = new Vector3(tribePos.position.x, GM.map.tilesizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
         }
         else if (tribePos.position.y <= thiscam.orthographicSize)
         {

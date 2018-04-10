@@ -34,6 +34,12 @@ public class ObjectGO : MonoBehaviour {
             objectrend.material.shader = shaderGUItext;
             objectrend.color = new Color(0.0f, 0.0f, 0.0f, 1.0f);
         }
+
+
+
+
+
+
         /*else if (objectCur.visitState == 1)
         {
             if (GM.visitedTrig.Contains(this) == false)
@@ -73,7 +79,6 @@ public class ObjectGO : MonoBehaviour {
         trigger_radius.GetComponent<Transform>().localScale = Triggersize/5;
         trigger_radius.GetComponent<Transform>().SetParent(trigger_type.GetComponent<Transform>());
         trigger_type.SetActive(false);
-
         if ((objectCur.modifiers.ContainsKey("capacity_max")) && (objectCur.modifiers.ContainsKey("capacity_min")) && (objectssave.Count == 0))
         {
             if (Convert.ToInt32(objectCur.modifiers["capacity_max"]) == -1)
@@ -112,7 +117,7 @@ public class ObjectGO : MonoBehaviour {
 
 
         // TO REMOVE WITH OnEnter and OnExit ?
-        if ((gameObject.tag == "trigger") && (objectrend.isVisible == true))
+       /* if ((gameObject.tag == "trigger") && (objectrend.isVisible == true))
         {
             foreach (GameObject radius in GameObject.FindGameObjectsWithTag("radius"))
             {
@@ -141,11 +146,11 @@ public class ObjectGO : MonoBehaviour {
             if (objectCur.modifiers.ContainsKey("capacity") && (objectCur.modifiers["capacity"] == "0"))
             {
                 // TO DESTROY, better replace with lower graph, so as to regen later !
-               /* if (canvasinfo != null)
-                    Destroy(canvasinfo);
-                Destroy(gameObject);*/
+               // if (canvasinfo != null)
+                //    Destroy(canvasinfo);
+               // Destroy(gameObject);
             }
-        }
+        }*/
     }
 
     void OnMouseDown()
@@ -190,6 +195,8 @@ public class ObjectGO : MonoBehaviour {
         }
         else if (visit == 2)
         {
+            if (GM.visitedTrig.Contains(this) == false)
+                GM.visitedTrig.Add(this);
             objectCur.visitState = 2;
             objectrend.material.shader = defaultShad;
             objectrend.color = defaultColorVisited;

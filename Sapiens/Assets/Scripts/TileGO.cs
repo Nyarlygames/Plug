@@ -11,7 +11,7 @@ public class TileGO : MonoBehaviour
     Shader defaultShad;
     Color defaultColor;
     Color defaultColorVisited;
-
+    public int updateState = 0;
     void Start()
     {
         enabled = false;

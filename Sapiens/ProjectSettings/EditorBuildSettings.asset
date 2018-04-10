@@ -17,24 +17,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NewGame.unity
     guid: f7d21e8b705fea045b34b4681fd62605
-  - enabled: 0
-    path: Assets/Scenes/Sapiens.unity
-    guid: 70070146f49957b46bb07128df072f7b
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Sapiens_Load.unity
     guid: 4af1e2895edd0264e9977211314876ae
   - enabled: 1
     path: Assets/Scenes/MenuLoad.unity
     guid: 77aa2903fa2e8504eb4082089c8569ef
+  - enabled: 1
+    path: Assets/Scenes/Load_Chunk.unity
+    guid: d96d6187078baa342b96f9afe6e5b46a

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class EventsManager : MonoBehaviour {
+public class EventsManager {
 
     public List<EventSave> events = new List<EventSave>();
     public GameManager GM;

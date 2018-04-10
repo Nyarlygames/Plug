@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -40,6 +41,7 @@ public class GameManager : MonoBehaviour
 
     Sprite[] resource_type;
     public Dictionary<string, Sprite> resource_types = new Dictionary<string, Sprite>();
+    public Dictionary<string, int> prefabs_name = new Dictionary<string, int>();
 
     public Sprite MouseCursor;
     public Sprite MouseCursorTarget;
@@ -76,6 +78,104 @@ public class GameManager : MonoBehaviour
         clothesF = Resources.LoadAll<Sprite>("Play/CharCustom/Females/Clothes/");
         clothesM = Resources.LoadAll<Sprite>("Play/CharCustom/Males/Clothes/");
 
+        GameObject Desert = Resources.Load<GameObject>("Play/Prefabs/Desert_Prefab");
+        GameObject Water = Resources.Load<GameObject>("Play/Prefabs/Water_Prefab");
+        GameObject Grass00 = Resources.Load<GameObject>("Play/Prefabs/Grass00_Prefab");
+        GameObject Grass01 = Resources.Load<GameObject>("Play/Prefabs/Grass01_Prefab");
+        GameObject Grass02 = Resources.Load<GameObject>("Play/Prefabs/Grass02_Prefab");
+        GameObject Grass03 = Resources.Load<GameObject>("Play/Prefabs/Grass03_Prefab");
+        GameObject Grass04 = Resources.Load<GameObject>("Play/Prefabs/Grass04_Prefab");
+        GameObject Grass05 = Resources.Load<GameObject>("Play/Prefabs/Grass05_Prefab");
+        GameObject Grass06 = Resources.Load<GameObject>("Play/Prefabs/Grass06_Prefab");
+        GameObject Grass07 = Resources.Load<GameObject>("Play/Prefabs/Grass07_Prefab");
+        GameObject Grass08 = Resources.Load<GameObject>("Play/Prefabs/Grass08_Prefab");
+        GameObject Grass09 = Resources.Load<GameObject>("Play/Prefabs/Grass09_Prefab");
+        GameObject Grass10 = Resources.Load<GameObject>("Play/Prefabs/Grass10_Prefab");
+        GameObject Grass11 = Resources.Load<GameObject>("Play/Prefabs/Grass11_Prefab");
+        GameObject Grass12 = Resources.Load<GameObject>("Play/Prefabs/Grass12_Prefab");
+        GameObject Trees = Resources.Load<GameObject>("Play/Prefabs/Trees_Prefab");
+        GameObject Rock1 = Resources.Load<GameObject>("Play/Prefabs/Rock1_Prefab");
+        GameObject Rock2 = Resources.Load<GameObject>("Play/Prefabs/Rock2_Prefab");
+        GameObject Water02 = Resources.Load<GameObject>("Play/Prefabs/Water02_Prefab");
+        GameObject Herbs = Resources.Load<GameObject>("Play/Prefabs/Herbs_Prefab");
+        GameObject Clam = Resources.Load<GameObject>("Play/Prefabs/Clam_Prefab");
+        GameObject Fish = Resources.Load<GameObject>("Play/Prefabs/Fish_Prefab");
+        GameObject Insect = Resources.Load<GameObject>("Play/Prefabs/Insect_Prefab");
+        GameObject Meat = Resources.Load<GameObject>("Play/Prefabs/Meat_Prefab");
+        GameObject Mushroom = Resources.Load<GameObject>("Play/Prefabs/Mushroom_Prefab");
+        GameObject Potato = Resources.Load<GameObject>("Play/Prefabs/Potato_Prefab");
+        GameObject Puma = Resources.Load<GameObject>("Play/Prefabs/Puma_Prefab");
+        GameObject Source = Resources.Load<GameObject>("Play/Prefabs/Source_Prefab");
+        GameObject Spawner = Resources.Load<GameObject>("Play/Prefabs/Spawner_Prefab");
+        GameObject Loader = Resources.Load<GameObject>("Play/Prefabs/Loader_Prefab");
+        List<GameObject> Prefabs = new List<GameObject>();
+        Prefabs.Add(Instantiate(Desert, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Water, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass00, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass01, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass02, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass03, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass04, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass05, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass06, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass07, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass08, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass09, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass10, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass11, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Grass12, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Trees, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Rock1, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Rock2, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Water02, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Herbs, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Clam, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Fish, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Insect, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Meat, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Mushroom, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Potato, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Puma, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Source, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Spawner, Vector3.zero, Quaternion.identity) as GameObject);
+        Prefabs.Add(Instantiate(Loader, Vector3.zero, Quaternion.identity) as GameObject);
+
+        prefabs_name.Add("Desert", 0);
+        prefabs_name.Add("Water", 1);
+        prefabs_name.Add("Grass00", 2);
+        prefabs_name.Add("Grass01", 3);
+        prefabs_name.Add("Grass02", 4);
+        prefabs_name.Add("Grass03", 5);
+        prefabs_name.Add("Grass04", 6);
+        prefabs_name.Add("Grass05", 7);
+        prefabs_name.Add("Grass06", 8);
+        prefabs_name.Add("Grass07", 9);
+        prefabs_name.Add("Grass08", 10);
+        prefabs_name.Add("Grass09", 11);
+        prefabs_name.Add("Grass10", 12);
+        prefabs_name.Add("Grass11", 13);
+        prefabs_name.Add("Grass12", 14);
+        prefabs_name.Add("Trees", 15);
+        prefabs_name.Add("Rock1", 16);
+        prefabs_name.Add("Rock2", 17);
+        prefabs_name.Add("Water02", 18);
+        prefabs_name.Add("Herbs", 19);
+        prefabs_name.Add("Clam", 20);
+        prefabs_name.Add("Fish", 21);
+        prefabs_name.Add("Insect", 22);
+        prefabs_name.Add("Meat", 23);
+        prefabs_name.Add("Mushroom", 24);
+        prefabs_name.Add("Potato", 25);
+        prefabs_name.Add("Puma", 26);
+        prefabs_name.Add("Source", 27);
+        prefabs_name.Add("Spawner", 28);
+        prefabs_name.Add("Loader", 29);
+
+        //Prefabs[prefabs_name["Desert"]].SetActive(false);
+        //Prefabs[prefabs_name["Grass"]].SetActive(false);
+        //Prefabs[prefabs_name["Water"]].SetActive(false);
+
+
         resource_type = Resources.LoadAll<Sprite>("Play/resources_type/");
         for (int i = 0; i < resource_type.Length; i++)
         {
@@ -91,7 +191,7 @@ public class GameManager : MonoBehaviour
             if ((sdata != null))
             {
                 SaveManager.LoadMap(sdata.mapfile, map);
-                SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
+                SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects, Prefabs);
                 if (EM == null)
                 {
                     EM = new EventsManager();
@@ -113,7 +213,7 @@ public class GameManager : MonoBehaviour
             sdata.savefolder = "Save/";
             sdata.mapfile = PlayerPrefs.GetString("mapfile");
             SaveManager.LoadMap(sdata.mapfile, map); // create map from file
-            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects);
+            SaveManager.LoadMapGO(map, TilesGO, ObjectsGO, sdata.mapsave.objects, Prefabs);
             EM = new EventsManager();
             EM.GM = this;
             GameObject NewTribeGO = GameObject.Find("newTribeGO");
@@ -155,7 +255,57 @@ public class GameManager : MonoBehaviour
                 GameObject.Find("UI_Ingame_Nomadism_T").GetComponent<Text>().text = "Nomadism : On";
             }
         }
+
+        //StartCoroutine("doLogic");
+
+        SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
+        //AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
+        //asyncLoad.priority = 0;
+        //  StartCoroutine(LoadYourAsyncScene());
     }
+
+    
+
+    public void doLogic()
+    {
+       /* Debug.Log("started");
+        MapSave chunk2 = new MapSave();
+        SaveData sdatachunk2 = new SaveData();
+        SaveManager.LoadMap("Assets/Resources/Map/TestChunk2.tmx", chunk2); // create map from file
+        List<GameObject> TilesChunk2 = new List<GameObject>();
+        List<GameObject> ObjectsChunk2 = new List<GameObject>();
+        SaveManager.LoadMapGO(map, TilesChunk2, ObjectsChunk2, sdatachunk2.mapsave.objects);
+        Debug.Log("done");
+
+        Debug.Log("started3");
+        MapSave chunk3 = new MapSave();
+        SaveData sdatachunk3 = new SaveData();
+        SaveManager.LoadMap("Assets/Resources/Map/TestChunk3.tmx", chunk3); // create map from file
+        List<GameObject> TilesChunk3 = new List<GameObject>();
+        List<GameObject> ObjectsChunk3 = new List<GameObject>();
+        SaveManager.LoadMapGO(map, TilesChunk3, ObjectsChunk3, sdatachunk3.mapsave.objects);
+        Debug.Log("done");
+
+        Debug.Log("started4");
+        MapSave chunk4 = new MapSave();
+        SaveData sdatachunk4 = new SaveData();
+        SaveManager.LoadMap("Assets/Resources/Map/TestChunk4.tmx", chunk4); // create map from file
+        List<GameObject> TilesChunk4 = new List<GameObject>();
+        List<GameObject> ObjectsChunk4 = new List<GameObject>();
+        SaveManager.LoadMapGO(map, TilesChunk4, ObjectsChunk4, sdatachunk4.mapsave.objects);
+        Debug.Log("done");*/
+    }
+   /* IEnumerator Fade()
+    {
+        for (float f = 1f; f >= 0; f -= 0.1f)
+        {
+           // Color c = renderer.material.color;
+            c.a = f;
+            //renderer.material.color = c;
+            yield return null;
+        }
+    }*/
+
 
     void Update()
     {
