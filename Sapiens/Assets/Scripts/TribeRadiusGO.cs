@@ -5,11 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class TribeRadiusGO : MonoBehaviour {
     GameObject[] triggers;
+    GameManager GM;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         triggers = GameObject.FindGameObjectsWithTag("trigger");
-	}
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -17,7 +19,20 @@ public class TribeRadiusGO : MonoBehaviour {
 
 
     }
-    
+
+    private void FixedUpdate()
+    {
+         //RaycastHit hit;
+         if (Physics.Raycast(transform.position, Vector3.up, 10))
+         {
+             // executes if hits a collider
+         }
+         else
+         {
+             // executes if it doesnt hit any collider
+         }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         ObjectGO objgo = collision.gameObject.GetComponent<ObjectGO>();
@@ -25,46 +40,18 @@ public class TribeRadiusGO : MonoBehaviour {
         {
             if (objgo.tag == "Loader")
             {
-                LoadChunk Load = GameObject.Find("Load_Chunk").GetComponent<LoadChunk>();
-                GameManager GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-                Debug.Log(objgo.objectCur.modifiers["loadChunk"] + " / started");
-                switch (objgo.objectCur.modifiers["loadChunk"])
-                {
-                    /*case "0":
-                        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
-                        break;*/
-                    case "1":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", 50, 0);
-                        break;
-                    case "2":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk3.tmx", 50, 100);
-                        break;
-                    case "3":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk4.tmx", 0, 100);
-                        break;
-                    /*case "4":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", -50, 100);
-                        break;
-                    case "5":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", 50, 0);
-                        break;
-                    case "6":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", 50, 0);
-                        break;
-                    case "7":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", 50, 0);
-                        break;
-                    case "8":
-                        Load.LoadChunkByName("Assets/Resources/Map/TestChunk2.tmx", 50, 0);
-                        break;*/
-                }
-                if (objgo.objectCur.modifiers["loadChunk"] != "0")
+                //LoadChunk Load = GameObject.Find("Load_Chunk").GetComponent<LoadChunk>();
+                GM.LoadManager.LoadChunkedMap(objgo.objectCur.modifiers["chunkfile"]);
+                GM.LoadManager.LoadChunkedTiles(GM.LoadManager.chunk2, 10, 0, 10, 10, 0, GM.map.sizey);
+                GM.map.tilesizex += 0;
+                GM.map.tilesizey += 10;
+                /*if (objgo.objectCur.modifiers["loadChunk"] != "0")
                 {
                     //GM.map.sizey += Load.chunk2.sizey;
                     //GM.map.sizex += Load.chunk2.sizex;
                     GM.map.tilesizey += Load.chunk2.tilesizey;
                     GM.map.tilesizex += Load.chunk2.tilesizex;
-                }
+                }*/
                 Destroy(collision.gameObject);
             }
             else

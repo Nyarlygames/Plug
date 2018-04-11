@@ -16,7 +16,7 @@ public class TileGO : MonoBehaviour
     {
         enabled = false;
         tilerend = gameObject.GetComponent<SpriteRenderer>();
-        defaultShad = tilerend.material.shader;
+        defaultShad = Shader.Find("Sprites/Default");
         defaultColor = tilerend.material.color;
         defaultColorVisited = new Color(defaultColor.r-0.2f, defaultColor.g-0.2f, defaultColor.b-0.2f,defaultColor.a);
         tilecol = gameObject.GetComponent<BoxCollider2D>();
@@ -61,11 +61,6 @@ public class TileGO : MonoBehaviour
                 childrend.color = defaultColorVisited;
             }
         }
-    }
-    
-    void FixedUpdate()
-    {
-        
     }
 
     void OnBecameVisible()

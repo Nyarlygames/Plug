@@ -6,15 +6,12 @@ using UnityEngine.UI;
 public class PanelUI : MonoBehaviour {
 
     Button Nomadism;
-    Button Debug;
     Text NomadismT;
     GameManager GM;
     TribeGO tribe;
 
 	void Start () {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
-        Nomadism = GameObject.Find("UI_Ingame_Nomadism_B").GetComponent<Button>();
-        Nomadism.onClick.AddListener(NomadismClick);
         Nomadism = GameObject.Find("UI_Ingame_Nomadism_B").GetComponent<Button>();
         Nomadism.onClick.AddListener(NomadismClick);
         NomadismT = GameObject.Find("UI_Ingame_Nomadism_T").GetComponent<Text>();

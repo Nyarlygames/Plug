@@ -127,6 +127,7 @@
  </tile>
  <tile id="21">
   <properties>
+   <property name="chunkfile" value=""/>
    <property name="loadChunk" type="int" value="0"/>
   </properties>
   <image width="500" height="500" source="Chunk_Loader.png"/>

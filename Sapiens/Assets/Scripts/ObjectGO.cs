@@ -25,7 +25,7 @@ public class ObjectGO : MonoBehaviour {
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         objectrend = gameObject.GetComponent<SpriteRenderer>();
         
-        defaultShad = objectrend.material.shader;
+        defaultShad = Shader.Find("Sprites/Default");
         defaultColor = objectrend.material.color;
         defaultColorVisited = new Color(defaultColor.r - 0.2f, defaultColor.g - 0.2f, defaultColor.b - 0.2f, defaultColor.a);
         if (objectCur.visitState == 0)

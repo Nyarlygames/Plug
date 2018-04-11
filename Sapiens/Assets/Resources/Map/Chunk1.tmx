@@ -353,16 +353,19 @@
   </object>
   <object id="349" gid="42" x="11842" y="5942" width="780" height="5948">
    <properties>
+    <property name="chunkfile" value="Assets/Resources/Map/TestChunk2.tmx"/>
     <property name="loadChunk" type="int" value="1"/>
    </properties>
   </object>
   <object id="352" gid="42" x="42" y="422" width="12580" height="444">
    <properties>
+    <property name="chunkfile" value="Assets/Resources/Map/TestChunk4.tmx"/>
     <property name="loadChunk" type="int" value="3"/>
    </properties>
   </object>
   <object id="353" gid="42" x="11194" y="1294" width="1428" height="1300">
    <properties>
+    <property name="chunkfile" value="Assets/Resources/Map/TestChunk3.tmx"/>
     <property name="loadChunk" type="int" value="2"/>
    </properties>
   </object>

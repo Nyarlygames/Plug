@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public SaveManagerScript SaveManager = new SaveManagerScript();
+    public LoadChunk LoadManager = new LoadChunk();
     public GameObject TribeGO;
     public TribeGO tribe;
     public GameObject UIEscape;
@@ -50,6 +51,8 @@ public class GameManager : MonoBehaviour
 
     public List<ObjectGO> visitedTrig = new List<ObjectGO>();
     Vector3 MouseCoords = Vector3.zero;
+
+    public List<GameObject> Prefabs = new List<GameObject>();
 
     void Start()
     {
@@ -108,7 +111,6 @@ public class GameManager : MonoBehaviour
         GameObject Source = Resources.Load<GameObject>("Play/Prefabs/Source_Prefab");
         GameObject Spawner = Resources.Load<GameObject>("Play/Prefabs/Spawner_Prefab");
         GameObject Loader = Resources.Load<GameObject>("Play/Prefabs/Loader_Prefab");
-        List<GameObject> Prefabs = new List<GameObject>();
         Prefabs.Add(Instantiate(Desert, Vector3.zero, Quaternion.identity) as GameObject);
         Prefabs.Add(Instantiate(Water, Vector3.zero, Quaternion.identity) as GameObject);
         Prefabs.Add(Instantiate(Grass00, Vector3.zero, Quaternion.identity) as GameObject);
@@ -258,7 +260,7 @@ public class GameManager : MonoBehaviour
 
         //StartCoroutine("doLogic");
 
-        SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
+        //SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
         //AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Load_Chunk", LoadSceneMode.Additive);
         //asyncLoad.priority = 0;
         //  StartCoroutine(LoadYourAsyncScene());
