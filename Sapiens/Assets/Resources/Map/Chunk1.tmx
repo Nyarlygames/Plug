@@ -353,6 +353,9 @@
   </object>
   <object id="349" gid="42" x="11842" y="5942" width="780" height="5948">
    <properties>
+    <property name="C" value="Assets/Resources/Map/TestChunk3.tmx"/>
+    <property name="D" value="Assets/Resources/Map/TestChunk4.tmx"/>
+    <property name="E" value="Assets/Resources/Map/TestChunk1.tmx"/>
     <property name="chunkfile" value="Assets/Resources/Map/TestChunk2.tmx"/>
     <property name="loadChunk" type="int" value="1"/>
    </properties>

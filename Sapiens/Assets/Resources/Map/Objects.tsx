@@ -127,6 +127,14 @@
  </tile>
  <tile id="21">
   <properties>
+   <property name="A" value=""/>
+   <property name="B" value=""/>
+   <property name="C" value=""/>
+   <property name="D" value=""/>
+   <property name="E" value=""/>
+   <property name="F" value=""/>
+   <property name="G" value=""/>
+   <property name="H" value=""/>
    <property name="chunkfile" value=""/>
    <property name="loadChunk" type="int" value="0"/>
   </properties>

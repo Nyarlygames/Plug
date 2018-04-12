@@ -10,6 +10,8 @@ public class MapSave
     public int sizey = 0;
     public int tilesizex = 0;
     public int tilesizey = 0;
+    public int maxsizex = 0;
+    public int maxsizey = 0;
     public int basevalue = 0;
     public int nextobject = 0;
     public string render = "";

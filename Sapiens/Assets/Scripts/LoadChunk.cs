@@ -30,7 +30,6 @@ public class LoadChunk {
             minx = startx - sizex;
         if (startx + sizex < chunk.sizex)
             maxx = startx + sizex;
-
         for (int y = miny; y < maxy; y++)
         {
             for (int x = minx; x < maxx; x++)

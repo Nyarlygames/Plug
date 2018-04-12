@@ -410,6 +410,8 @@ public class SaveManagerScript
                 map.sizey = Convert.ToInt32(map.GetValueFromKey("height", line));
                 map.tilesizex = Convert.ToInt32(map.GetValueFromKey("tilewidth", line));
                 map.tilesizey = Convert.ToInt32(map.GetValueFromKey("tileheight", line));
+                map.maxsizex = map.tilesizex;
+                map.maxsizey = map.tilesizey;
                 map.basevalue = Convert.ToInt32(map.GetValueFromKey("infinite", line));
                 map.render = map.GetValueFromKey("renderorder", line);
                 map.orientation = map.GetValueFromKey("orientation", line);

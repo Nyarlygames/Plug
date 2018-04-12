@@ -6,21 +6,72 @@ using UnityEngine.SceneManagement;
 public class TribeRadiusGO : MonoBehaviour {
     GameObject[] triggers;
     GameManager GM;
+    Transform RadiusTrans;
+
+    public int extraload = 0;
 
     // Use this for initialization
     void Start () {
         triggers = GameObject.FindGameObjectsWithTag("trigger");
         GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        RadiusTrans = gameObject.GetComponent<Transform>();
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-
+        Debug.Log(RadiusTrans.position.y + GM.RF.tribe_sightradius + " / " + (GM.map.maxsizey / 2)); 
+        if (RadiusTrans.position.y + GM.RF.tribe_sightradius + (Camera.main.orthographicSize/2) >= GM.map.maxsizey / 2)
+        {
+            extraload += 10;
+            GM.LoadManager.LoadChunkedTiles(GM.LoadManager.chunk2, 0, extraload, 50, 10, 0, GM.map.sizey);
+            GM.map.maxsizex += 0;
+            GM.map.maxsizey += 10;
+            GM.map.sizey += 10;
+            Debug.Log("trop haut" + (RadiusTrans.position.y + GM.RF.tribe_sightradius));
+        }
+        /*else if (tribePos.position.x >= GM.map.maxsizex / 2 - thiscam.orthographicSize * 2)
+        {
+            if (tribePos.position.y >= GM.map.maxsizey / 2 - thiscam.orthographicSize)
+               // temp = new Vector3(GM.map.maxsizex / 2 - thiscam.orthographicSize* 2, GM.map.maxsizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
+            else if (tribePos.position.y <= thiscam.orthographicSize)
+              //  temp = new Vector3(GM.map.maxsizex / 2 - thiscam.orthographicSize* 2, thiscam.orthographicSize, -thiscam.orthographicSize);
+            else
+              //  temp = new Vector3(GM.map.maxsizex / 2 - thiscam.orthographicSize* 2, tribePos.position.y, -thiscam.orthographicSize);
+}
+        else if (tribePos.position.x <= thiscam.orthographicSize * 2)
+        {
+            if (tribePos.position.y >= GM.map.maxsizey / 2 - thiscam.orthographicSize)
+              //  temp = new Vector3(thiscam.orthographicSize* 2, GM.map.maxsizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
+            else if (tribePos.position.y <= thiscam.orthographicSize)
+              //  temp = new Vector3(thiscam.orthographicSize* 2, thiscam.orthographicSize, -thiscam.orthographicSize);
+            else
+               // temp = new Vector3(thiscam.orthographicSize* 2, tribePos.position.y, -thiscam.orthographicSize);
+        }
+        else if (transform.position.y >= GM.map.maxsizey / 2 - thiscam.orthographicSize)
+        {
+            if (tribePos.position.x >= GM.map.maxsizex / 2 - thiscam.orthographicSize * 2)
+              //  temp = new Vector3(GM.map.maxsizex / 2 - thiscam.orthographicSize* 2, GM.map.maxsizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
+            else if (tribePos.position.x <= thiscam.orthographicSize * 2)
+              //  temp = new Vector3(thiscam.orthographicSize* 2, GM.map.maxsizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
+            else
+             //   temp = new Vector3(tribePos.position.x, GM.map.maxsizey / 2 - thiscam.orthographicSize, -thiscam.orthographicSize);
+        }
+        else if (tribePos.position.y <= thiscam.orthographicSize)
+        {
+            if (tribePos.position.x >= GM.map.maxsizex / 2 - thiscam.orthographicSize * 2)
+               // temp = new Vector3(GM.map.maxsizex / 2 - thiscam.orthographicSize* 2, thiscam.orthographicSize, -thiscam.orthographicSize);
+            else if (tribePos.position.x <= thiscam.orthographicSize * 2)
+              //  temp = new Vector3(thiscam.orthographicSize* 2, thiscam.orthographicSize, -thiscam.orthographicSize);
+            else
+             //   temp = new Vector3(tribePos.position.x, thiscam.orthographicSize, -thiscam.orthographicSize);
+        }*/
 
     }
 
-    private void FixedUpdate()
+    
+
+   /* private void FixedUpdate()
     {
          //RaycastHit hit;
          if (Physics.Raycast(transform.position, Vector3.up, 10))
@@ -31,7 +82,7 @@ public class TribeRadiusGO : MonoBehaviour {
          {
              // executes if it doesnt hit any collider
          }
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -42,9 +93,9 @@ public class TribeRadiusGO : MonoBehaviour {
             {
                 //LoadChunk Load = GameObject.Find("Load_Chunk").GetComponent<LoadChunk>();
                 GM.LoadManager.LoadChunkedMap(objgo.objectCur.modifiers["chunkfile"]);
-                GM.LoadManager.LoadChunkedTiles(GM.LoadManager.chunk2, 10, 0, 10, 10, 0, GM.map.sizey);
-                GM.map.tilesizex += 0;
-                GM.map.tilesizey += 10;
+               // GM.LoadManager.LoadChunkedTiles(GM.LoadManager.chunk2, 10, 0, 10, 10, 0, GM.map.sizey);
+               // GM.map.maxsizex += 0;
+                //GM.map.maxsizey += 12;
                 /*if (objgo.objectCur.modifiers["loadChunk"] != "0")
                 {
                     //GM.map.sizey += Load.chunk2.sizey;
